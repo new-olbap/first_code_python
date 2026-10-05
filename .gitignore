@@ -1,3 +1,6 @@
 sourcemap.json
 *.rbxl.lock
 *.rbxlx.lock
+
+# Third-party skill/MCP clones (local only)
+.claude/skills_src/
