@@ -5,11 +5,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local NAMES = {
-	"Fire", -- client -> serveur : "je tire / je frappe vers cette position"
+	"Attack", -- client -> serveur : "j'attaque" (+ directions des balles pour les armes à feu)
 	"Reload", -- client -> serveur : "je recharge"
-	"ShotFired", -- serveur -> tous : afficher les traînées de balles
-	"HitConfirmed", -- serveur -> tireur : "tu as touché" (et "tu as tué")
+	"WeaponFx", -- serveur -> autres joueurs : afficher un tir, un coup, une flèche
+	"HitConfirmed", -- serveur -> attaquant : liste des touches (marqueur + chiffres de dégâts)
+	"DamageTaken", -- serveur -> victime : d'où vient le coup (indicateur de direction)
 	"Notify", -- serveur -> joueur : petit message à l'écran
+	"Debug", -- client -> serveur : actions du panneau de debug
 }
 
 local Remotes = {}
