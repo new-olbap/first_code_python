@@ -40,8 +40,32 @@ local function buildSimpleRig(skinColor: Color3, clothesColor: Color3): Model
 	return model
 end
 
+-- Deux yeux lumineux soudés à la tête (pour les monstres)
+local function addEyes(model: Model, color: Color3)
+	local head = model:FindFirstChild("Head") :: BasePart?
+	if not head then
+		return
+	end
+	for _, side in ipairs({ -1, 1 }) do
+		local eye = Instance.new("Part")
+		eye.Name = "Eye"
+		eye.Size = Vector3.new(0.22, 0.12, 0.05)
+		eye.Material = Enum.Material.Neon
+		eye.Color = color
+		eye.CanCollide = false
+		eye.CanQuery = false
+		eye.Massless = true
+		eye.CFrame = head.CFrame * CFrame.new(side * 0.22, 0.12, -head.Size.Z / 2 - 0.02)
+		local weld = Instance.new("WeldConstraint")
+		weld.Part0 = head
+		weld.Part1 = eye
+		weld.Parent = eye
+		eye.Parent = model
+	end
+end
+
 -- Renvoie une copie d'un rig R15 aux couleurs demandées
-function Rigs.build(name: string, skinColor: Color3, clothesColor: Color3): Model
+function Rigs.build(name: string, skinColor: Color3, clothesColor: Color3, eyeColor: Color3?): Model
 	local key = name .. skinColor:ToHex() .. clothesColor:ToHex()
 	if not cache[key] then
 		local description = Instance.new("HumanoidDescription")
@@ -68,6 +92,9 @@ function Rigs.build(name: string, skinColor: Color3, clothesColor: Color3): Mode
 			model = buildSimpleRig(skinColor, clothesColor)
 		end
 		model.Name = name
+		if eyeColor then
+			addEyes(model, eyeColor)
+		end
 		cache[key] = model
 	end
 	return cache[key]:Clone()

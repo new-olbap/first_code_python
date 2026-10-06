@@ -9,23 +9,18 @@ Pour le remplacer par un vrai modèle :
 
 ## Liste des noms
 
-| Dossier | Nom | Ce que c'est | Type attendu |
-|---|---|---|---|
-| `Weapons` | `Knife` | Couteau | Tool (ou Model) avec une pièce `Handle` |
-| `Weapons` | `Bat` | Batte | idem |
-| `Weapons` | `Machete` | Machette | idem |
-| `Weapons` | `Bow` | Arc | idem |
-| `Weapons` | `Pistol` | Pistolet | idem |
-| `Weapons` | `Shotgun` | Fusil à pompe | idem |
-| `Weapons` | `AssaultRifle` | Fusil d'assaut | idem |
-| `Monsters` | `Prowler` | Rôdeur | Model avec `Humanoid` et `HumanoidRootPart` |
-| `Characters` | `Dummy` | Mannequin de la zone de test | Model avec `Humanoid` et `HumanoidRootPart` |
-| `Props` | `Tree` | Arbre | Model |
-| `Props` | `Rock` | Rocher | Model |
-| `Props` | `Car` | Voiture abandonnée | Model |
-| `Props` | `Bag` | Sac lâché à la mort | Model |
-| `Props` | `Arrow` | Flèche (en vol et plantée) | Model |
-| `Buildings` | `House` | Bâtiment de la ville | Model |
+| Dossier | Noms | Type attendu |
+|---|---|---|
+| `Weapons` | `Knife` (couteau), `Bat` (batte), `Machete` (machette), `Bow` (arc), `Pistol` (pistolet), `Shotgun` (fusil à pompe), `AssaultRifle` (fusil d'assaut) | Tool (ou Model) avec une pièce `Handle` |
+| `Monsters` | `Prowler` (Rôdeur) | Model avec `Humanoid` et `HumanoidRootPart` |
+| `Characters` | `Dummy` (mannequin de la zone de test) | Model avec `Humanoid` et `HumanoidRootPart` |
+| `Buildings` | `House` (maison à étage), `Apartment` (immeuble), `Shop` (magasin), `Warehouse` (entrepôt), `Ruin` (ruine) | Model |
+| `Containers` | `Crate` (caisse), `HunterStash` (cache de chasseur), `Cabinet` (armoire), `Fridge` (frigo), `MedCabinet` (armoire à pharmacie), `Bin` (poubelle), `WeaponLocker` (râtelier d'armes) | Model |
+| `Props` | `Tree` (arbre), `BerryBush` (buisson de baies), `Rock` (rocher), `Log` (tronc couché), `Tent` (tente), `Campfire` (feu de camp), `HuntingTower` (tour de chasse) | Model |
+| `Props` | `Car` (voiture), `StreetLight` (lampadaire), `Bench` (banc), `Barrier` (barrière en béton), `Cone` (plot), `Tires` (pneus), `UtilityPole` (poteau électrique) | Model |
+| `Props` | `Bag` (sac lâché à la mort), `Pouch` (petit sac d'objets jetés), `Arrow` (flèche en vol et plantée) | Model |
+
+> Un seul modèle par nom : si tu fournis `Tree`, tous les arbres seront ce modèle. Les placeholders, eux, varient (pins, chênes, bouleaux, arbres morts ; 5 enseignes de magasin...).
 
 ## Conventions
 
@@ -35,7 +30,7 @@ Pour le remplacer par un vrai modèle :
 - **L'avant regarde vers -Z** (la face « Front » dans Studio).
 
 **Armes (`Weapons`) :**
-- La pièce principale s'appelle **`Handle`**, avec sa **longueur sur l'axe Z** et le **canon (ou la lame) vers -Z**.
+- La pièce principale s'appelle **`Handle`**, avec sa **longueur sur l'axe Z**, le **canon (ou la lame) vers -Z** et le **haut de l'arme vers +Y** (la poignée pend vers -Y).
 - Les autres pièces sont **soudées** à `Handle` (WeldConstraint) et **non ancrées**. Le code règle lui-même les collisions et la masse.
 - Mets une **Attachment `Muzzle`** dans `Handle`, au bout du canon : c'est de là que partent le flash et les traînées des balles.
 - **Point d'attache en main** : si tu fournis un **Tool**, son `Grip` est gardé tel quel. Si tu fournis un **Model**, le code tient l'arme à 0,4 stud de l'arrière de `Handle`.
@@ -46,10 +41,20 @@ Pour le remplacer par un vrai modèle :
 
 **Bâtiments (`Buildings`) :**
 - La porte est sur la face avant (-Z). Le code tourne les bâtiments pour que la porte donne sur la rue.
+- **Le pivot (PrimaryPart) est le sol du rez-de-chaussée.**
 - Place des **Attachments nommées `LootSpot`** à l'intérieur, au niveau du sol : une arme apparaîtra sur chacune.
-- Le placeholder mesure 40 × 30 studs au sol. Garde à peu près cette taille, sinon les rues seront bouchées.
+- Place des **Attachments nommées `ContainerSpot`** avec un attribut texte **`ContainerType`** (par exemple `Fridge`) : le conteneur sera posé là, son avant (-Z) dans le sens de l'Attachment.
+- Les bâtiments font au plus 40 × 30 studs au sol. Garde à peu près cette taille, sinon les rues seront bouchées.
 
-**Arbres et décor :**
+**Conteneurs et objets fouillables :**
+- Un modèle de `Containers` est rendu fouillable automatiquement ; son avant (-Z) fait face au joueur.
+- Pour qu'un objet du décor se fouille lui-même (comme le coffre de la voiture), ajoute-lui une Attachment `ContainerSpot` avec les attributs `ContainerType` = `CarTrunk` et `Embedded` = vrai.
+
+**Arbres et buissons :**
+- Tous les arbres (`Tree`) donnent du bois quand on les frappe ; il n'y a rien à ajouter.
+- Un buisson (`BerryBush`) doit contenir un Model ou Folder nommé `Berries` : ces pièces disparaissent quand on cueille.
+
+**Feuillage :**
 - Les pièces que les balles doivent traverser (feuillage) doivent avoir `CanQuery = false`.
 
 ## Sons

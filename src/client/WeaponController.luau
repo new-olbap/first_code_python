@@ -21,6 +21,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local SoundPlayer = require(ReplicatedStorage.Shared.SoundPlayer)
 local WeaponDefs = require(ReplicatedStorage.Shared.WeaponDefs)
 local Effects = require(script.Parent.Effects)
+local InventoryClient = require(script.Parent.InventoryClient)
 
 local WeaponController = {}
 
@@ -50,7 +51,8 @@ local bloom = 0 -- dispersion accumulée par les tirs rapprochés (degrés)
 local recoilPitch, recoilYaw = 0, 0 -- décalage de caméra dû au recul (degrés)
 local currentRecoilRecovery = 10
 local lastBrokenWarning = 0
-local mouseFree = false -- un menu est ouvert : on libère la souris
+local openMenus: { [string]: boolean } = {} -- un menu est ouvert : on libère la souris
+local mouseFree = false
 
 local Hud
 
@@ -118,7 +120,7 @@ local function requestReload()
 	if not eq or eq.def.kind == "melee" or eq.tool:GetAttribute("Reloading") then
 		return
 	end
-	if (eq.tool:GetAttribute("Ammo") or 0) < eq.def.magazine and (eq.tool:GetAttribute("Reserve") or 0) > 0 then
+	if (eq.tool:GetAttribute("Ammo") or 0) < eq.def.magazine and InventoryClient.count(eq.def.ammoItem) > 0 then
 		Remotes.Reload:FireServer()
 	end
 end
@@ -126,7 +128,7 @@ end
 local function attack()
 	local eq = equipped
 	local humanoid = getHumanoid()
-	if not eq or not character or not humanoid or humanoid.Health <= 0 then
+	if not eq or not character or not humanoid or humanoid.Health <= 0 or player:GetAttribute("Using") then
 		return
 	end
 	local def = eq.def
@@ -332,8 +334,14 @@ local function onRenderStep(dt: number)
 	end
 end
 
--- Un menu (panneau de debug) libère la souris tant qu'il est ouvert
-function WeaponController.setMouseFree(free: boolean)
+-- Un menu (inventaire, debug...) libère la souris tant qu'il est ouvert
+function WeaponController.setMouseFree(menu: string, open: boolean)
+	if open then
+		openMenus[menu] = true
+	else
+		openMenus[menu] = nil
+	end
+	local free = next(openMenus) ~= nil
 	mouseFree = free
 	if free then
 		UserInputService.MouseBehavior = Enum.MouseBehavior.Default

@@ -8,8 +8,36 @@ GameConfig.RespawnTime = 5 -- secondes avant de réapparaître
 GameConfig.SpawnProtection = 3 -- secondes d'invincibilité après l'apparition
 GameConfig.HeadshotMultiplier = 1.5
 
--- Butin au sol
-GameConfig.LootRespawnTime = 90 -- une arme ramassée réapparaît après ce délai
+-- Inventaire (étape 2)
+GameConfig.Inventory = {
+	slots = 24, -- nombre de cases
+	maxWeapons = 5, -- armes dans la barre d'outils (touches 1 à 5)
+	interactDistance = 12, -- distance max pour prendre dans un conteneur
+}
+
+-- Faim et soif (étape 2, version légère : à tester, voir docs/A_EQUILIBRER.md)
+GameConfig.Survival = {
+	enabled = true,
+	hungerDuration = 40 * 60, -- secondes pour passer de 100 à 0
+	thirstDuration = 30 * 60,
+	emptyDamage = 1, -- dégâts quand une jauge est vide...
+	emptyDamageInterval = 2, -- ...toutes les N secondes
+	wellFedThreshold = 70, -- au-dessus (faim ET soif), on regagne de la vie
+	wellFedRegen = 0.5, -- vie par seconde
+	respawnHunger = 80,
+	respawnThirst = 80,
+}
+
+-- Ressources de la forêt
+GameConfig.Resources = {
+	treeWood = 30, -- bois dans un arbre avant qu'il soit épuisé
+	treeRegrow = 300, -- secondes pour qu'un arbre épuisé se régénère
+	berriesPerPick = { min = 2, max = 4 },
+	bushRegrow = 150,
+}
+
+-- Butin au sol (en plus petite quantité que dans les conteneurs)
+GameConfig.LootRespawnTime = 120 -- une arme ramassée réapparaît après ce délai
 GameConfig.LootDurability = { min = 0.55, max = 1 } -- état des armes trouvées (en % de l'usure max)
 
 -- Sac lâché à la mort

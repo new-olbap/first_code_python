@@ -39,7 +39,7 @@ local function build(weaponController)
 	local panel = Instance.new("Frame")
 	panel.AnchorPoint = Vector2.new(0, 0.5)
 	panel.Position = UDim2.new(0, 16, 0.5, 0)
-	panel.Size = UDim2.fromOffset(330, 420)
+	panel.Size = UDim2.fromOffset(330, 470)
 	panel.BackgroundColor3 = Color3.fromRGB(20, 22, 28)
 	panel.BackgroundTransparency = 0.1
 	panel.Visible = false
@@ -95,6 +95,15 @@ local function build(weaponController)
 	makeButton(list, "Réparer + munitions", actionColor, function()
 		send("refill")
 	end)
+	makeButton(list, "Kit de survie", actionColor, function()
+		send("kit")
+	end)
+	makeButton(list, "Faim/soif au minimum", dangerColor, function()
+		send("starve")
+	end)
+	makeButton(list, "Faim/soif à 100", actionColor, function()
+		send("feed")
+	end)
 	makeButton(list, "Usure à 20 %", actionColor, function()
 		send("wear")
 	end)
@@ -119,7 +128,7 @@ local function build(weaponController)
 
 	local function toggle()
 		panel.Visible = not panel.Visible
-		weaponController.setMouseFree(panel.Visible)
+		weaponController.setMouseFree("debug", panel.Visible)
 	end
 
 	UserInputService.InputBegan:Connect(function(input, gameProcessed)

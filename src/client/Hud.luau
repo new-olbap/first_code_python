@@ -13,6 +13,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local SoundPlayer = require(ReplicatedStorage.Shared.SoundPlayer)
 local WeaponDefs = require(ReplicatedStorage.Shared.WeaponDefs)
 local Effects = require(script.Parent.Effects)
+local InventoryClient = require(script.Parent.InventoryClient)
 
 local Hud = {}
 
@@ -22,6 +23,7 @@ local isTouch = UserInputService.TouchEnabled and not UserInputService.KeyboardE
 
 local gui: ScreenGui
 local healthFill: Frame, healthText: TextLabel
+local gauges: { [string]: { fill: Frame, label: TextLabel } } = {}
 local weaponName: TextLabel, ammoText: TextLabel, durabilityFill: Frame, durabilityBar: Frame
 local clockText: TextLabel, nightWarning: TextLabel
 local crosshair: Frame, crosshairBars: { Frame }
@@ -80,6 +82,25 @@ local function buildGui()
 	healthFill = create("Frame", { Size = UDim2.fromScale(1, 1), BackgroundColor3 = Color3.fromRGB(200, 50, 50) }, healthBar)
 	corner(healthFill, 6)
 	healthText = label({ Size = UDim2.fromScale(1, 1), Text = "", TextSize = 15, ZIndex = 2 }, healthBar)
+
+	-- Faim et soif (au-dessus de la vie)
+	for index, info in ipairs({
+		{ key = "Hunger", name = "Faim", color = Color3.fromRGB(220, 150, 60) },
+		{ key = "Thirst", name = "Soif", color = Color3.fromRGB(70, 150, 230) },
+	}) do
+		local bar = create("Frame", {
+			AnchorPoint = Vector2.new(0, 1),
+			Position = UDim2.new(0, 16 + (index - 1) * 124, 1, -44),
+			Size = UDim2.fromOffset(116, 14),
+			BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+			BackgroundTransparency = 0.3,
+		}, gui)
+		corner(bar, 5)
+		local fill = create("Frame", { Size = UDim2.fromScale(1, 1), BackgroundColor3 = info.color }, bar)
+		corner(fill, 5)
+		local text = label({ Size = UDim2.fromScale(1, 1), Text = info.name, TextSize = 11, ZIndex = 2 }, bar)
+		gauges[info.key] = { fill = fill, label = text }
+	end
 
 	-- Arme (en bas à droite) : nom, munitions, barre d'usure
 	weaponName = label({
@@ -148,7 +169,7 @@ local function buildGui()
 		TextTransparency = 0.35,
 		Text = if isTouch
 			then "Touche l'écran : attaquer"
-			else "Clic : attaquer · Clic droit : viser · R : recharger · E : ramasser · 1-9 : armes · F2 : debug",
+			else "Clic : attaquer · Clic droit : viser · R : recharger · E : ramasser/fouiller · I : inventaire · H : se soigner · F2 : debug",
 	}, gui)
 
 	-- Bouton recharger (écrans tactiles)
@@ -289,6 +310,13 @@ local function update()
 		healthText.Text = "Vie " .. math.ceil(humanoid.Health)
 	end
 
+	for key, gauge in pairs(gauges) do
+		local value = player:GetAttribute(key) or 100
+		gauge.fill.Size = UDim2.fromScale(math.clamp(value / 100, 0, 1), 1)
+		gauge.label.Text = (if key == "Hunger" then "Faim " else "Soif ") .. math.floor(value)
+		gauge.label.TextColor3 = if value < 20 then Color3.fromRGB(255, 120, 120) else WHITE
+	end
+
 	local eq = getEquipped()
 	if eq then
 		local def, tool = eq.def, eq.tool
@@ -312,7 +340,7 @@ local function update()
 			ammoText.Text = "Rechargement..."
 			ammoText.TextColor3 = Color3.fromRGB(255, 220, 120)
 		else
-			ammoText.Text = eq.predictedAmmo .. " / " .. (tool:GetAttribute("Reserve") or 0)
+			ammoText.Text = eq.predictedAmmo .. " / " .. InventoryClient.count(def.ammoItem)
 			ammoText.TextColor3 = if eq.predictedAmmo == 0 then Color3.fromRGB(255, 90, 60) else WHITE
 		end
 		reloadButton.Visible = isTouch and def.kind ~= "melee"

@@ -15,6 +15,8 @@ local DebugService = {}
 local WeaponService
 local MonsterService
 local DayNight
+local InventoryService
+local SurvivalService
 
 function DebugService.isAllowed(player: Player): boolean
 	local cfg = GameConfig.Debug
@@ -63,12 +65,42 @@ local actions: { [string]: (Player, Model, any) -> string? } = {
 		for _, tool in ipairs(WeaponService.getTools(player)) do
 			local def = WeaponDefs.Weapons[tool:GetAttribute("WeaponId")]
 			tool:SetAttribute("Durability", def.maxDurability)
-			if def.kind ~= "melee" then
+			if def.ammoItem then
 				tool:SetAttribute("Ammo", def.magazine)
-				tool:SetAttribute("Reserve", def.reserve)
+				InventoryService.add(player, def.ammoItem, def.magazine * 3)
 			end
 		end
-		return "Armes réparées et rechargées"
+		return "Armes réparées, chargées, + 3 chargeurs chacune"
+	end,
+
+	kit = function(player)
+		local kit = {
+			Wood = 30,
+			Scrap = 20,
+			Cloth = 10,
+			Bandage = 5,
+			Medkit = 1,
+			CannedFood = 2,
+			WaterBottle = 2,
+			AmmoPistol = 36,
+			AmmoShotgun = 12,
+			AmmoRifle = 60,
+			Arrow = 15,
+		}
+		for id, count in pairs(kit) do
+			InventoryService.add(player, id, count)
+		end
+		return "Kit de survie ajouté à l'inventaire"
+	end,
+
+	starve = function(player)
+		SurvivalService.setGauges(player, 8, 8)
+		return "Faim et soif presque vides"
+	end,
+
+	feed = function(player)
+		SurvivalService.setGauges(player, 100, 100)
+		return "Faim et soif à 100"
 	end,
 
 	wear = function(player)
@@ -107,10 +139,12 @@ local actions: { [string]: (Player, Model, any) -> string? } = {
 	end,
 }
 
-function DebugService.start(weaponService, monsterService, dayNight)
-	WeaponService = weaponService
-	MonsterService = monsterService
-	DayNight = dayNight
+function DebugService.start(deps)
+	WeaponService = deps.WeaponService
+	MonsterService = deps.MonsterService
+	DayNight = deps.DayNight
+	InventoryService = deps.InventoryService
+	SurvivalService = deps.SurvivalService
 
 	Remotes.Debug.OnServerEvent:Connect(function(player, action, argument)
 		if not DebugService.isAllowed(player) or typeof(action) ~= "string" or not actions[action] then

@@ -10,11 +10,12 @@
 --   maxDurability usure maximale ; chaque utilisation retire wearPerUse
 --   noise         rayon (studs) dans lequel monstres et joueurs entendent l'attaque
 --   sounds        clés de la table Sounds
---   size, color   forme du placeholder (longueur sur l'axe Z, l'avant vers -Z)
+--   repairCost    matériaux pour réparer la moitié de l'usure
+--   color         couleur principale du placeholder (le modèle est dans WeaponModels)
 --
 -- Armes blanches : range (portée), arc (largeur du coup : 1 = droit devant, 0 = 180°),
 --   windup (délai avant que le coup touche, pour qu'il soit lisible)
--- Armes à feu / arcs : magazine, reserve, reloadTime, range, pellets, automatic,
+-- Armes à feu / arcs : magazine, ammoItem (objet de munitions), reloadTime, range, pellets, automatic,
 --   spread = { base, moving, perShot, max, recovery } en degrés,
 --   recoil = { vertical, horizontal, recovery } en degrés,
 --   aimFov (champ de vision en visant, clic droit)
@@ -41,9 +42,10 @@ WeaponDefs.Weapons = {
 		arc = 0.35,
 		maxDurability = 120,
 		wearPerUse = 1,
+		repairCost = { Scrap = 1 }, -- matériaux pour réparer 50 % de l'usure
+		harvest = 1, -- bois récolté par coup sur un arbre
 		noise = 12,
 		sounds = { swing = "MeleeSwing", hit = "MeleeHit" },
-		size = Vector3.new(0.2, 0.3, 1.6),
 		color = Color3.fromRGB(165, 165, 175),
 	},
 	Bat = {
@@ -57,9 +59,10 @@ WeaponDefs.Weapons = {
 		arc = 0.2,
 		maxDurability = 80,
 		wearPerUse = 1,
+		repairCost = { Wood = 4 },
+		harvest = 2,
 		noise = 15,
 		sounds = { swing = "MeleeSwingHeavy", hit = "MeleeHit" },
-		size = Vector3.new(0.4, 0.4, 3.2),
 		color = Color3.fromRGB(140, 95, 55),
 	},
 	Machete = {
@@ -73,9 +76,10 @@ WeaponDefs.Weapons = {
 		arc = 0.25,
 		maxDurability = 100,
 		wearPerUse = 1,
+		repairCost = { Scrap = 2 },
+		harvest = 3,
 		noise = 12,
 		sounds = { swing = "MeleeSwing", hit = "MeleeHit" },
-		size = Vector3.new(0.15, 0.5, 2.6),
 		color = Color3.fromRGB(120, 125, 130),
 	},
 	Bow = {
@@ -85,7 +89,7 @@ WeaponDefs.Weapons = {
 		damage = 45,
 		cooldown = 0.9,
 		magazine = 1,
-		reserve = 12,
+		ammoItem = "Arrow", -- munitions prises dans l'inventaire
 		reloadTime = 0.7,
 		pellets = 1,
 		automatic = false,
@@ -97,9 +101,9 @@ WeaponDefs.Weapons = {
 		aimFov = 55,
 		maxDurability = 60,
 		wearPerUse = 1,
+		repairCost = { Wood = 4, Cloth = 1 },
 		noise = 8, -- presque silencieux : c'est tout l'intérêt de l'arc
 		sounds = { fire = "BowShot", reload = "BowReload", hit = "ArrowHit" },
-		size = Vector3.new(0.2, 3.4, 0.6),
 		color = Color3.fromRGB(110, 75, 45),
 	},
 	Pistol = {
@@ -109,7 +113,7 @@ WeaponDefs.Weapons = {
 		damage = 20,
 		cooldown = 0.22,
 		magazine = 12,
-		reserve = 36,
+		ammoItem = "AmmoPistol",
 		reloadTime = 1.4,
 		pellets = 1,
 		automatic = false,
@@ -119,9 +123,9 @@ WeaponDefs.Weapons = {
 		aimFov = 60,
 		maxDurability = 150,
 		wearPerUse = 1,
+		repairCost = { Scrap = 3 },
 		noise = 90,
 		sounds = { fire = "PistolShot", reload = "Reload", empty = "DryFire" },
-		size = Vector3.new(0.3, 0.6, 1.3),
 		color = Color3.fromRGB(45, 45, 50),
 	},
 	Shotgun = {
@@ -131,7 +135,7 @@ WeaponDefs.Weapons = {
 		damage = 11,
 		cooldown = 0.9,
 		magazine = 6,
-		reserve = 18,
+		ammoItem = "AmmoShotgun",
 		reloadTime = 2.4,
 		pellets = 8,
 		automatic = false,
@@ -141,9 +145,9 @@ WeaponDefs.Weapons = {
 		aimFov = 62,
 		maxDurability = 90,
 		wearPerUse = 1,
+		repairCost = { Scrap = 4, Wood = 2 },
 		noise = 130,
 		sounds = { fire = "ShotgunShot", reload = "Reload", empty = "DryFire" },
-		size = Vector3.new(0.4, 0.5, 3.6),
 		color = Color3.fromRGB(90, 60, 40),
 	},
 	AssaultRifle = {
@@ -153,7 +157,7 @@ WeaponDefs.Weapons = {
 		damage = 16,
 		cooldown = 0.11,
 		magazine = 30,
-		reserve = 90,
+		ammoItem = "AmmoRifle",
 		reloadTime = 2.2,
 		pellets = 1,
 		automatic = true,
@@ -163,9 +167,9 @@ WeaponDefs.Weapons = {
 		aimFov = 55,
 		maxDurability = 300,
 		wearPerUse = 1,
+		repairCost = { Scrap = 6 },
 		noise = 150,
 		sounds = { fire = "RifleShot", reload = "Reload", empty = "DryFire" },
-		size = Vector3.new(0.35, 0.7, 3.4),
 		color = Color3.fromRGB(55, 65, 50),
 	},
 }

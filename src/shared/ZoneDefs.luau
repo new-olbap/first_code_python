@@ -10,23 +10,19 @@ ZoneDefs.Zones = {
 		name = "Forêt",
 		center = Vector3.new(0, 0, 0),
 		size = Vector3.new(400, 0, 400),
-		groundColor = Color3.fromRGB(75, 120, 60),
-		groundMaterial = Enum.Material.Grass,
 		loot = { Knife = 35, Bat = 25, Machete = 15, Bow = 15, Pistol = 10 },
-		groundLootSpots = 10,
+		groundLootSpots = 6, -- armes posées au sol (le reste est dans les conteneurs)
 		prowlerGroups = 2,
-		trees = 120,
-		rocks = 25,
+		trees = 150,
+		rocks = 20,
 	},
 	{
 		id = "Town",
 		name = "Ville",
 		center = Vector3.new(0, 0, -380),
 		size = Vector3.new(400, 0, 360),
-		groundColor = Color3.fromRGB(110, 110, 105),
-		groundMaterial = Enum.Material.Concrete,
 		loot = { Bat = 10, Machete = 10, Bow = 5, Pistol = 40, Shotgun = 22, AssaultRifle = 13 },
-		groundLootSpots = 5, -- dans la rue ; les bâtiments ont leurs propres emplacements
+		groundLootSpots = 4, -- dans la rue ; les bâtiments ont leurs propres emplacements
 		prowlerGroups = 4,
 	},
 }

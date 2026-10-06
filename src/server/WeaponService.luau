@@ -6,9 +6,10 @@
 -- depuis la tête du personnage et décide seul des dégâts.
 --
 -- Une arme existe sous deux formes :
---   - un "item" : une simple table { weaponId, ammo, reserve, durability }
---     (au sol, dans un sac)
---   - un Tool dans le sac à dos du joueur, avec les mêmes valeurs en attributs
+--   - un "item" : une simple table { weaponId, ammo, durability }
+--     (au sol, dans un conteneur, dans un sac)
+--   - un Tool dans la barre d'outils du joueur, avec les mêmes valeurs en attributs
+-- Les munitions de réserve sont des objets de l'inventaire (InventoryService).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -25,8 +26,7 @@ local WeaponService = {}
 
 export type Item = {
 	weaponId: string,
-	ammo: number,
-	reserve: number,
+	ammo: number, -- balles dans le chargeur
 	durability: number,
 }
 
@@ -34,6 +34,10 @@ type HitInfo = { position: Vector3, damage: number, headshot: boolean, killed: b
 
 local MonsterService
 local Projectiles
+local InventoryService
+local ResourceService
+local SurvivalService
+local ContainerService
 local lastAttack: { [Player]: number } = {}
 local busy: { [Player]: boolean } = {} -- pendant l'élan d'un coup d'arme blanche
 
@@ -44,7 +48,6 @@ function WeaponService.newItem(weaponId: string, durabilityRatio: number?): Item
 	return {
 		weaponId = weaponId,
 		ammo = def.magazine or 0,
-		reserve = def.reserve or 0,
 		durability = math.max(1, math.floor(def.maxDurability * (durabilityRatio or 1))),
 	}
 end
@@ -66,7 +69,7 @@ function WeaponService.createTool(item: Item): Tool
 		end
 		local handle = tool:FindFirstChild("Handle") :: BasePart?
 		if handle then
-			tool.Grip = CFrame.new(0, 0, handle.Size.Z / 2 - 0.4)
+			tool.Grip = CFrame.new(0, 0, handle.Size.Z / 2 - 0.4) -- tenue par l'arrière
 		end
 		asset:Destroy()
 	end
@@ -87,7 +90,6 @@ function WeaponService.createTool(item: Item): Tool
 	tool:SetAttribute("Durability", item.durability)
 	if def.kind ~= "melee" then
 		tool:SetAttribute("Ammo", item.ammo)
-		tool:SetAttribute("Reserve", item.reserve)
 		tool:SetAttribute("Reloading", false)
 	end
 	return tool
@@ -101,7 +103,6 @@ function WeaponService.toolToItem(tool: Tool): Item?
 	return {
 		weaponId = weaponId,
 		ammo = tool:GetAttribute("Ammo") or 0,
-		reserve = tool:GetAttribute("Reserve") or 0,
 		durability = tool:GetAttribute("Durability") or 1,
 	}
 end
@@ -136,7 +137,7 @@ local function isAlive(player: Player): boolean
 end
 
 -- Donne un item au joueur. Renvoie (item pris ?, message à afficher)
--- Si le joueur a déjà cette arme à munitions, on récupère seulement ses munitions.
+-- Si le joueur a déjà cette arme, on récupère seulement les balles de son chargeur.
 function WeaponService.giveItem(player: Player, item: Item): (boolean, string?)
 	local def = WeaponDefs.Weapons[item.weaponId]
 	local backpack = player:FindFirstChildOfClass("Backpack")
@@ -146,26 +147,54 @@ function WeaponService.giveItem(player: Player, item: Item): (boolean, string?)
 
 	local owned = WeaponService.findTool(player, item.weaponId)
 	if owned then
-		local ammo = item.ammo + item.reserve
-		if def.kind ~= "melee" and ammo > 0 then
-			owned:SetAttribute("Reserve", (owned:GetAttribute("Reserve") or 0) + ammo)
-			return true, "+" .. ammo .. " munitions (" .. def.name .. ")"
+		if def.ammoItem and item.ammo > 0 then
+			local added = InventoryService.add(player, def.ammoItem, item.ammo)
+			if added > 0 then
+				item.ammo -= added
+				return item.ammo <= 0, "+" .. added .. " munitions (" .. def.name .. ")"
+			end
+			return false, "Inventaire plein"
 		end
 		return false, "Tu as déjà : " .. def.name
+	end
+
+	if #WeaponService.getTools(player) >= GameConfig.Inventory.maxWeapons then
+		return false, "Barre d'armes pleine (" .. GameConfig.Inventory.maxWeapons .. " max)"
 	end
 
 	WeaponService.createTool(item).Parent = backpack
 	return true, "Ramassé : " .. def.name .. " (" .. WeaponDefs.Rarities[def.rarity].name .. ")"
 end
 
--- Ajoute des munitions de réserve à une arme possédée (flèches ramassées, debug)
-function WeaponService.addReserve(player: Player, weaponId: string, amount: number): boolean
+-- Répare une arme avec des matériaux (la moitié de l'usure maximale)
+function WeaponService.repair(player: Player, weaponId: string): (string, Color3)
+	local red = Color3.fromRGB(255, 120, 120)
 	local tool = WeaponService.findTool(player, weaponId)
-	if not tool then
-		return false
+	local def = WeaponDefs.Weapons[weaponId]
+	if not tool or not def then
+		return "Arme introuvable", red
 	end
-	tool:SetAttribute("Reserve", (tool:GetAttribute("Reserve") or 0) + amount)
-	return true
+	local durability = tool:GetAttribute("Durability") or 0
+	if durability >= def.maxDurability then
+		return def.name .. " est déjà en parfait état", Color3.fromRGB(255, 200, 120)
+	end
+	if not InventoryService.removeAll(player, def.repairCost) then
+		return "Pas assez de matériaux pour réparer " .. def.name, red
+	end
+	tool:SetAttribute("Durability", math.min(def.maxDurability, durability + math.ceil(def.maxDurability / 2)))
+	return def.name .. " réparée", Color3.fromRGB(120, 230, 140)
+end
+
+-- Jette une arme au sol (dans un petit sac que tout le monde peut prendre)
+function WeaponService.dropWeapon(player: Player, weaponId: string)
+	local tool = WeaponService.findTool(player, weaponId)
+	local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if not tool or not root then
+		return
+	end
+	local item = WeaponService.toolToItem(tool)
+	tool:Destroy()
+	ContainerService.dropPouch(root.Position + root.CFrame.LookVector * 2, { { kind = "weapon", item = item } }, player.DisplayName)
 end
 
 -- ATTAQUES ----------------------------------------------------------------------
@@ -266,6 +295,8 @@ local function melee(player: Player, character: Model, tool: Tool, def)
 		wear(player, tool, def)
 		MonsterService.reportNoise(root.Position, def.noise)
 		if not best then
+			-- Personne devant : peut-être un arbre à couper
+			ResourceService.tryHarvest(player, root, def.range, def.harvest or 1)
 			return
 		end
 		local humanoid = best:FindFirstChildOfClass("Humanoid") :: Humanoid
@@ -366,7 +397,7 @@ end
 
 local function onAttack(player: Player, directions: any)
 	local character, tool, def = getEquipped(player)
-	if not character or busy[player] then
+	if not character or busy[player] or SurvivalService.isUsing(player) then
 		return
 	end
 	if (tool:GetAttribute("Durability") or 0) <= 0 then
@@ -405,8 +436,8 @@ local function onReload(player: Player)
 	if not character or def.kind == "melee" or tool:GetAttribute("Reloading") then
 		return
 	end
-	local ammo, reserve = tool:GetAttribute("Ammo"), tool:GetAttribute("Reserve")
-	if ammo >= def.magazine or reserve <= 0 then
+	local ammo = tool:GetAttribute("Ammo")
+	if ammo >= def.magazine or InventoryService.count(player, def.ammoItem) <= 0 then
 		return
 	end
 
@@ -426,16 +457,20 @@ local function onReload(player: Player)
 			return
 		end
 		local currentAmmo = tool:GetAttribute("Ammo")
-		local currentReserve = tool:GetAttribute("Reserve")
-		local amount = math.min(def.magazine - currentAmmo, currentReserve)
-		tool:SetAttribute("Ammo", currentAmmo + amount)
-		tool:SetAttribute("Reserve", currentReserve - amount)
+		local amount = math.min(def.magazine - currentAmmo, InventoryService.count(player, def.ammoItem))
+		if amount > 0 and InventoryService.remove(player, def.ammoItem, amount) then
+			tool:SetAttribute("Ammo", currentAmmo + amount)
+		end
 	end)
 end
 
-function WeaponService.start(monsterService, projectiles)
-	MonsterService = monsterService
-	Projectiles = projectiles
+function WeaponService.start(deps)
+	MonsterService = deps.MonsterService
+	Projectiles = deps.Projectiles
+	InventoryService = deps.InventoryService
+	ResourceService = deps.ResourceService
+	SurvivalService = deps.SurvivalService
+	ContainerService = deps.ContainerService
 	Remotes.Attack.OnServerEvent:Connect(onAttack)
 	Remotes.Reload.OnServerEvent:Connect(onReload)
 	Players.PlayerRemoving:Connect(function(player)

@@ -53,6 +53,7 @@ local monsters: { [Model]: State } = {}
 local nextGroupId = 0
 local sightParams = RaycastParams.new()
 sightParams.FilterType = Enum.RaycastFilterType.Exclude
+sightParams.IgnoreWater = true
 
 local cfg = GameConfig.Monsters
 local def = MonsterDefs.Prowler
@@ -138,7 +139,7 @@ end
 local function spawnMonster(position: Vector3, zoneId: string, groupId: number, night: boolean)
 	local nightCfg = GameConfig.Night
 	local model = AssetLoader.get("Monsters", def.assetName, function()
-		return Rigs.build(def.assetName, def.skinColor, def.clothesColor)
+		return Rigs.build(def.assetName, def.skinColor, def.clothesColor, Color3.fromRGB(255, 60, 40))
 	end) :: Model
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
 	local root = model:FindFirstChild("HumanoidRootPart") :: BasePart?
@@ -222,7 +223,7 @@ local function findSpawnPosition(zone): Vector3?
 		local ground = groundAt(x, z)
 		if
 			ground
-			and ground.Position.Y < 1
+			and math.abs(ground.Position.Y) < 1 -- ni sur une colline, ni dans l'eau
 			and not inTestZone(ground.Position)
 			and nearestPlayerDistance(ground.Position) >= cfg.minSpawnDistance
 		then

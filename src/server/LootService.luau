@@ -1,4 +1,5 @@
--- Tout ce qui se ramasse : armes au sol, sacs des joueurs morts, flèches plantées.
+-- Ce qui se ramasse directement au sol : armes posées par terre et flèches plantées.
+-- (Les conteneurs et les sacs des joueurs morts sont dans ContainerService.)
 -- Le serveur décide de tout ; le joueur maintient E (ProximityPrompt) pour ramasser.
 
 local Debris = game:GetService("Debris")
@@ -14,6 +15,7 @@ local WeaponDefs = require(ReplicatedStorage.Shared.WeaponDefs)
 local LootService = {}
 
 local WeaponService
+local InventoryService
 local rng = Random.new()
 local folder: Folder
 local arrowPickups: { Model } = {}
@@ -82,7 +84,7 @@ end
 -- ARMES AU SOL ------------------------------------------------------------------
 
 -- Crée une arme au sol. onTaken est appelé après ramassage (pour remettre du butin).
-function LootService.spawnWeapon(position: Vector3, item, onTaken: (() -> ())?)
+function LootService.spawnWeapon(position: Vector3, item, onTaken: ((Player) -> ())?)
 	local def = WeaponDefs.Weapons[item.weaponId]
 	local rarity = WeaponDefs.Rarities[def.rarity]
 
@@ -104,10 +106,18 @@ function LootService.spawnWeapon(position: Vector3, item, onTaken: (() -> ())?)
 	model.PrimaryPart = handle
 	makeStatic(model)
 
-	local size = handle.Size
-	local flat = if size.Y > size.X then CFrame.Angles(0, 0, math.rad(90)) else CFrame.identity
-	local thickness = math.min(size.X, size.Y)
-	model:PivotTo(CFrame.new(position + Vector3.new(0, thickness / 2 + 0.05, 0)) * CFrame.Angles(0, rng:NextNumber(0, 2 * math.pi), 0) * flat)
+	-- Couchée sur le flanc, puis posée pile sur le sol
+	model:PivotTo(CFrame.new(position) * CFrame.Angles(0, rng:NextNumber(0, 2 * math.pi), 0) * CFrame.Angles(0, 0, math.rad(90)))
+	local lowest = math.huge
+	for _, p in ipairs(model:GetDescendants()) do
+		if p:IsA("BasePart") then
+			local half = p.Size / 2
+			for _, corner in ipairs({ Vector3.new(1, 1, 1), Vector3.new(1, 1, -1), Vector3.new(1, -1, 1), Vector3.new(1, -1, -1), Vector3.new(-1, 1, 1), Vector3.new(-1, 1, -1), Vector3.new(-1, -1, 1), Vector3.new(-1, -1, -1) }) do
+				lowest = math.min(lowest, (p.CFrame * (half * corner)).Y)
+			end
+		end
+	end
+	model:PivotTo(model:GetPivot() + Vector3.new(0, position.Y - lowest + 0.05, 0))
 
 	-- Lumière de la couleur de la rareté : on repère le butin de loin, surtout la nuit
 	local light = Instance.new("PointLight")
@@ -134,7 +144,7 @@ function LootService.spawnWeapon(position: Vector3, item, onTaken: (() -> ())?)
 			SoundPlayer.playAt(handle.Position, "Pickup", 30)
 			model:Destroy()
 			if onTaken then
-				onTaken()
+				onTaken(player)
 			end
 		end
 	end)
@@ -151,52 +161,16 @@ function LootService.spawnZoneLoot(position: Vector3, zone)
 	end)
 end
 
--- Râtelier de la zone de test : toujours la même arme, neuve, qui revient vite
+-- Râtelier de la zone de test : toujours la même arme, neuve, qui revient vite.
+-- On reçoit aussi 3 chargeurs de munitions.
 function LootService.spawnRack(position: Vector3, weaponId: string)
-	LootService.spawnWeapon(position, WeaponService.newItem(weaponId, 1), function()
+	LootService.spawnWeapon(position, WeaponService.newItem(weaponId, 1), function(player)
+		local def = WeaponDefs.Weapons[weaponId]
+		if def.ammoItem then
+			InventoryService.add(player, def.ammoItem, def.magazine * 3)
+		end
 		task.delay(3, LootService.spawnRack, position, weaponId)
 	end)
-end
-
--- SAC DU JOUEUR MORT -------------------------------------------------------------
-
-function LootService.dropBag(position: Vector3, items: { any }, ownerName: string)
-	if #items == 0 then
-		return
-	end
-	local model = AssetLoader.get("Props", "Bag", Placeholders.bag) :: Model
-	model.Name = "Bag"
-	makeStatic(model)
-	model:PivotTo(CFrame.new(position)) -- position = point au sol
-
-	local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true) :: BasePart
-	addLabel(part, "Sac de " .. ownerName, Color3.fromRGB(255, 210, 120), 60)
-	local prompt = addPrompt(part, "Fouiller", "Sac de " .. ownerName .. " (" .. #items .. " objets)", 0.8)
-
-	prompt.Triggered:Connect(function(player)
-		local taken = {}
-		for index = #items, 1, -1 do
-			local picked = WeaponService.giveItem(player, items[index])
-			if picked then
-				table.insert(taken, WeaponDefs.Weapons[items[index].weaponId].name)
-				table.remove(items, index)
-			end
-		end
-		if #taken > 0 then
-			Remotes.Notify:FireClient(player, "Récupéré : " .. table.concat(taken, ", "), WHITE)
-			SoundPlayer.playAt(part.Position, "Pickup", 30)
-		else
-			Remotes.Notify:FireClient(player, "Rien que tu puisses prendre", RED)
-		end
-		if #items == 0 then
-			model:Destroy()
-		else
-			prompt.ObjectText = "Sac de " .. ownerName .. " (" .. #items .. " objets)"
-		end
-	end)
-
-	model.Parent = folder
-	Debris:AddItem(model, GameConfig.BagLifetime)
 end
 
 -- FLÈCHES PLANTÉES ----------------------------------------------------------------
@@ -210,11 +184,11 @@ function LootService.dropArrow(cframe: CFrame)
 	prompt.MaxActivationDistance = 7
 
 	prompt.Triggered:Connect(function(player)
-		if WeaponService.addReserve(player, "Bow", 1) then
+		if InventoryService.add(player, "Arrow", 1) > 0 then
 			Remotes.Notify:FireClient(player, "+1 flèche", WHITE)
 			model:Destroy()
 		else
-			Remotes.Notify:FireClient(player, "Il te faut un arc", RED)
+			Remotes.Notify:FireClient(player, "Inventaire plein", RED)
 		end
 	end)
 
@@ -228,8 +202,9 @@ function LootService.dropArrow(cframe: CFrame)
 	end
 end
 
-function LootService.start(lootSpots: { [string]: { Vector3 } }, zones, weaponService)
+function LootService.start(lootSpots: { [string]: { Vector3 } }, zones, weaponService, inventoryService)
 	WeaponService = weaponService
+	InventoryService = inventoryService
 	folder = Instance.new("Folder")
 	folder.Name = "Loot"
 	folder.Parent = workspace

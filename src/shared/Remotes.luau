@@ -12,6 +12,11 @@ local NAMES = {
 	"DamageTaken", -- serveur -> victime : d'où vient le coup (indicateur de direction)
 	"Notify", -- serveur -> joueur : petit message à l'écran
 	"Debug", -- client -> serveur : actions du panneau de debug
+	"InventoryUpdate", -- serveur -> joueur : contenu de son inventaire
+	"InventoryAction", -- client -> serveur : utiliser, jeter, réparer
+	"ContainerOpen", -- serveur -> joueur : contenu d'un conteneur fouillé (ou nil = fermé)
+	"ContainerAction", -- client -> serveur : prendre un objet, tout prendre, fermer
+	"UseProgress", -- serveur -> joueur : barre de progression (manger, se soigner...)
 }
 
 local Remotes = {}

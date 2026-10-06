@@ -8,31 +8,36 @@ local GameConfig = require(ReplicatedStorage.Shared.GameConfig)
 local PlayerService = {}
 
 local WeaponService
-local LootService
+local InventoryService
+local ContainerService
 
 local groundParams = RaycastParams.new()
 groundParams.FilterType = Enum.RaycastFilterType.Exclude
 groundParams.RespectCanCollide = true
 
--- À la mort, toutes les armes portées tombent dans un sac que tout le monde peut fouiller
+-- À la mort, tout ce que le joueur porte (armes et inventaire) tombe dans un sac
+-- que tout le monde peut fouiller
 local function dropEverything(player: Player, character: Model)
 	local root = character:FindFirstChild("HumanoidRootPart") :: BasePart?
 	if not root then
 		return
 	end
-	local items = {}
+	local entries = {}
 	for _, tool in ipairs(WeaponService.getTools(player)) do
 		local item = WeaponService.toolToItem(tool)
 		if item then
-			table.insert(items, item)
+			table.insert(entries, { kind = "weapon", item = item })
 		end
 		tool:Destroy()
+	end
+	for _, slot in ipairs(InventoryService.takeEverything(player)) do
+		table.insert(entries, { kind = "item", id = slot.id, count = slot.count })
 	end
 
 	groundParams.FilterDescendantsInstances = { character }
 	local ground = workspace:Raycast(root.Position, Vector3.new(0, -20, 0), groundParams)
 	local position = if ground then ground.Position else root.Position - Vector3.new(0, 3, 0)
-	LootService.dropBag(position, items, player.DisplayName)
+	ContainerService.dropBag(position, entries, player.DisplayName)
 end
 
 local function onCharacterAdded(player: Player, character: Model)
@@ -42,13 +47,16 @@ local function onCharacterAdded(player: Player, character: Model)
 	end)
 end
 
-function PlayerService.start(weaponService, lootService, debugService)
-	WeaponService = weaponService
-	LootService = lootService
+function PlayerService.start(deps)
+	WeaponService = deps.WeaponService
+	InventoryService = deps.InventoryService
+	ContainerService = deps.ContainerService
+	local debugService = deps.DebugService
 	Players.RespawnTime = GameConfig.RespawnTime
 
 	local function onPlayerAdded(player: Player)
 		player:SetAttribute("DebugAllowed", debugService.isAllowed(player))
+		InventoryService.sync(player)
 		player.CharacterAdded:Connect(function(character)
 			onCharacterAdded(player, character)
 		end)
