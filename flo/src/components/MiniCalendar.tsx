@@ -20,7 +20,7 @@ export default function MiniCalendar({ today = new Date() }: { today?: Date }) {
           return (
             <span
               key={i}
-              className={`relative grid aspect-square place-items-center rounded-xl text-sm
+              className={`relative grid aspect-square place-items-center text-sm
                 ${isToday ? "bg-accent-2 font-bold text-black" : d ? "hover:bg-surface" : ""}`}
             >
               {d}

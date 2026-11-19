@@ -14,7 +14,7 @@ export default async function Section({ params }: { params: Promise<{ section: s
   return (
     <Card className="grid min-h-[60vh] place-items-center text-center">
       <div>
-        <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-3xl border border-line bg-surface text-ink">
+        <div className="mx-auto mb-4 grid h-16 w-16 place-items-center border border-line bg-surface text-ink">
           <Icon size={28} aria-hidden />
         </div>
         <h1 className="text-2xl font-bold">{page.label}</h1>

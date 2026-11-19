@@ -11,8 +11,8 @@ export default function WeekChart() {
           cursor={{ fill: "rgb(255 255 255 / 0.05)" }}
           contentStyle={{ borderRadius: 16, border: "1px solid rgb(255 255 255 / .12)", background: "#141414", color: "#f5f5f5" }}
         />
-        <Bar dataKey="rdv" name="Rendez-vous" fill="var(--accent)" radius={[10, 10, 10, 10]} />
-        <Bar dataKey="annules" name="Annulés" fill="#3a3a3a" radius={[10, 10, 10, 10]} />
+        <Bar dataKey="rdv" name="Rendez-vous" fill="var(--accent)" radius={0} />
+        <Bar dataKey="annules" name="Annulés" fill="#3a3a3a" radius={0} />
       </BarChart>
     </ResponsiveContainer>
   );

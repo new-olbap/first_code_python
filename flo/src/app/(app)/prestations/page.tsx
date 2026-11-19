@@ -39,7 +39,7 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
         <p className="text-sm text-muted">La durée sert à bloquer le bon créneau dans l’agenda et sur la page de réservation.</p>
         <Notice {...await searchParams} />
         {canEdit && (
-          <form key={rows.length} action={createService} className="space-y-3 rounded-3xl bg-surface p-4">
+          <form key={rows.length} action={createService} className="space-y-3 bg-surface p-4">
             <h2 className="font-semibold">Ajouter une prestation</h2>
             <ServiceFields />
             <button className={primaryBtn}>Ajouter</button>
@@ -50,7 +50,7 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
       <Card className="space-y-3">
         {rows.length === 0 && <p className="p-4 text-center text-muted">Aucune prestation pour l’instant.</p>}
         {rows.map((s) => canEdit ? (
-          <div key={s.id} className={`space-y-3 rounded-3xl bg-surface p-4 ${s.archived_at ? "opacity-60" : ""}`}>
+          <div key={s.id} className={`space-y-3 bg-surface p-4 ${s.archived_at ? "opacity-60" : ""}`}>
             <form action={updateService} className="space-y-3">
               <input type="hidden" name="id" value={s.id} />
               <ServiceFields s={s} />
@@ -63,7 +63,7 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
             </form>
           </div>
         ) : (
-          <div key={s.id} className="flex items-center gap-4 rounded-2xl bg-surface p-4">
+          <div key={s.id} className="flex items-center gap-4 bg-surface p-4">
             <span className="flex-1 font-semibold">{s.name}</span>
             <span className="flex items-center gap-1 text-sm text-muted"><Clock size={14} aria-hidden />{formatDuration(s.duration_minutes)}</span>
             {s.price_cents !== null && <span className="text-sm font-semibold">{formatPrice(s.price_cents)} €</span>}

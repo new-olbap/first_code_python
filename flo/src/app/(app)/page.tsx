@@ -24,13 +24,13 @@ export default async function Dashboard() {
         <Halftone className="absolute inset-y-0 right-0 hidden h-full w-3/5 text-white/40 [mask-image:linear-gradient(to_right,transparent,#000_35%)] md:block" />
         <div className="relative pt-20 md:pt-0">
           <p className="text-xs font-semibold uppercase tracking-widest text-muted">Votre espace de travail</p>
-          <h1 className="mt-2 text-4xl font-black uppercase tracking-tight md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
+          <h1 className="mt-2 text-4xl font-black uppercase tracking-tight md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""}</h1>
           <p className="mt-2 max-w-xs font-medium text-muted">Votre activité est bien organisée aujourd’hui.</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <span className="rounded-2xl border border-line bg-bg px-4 py-2 text-sm font-semibold text-ink">
+            <span className=" border border-line bg-bg px-4 py-2 text-sm font-semibold text-ink">
               <span className="text-accent-ink">{weekTotal}</span> rendez-vous cette semaine
             </span>
-            <Link href="/demandes" className="flex items-center gap-1 rounded-2xl bg-ink px-4 py-2 text-sm font-semibold text-bg hover:opacity-90">
+            <Link href="/demandes" className="flex items-center gap-1 bg-ink px-4 py-2 text-sm font-semibold text-bg hover:opacity-90">
               Demandes urgentes <ArrowRight size={16} aria-hidden />
             </Link>
           </div>
@@ -47,7 +47,7 @@ export default async function Dashboard() {
             <>
               <p className="text-3xl font-bold">{k.value}</p>
               <p className="mt-1 text-sm text-muted">{k.label}</p>
-              <span className={`mt-3 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${k.delta === "urgent" ? "bg-accent-2 text-black" : "bg-surface text-ink"}`}>
+              <span className={`mt-3 inline-block px-2 py-0.5 text-xs font-semibold ${k.delta === "urgent" ? "bg-accent-2 text-black" : "bg-surface text-ink"}`}>
                 {k.delta}
               </span>
             </>
@@ -75,13 +75,13 @@ export default async function Dashboard() {
         </div>
         <ul className="space-y-2">
           {upcoming.map((a) => (
-            <li key={a.time} className="flex items-center gap-3 rounded-2xl bg-surface p-3">
+            <li key={a.time} className="flex items-center gap-3 bg-surface p-3">
               <span className="flex items-center gap-1 text-sm font-bold"><Clock size={14} aria-hidden />{a.time}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold">{a.client}</p>
                 <p className="truncate text-xs text-muted">{a.service} · {a.staff}</p>
               </div>
-              <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${badge[a.status]}`}>{a.status}</span>
+              <span className={`shrink-0 px-2 py-0.5 text-xs font-semibold ${badge[a.status]}`}>{a.status}</span>
             </li>
           ))}
         </ul>

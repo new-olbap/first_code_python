@@ -8,7 +8,7 @@ export default async function Bienvenue({ searchParams }: { searchParams: Msg })
   if (session?.organization) redirect("/");
   return (
     <form action={createOrganization} className="space-y-4">
-      <h1 className="text-2xl font-bold">Bienvenue{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
+      <h1 className="text-2xl font-bold">Bienvenue{session?.firstName ? `, ${session.firstName}` : ""}</h1>
       <p className="text-sm text-muted">Dernière étape : présentez votre entreprise.</p>
       <Notice {...await searchParams} />
       <Field label="Nom de l’entreprise" name="name" minLength={2} maxLength={120} required />

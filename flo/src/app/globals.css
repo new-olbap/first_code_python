@@ -38,7 +38,7 @@ body {
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border-radius: 1.75rem;
+  border-radius: 0;
   box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.8);
 }
 
