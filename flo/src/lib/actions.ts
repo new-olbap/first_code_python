@@ -12,9 +12,10 @@ export async function signIn(fd: FormData) {
   const sb = await createClient();
   const { error } = await sb.auth.signInWithPassword({ email: str(fd, "email"), password: String(fd.get("password") ?? "") });
   if (error) {
-    go("/connexion", "erreur", error.code === "email_not_confirmed"
-      ? "Confirme d’abord ton adresse e-mail (lien reçu par mail)."
-      : "E-mail ou mot de passe incorrect.");
+    go("/connexion", "erreur",
+      error.code === "invalid_credentials" ? "E-mail ou mot de passe incorrect."
+      : error.code === "email_not_confirmed" ? "Confirme d’abord ton adresse e-mail (lien reçu par mail)."
+      : "Connexion impossible pour le moment, réessaie dans un instant.");
   }
   redirect("/");
 }

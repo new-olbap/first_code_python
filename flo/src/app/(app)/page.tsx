@@ -22,10 +22,10 @@ export default async function Dashboard() {
         <div aria-hidden className="absolute inset-0 bg-white" />
         {/* Mobile : bandeau de points en haut ; ordinateur : points à droite, à côté du texte */}
         <Halftone cols={34} rows={10} cx={0.7} cy={0.1} reach={0.6} className="absolute inset-x-0 top-0 h-28 w-full text-accent-2 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)] md:hidden" />
-        <Halftone className="absolute inset-y-0 right-0 hidden h-full w-3/4 text-accent-2 [mask-image:linear-gradient(to_right,transparent,#000_35%)] md:block" />
+        <Halftone className="absolute inset-y-0 right-0 hidden h-full w-3/5 text-accent-2 [mask-image:linear-gradient(to_right,transparent,#000_35%)] md:block" />
         <div className="relative pt-20 md:pt-0">
           <p className="text-xs font-semibold uppercase tracking-widest text-muted">Votre espace de travail</p>
-          <h1 className="mt-2 text-4xl font-black uppercase tracking-tight md:text-6xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
+          <h1 className="mt-2 text-4xl font-black uppercase tracking-tight md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
           <p className="mt-2 max-w-xs font-medium text-muted">Votre activité est bien organisée aujourd’hui.</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <span className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-ink shadow-md">

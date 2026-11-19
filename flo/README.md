@@ -28,6 +28,11 @@ Stack : Next.js 15 (App Router) · Tailwind CSS 4 · Motion · Lucide · Rechart
 Rôles : `owner` (tout, dont l’abonnement), `admin` (entreprise + équipe sauf propriétaires), `member` (lecture de l’entreprise).
 Les règles d’accès sont dans la base (RLS), pas seulement dans l’interface.
 
+Test d’isolation sur le vrai projet (crée 2 comptes test-flo-…@mailinator.com, « Confirm email » doit être désactivé) :
+```bash
+node --env-file=.env.local scripts/check-isolation.mjs
+```
+
 Test d’isolation sur un PostgreSQL local (sans Supabase) :
 ```bash
 psql -d <base_vide> -v ON_ERROR_STOP=1 -f supabase/tests/local_stub.sql \
