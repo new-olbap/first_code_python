@@ -1,8 +1,8 @@
 export const inputCls =
-  "w-full rounded-2xl border border-[#c9d8e4] bg-white/70 px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30";
+  "w-full rounded-2xl border border-line bg-surface px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-white/50 focus:ring-2 focus:ring-white/15";
 const btn = "rounded-2xl px-4 py-2.5 text-sm font-semibold transition";
-export const primaryBtn = `${btn} bg-gradient-to-r from-accent-ink to-accent-2 text-white shadow-lg shadow-accent/30 hover:brightness-105`;
-export const secondaryBtn = `${btn} border border-[#c9d8e4] bg-white/80 text-ink hover:bg-white`;
+export const primaryBtn = `${btn} bg-ink text-bg hover:opacity-90`;
+export const secondaryBtn = `${btn} border border-line bg-surface text-ink hover:bg-white/10`;
 export const buttonCls = `${primaryBtn} w-full py-3`;
 
 export function Field({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
@@ -39,7 +39,7 @@ export function Notice({ erreur, info }: { erreur?: string; info?: string }) {
   if (!erreur && !info) return null;
   return (
     <p role={erreur ? "alert" : "status"}
-      className={`rounded-2xl px-4 py-3 text-sm font-medium ${erreur ? "bg-accent-2/10 text-[#a0236c]" : "bg-accent/10 text-accent-ink"}`}>
+      className={`rounded-2xl px-4 py-3 text-sm font-medium ${erreur ? "bg-accent-2/15 text-accent-2" : "bg-white/10 text-ink"}`}>
       {erreur ?? info}
     </p>
   );

@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
-/* Sky Glass (Sky Blue + Hot Pink) — change these tokens to restyle the whole app */
+/* FLO — noir et blanc + une seule couleur d'accent. Changer --accent-2 suffit à essayer une autre couleur. */
 :root {
-  --bg: #f2f8fc;
-  --ink: #0f2236;
-  --muted: #5b6f84;
-  --accent: #0593c6;     /* Sky Blue — fonds, graphiques */
-  --accent-ink: #04739b; /* bleu foncé pour texte/boutons (contraste AA) */
-  --accent-2: #d83995;   /* Hot Pink — urgent, appels à l'action */
-  --glass: rgb(255 255 255 / 0.55);
-  --glass-border: rgb(255 255 255 / 0.8);
+  color-scheme: dark; /* listes déroulantes, barres de défilement… en sombre */
+  --bg: #0a0a0a;
+  --ink: #f5f5f5;          /* texte principal */
+  --muted: #a3a3a3;        /* texte secondaire */
+  --accent: #f5f5f5;       /* remplissages (graphique) */
+  --accent-ink: #f5f5f5;   /* liens */
+  --accent-2: #ff5a1f;     /* accent : urgent, aujourd'hui (à choisir) */
+  --surface: rgb(255 255 255 / 0.05);
+  --line: rgb(255 255 255 / 0.12);
+  --glass: rgb(255 255 255 / 0.04);
+  --glass-border: rgb(255 255 255 / 0.09);
 }
 
 @theme inline {
@@ -19,17 +22,14 @@
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
   --color-accent-ink: var(--accent-ink);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
   color: var(--ink);
-  background:
-    radial-gradient(40rem 30rem at 10% 0%, #a9dcf2 0%, transparent 60%),
-    radial-gradient(35rem 30rem at 100% 15%, #f5c3df 0%, transparent 60%),
-    radial-gradient(40rem 30rem at 55% 100%, #c6e3f7 0%, transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
   min-height: 100vh;
 }
 
@@ -39,5 +39,13 @@ body {
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border-radius: 1.75rem;
-  box-shadow: 0 10px 40px -12px rgb(5 147 198 / 0.22);
+  box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.8);
+}
+
+@theme {
+  --animate-tumble: tumble 10s linear infinite;
+  @keyframes tumble {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to { transform: rotateX(360deg) rotateY(720deg); }
+  }
 }

@@ -38,7 +38,7 @@ export default async function Clients({ searchParams }: {
         </div>
         <Notice erreur={sp.erreur} info={sp.info} />
         {sp.nouveau && (
-          <form action={createCustomer} className="space-y-4 rounded-3xl bg-white/70 p-4">
+          <form action={createCustomer} className="space-y-4 rounded-3xl bg-surface p-4">
             <h2 className="font-semibold">Nouvelle fiche</h2>
             <CustomerFields />
             <div className="flex gap-3">
@@ -59,7 +59,7 @@ export default async function Clients({ searchParams }: {
         <nav className="flex flex-wrap gap-2" aria-label="Filtrer">
           {(Object.keys(VUES) as Vue[]).map((v) => (
             <Link key={v} href={`/clients?vue=${v}${q ? `&q=${encodeURIComponent(q)}` : ""}`} aria-current={v === vue ? "page" : undefined}
-              className={`rounded-full px-3 py-1 text-sm font-medium ${v === vue ? "bg-ink text-white" : "bg-white/70 text-muted hover:text-ink"}`}>
+              className={`rounded-full px-3 py-1 text-sm font-medium ${v === vue ? "bg-ink text-bg" : "bg-surface text-muted hover:text-ink"}`}>
               {VUES[v]}
             </Link>
           ))}
@@ -70,12 +70,12 @@ export default async function Clients({ searchParams }: {
         {rows.length === 0 ? (
           <p className="p-6 text-center text-muted">{q ? "Aucun résultat." : "Aucune fiche pour l’instant."}</p>
         ) : (
-          <ul className="divide-y divide-white/80">
+          <ul className="divide-y divide-line">
             {rows.map((c) => (
               <li key={c.id}>
-                <Link href={`/clients/${c.id}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl px-3 py-3 hover:bg-white/70">
+                <Link href={`/clients/${c.id}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl px-3 py-3 hover:bg-surface">
                   <span className="w-full truncate font-semibold sm:w-auto sm:min-w-0 sm:flex-1">{fullName(c)}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${c.kind === "prospect" ? "bg-accent-2/10 text-[#a0236c]" : "bg-accent/10 text-accent-ink"}`}>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${c.kind === "prospect" ? "bg-accent-2/15 text-accent-2" : "bg-white/10 text-ink"}`}>
                     {c.kind === "prospect" ? "Prospect" : "Client"}
                   </span>
                   {c.phone && <span className="flex items-center gap-1 text-sm text-muted"><Phone size={14} aria-hidden />{c.phone}</span>}
