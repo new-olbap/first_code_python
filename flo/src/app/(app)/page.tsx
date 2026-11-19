@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import Card from "@/components/Card";
-import GlowBackdrop from "@/components/GlowBackdrop";
+import Halftone from "@/components/Halftone";
 import MiniCalendar from "@/components/MiniCalendar";
 import WeekChart from "@/components/WeekChart";
 import { kpis, upcoming, week, type Status } from "@/lib/demo";
@@ -18,14 +18,17 @@ export default async function Dashboard() {
   const weekTotal = week.reduce((s, d) => s + d.rdv, 0);
   return (
     <main className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-      <Card i={0} className="relative overflow-hidden text-white lg:col-span-2">
-        <GlowBackdrop />
-        <div className="relative">
-          <p className="text-xs font-semibold uppercase tracking-widest text-white/80">Votre espace de travail</p>
-          <h1 className="mt-2 text-3xl font-bold md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
-          <p className="mt-2 max-w-sm text-white/90">Votre activité est bien organisée aujourd’hui.</p>
+      <Card i={0} className="relative overflow-hidden lg:col-span-2">
+        <div aria-hidden className="absolute inset-0 bg-white" />
+        {/* Mobile : bandeau de points en haut ; ordinateur : points à droite, à côté du texte */}
+        <Halftone cols={34} rows={10} cx={0.7} cy={0.1} reach={0.6} className="absolute inset-x-0 top-0 h-28 w-full text-accent-2 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)] md:hidden" />
+        <Halftone className="absolute inset-y-0 right-0 hidden h-full w-3/4 text-accent-2 [mask-image:linear-gradient(to_right,transparent,#000_35%)] md:block" />
+        <div className="relative pt-20 md:pt-0">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted">Votre espace de travail</p>
+          <h1 className="mt-2 text-4xl font-black uppercase tracking-tight md:text-6xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
+          <p className="mt-2 max-w-xs font-medium text-muted">Votre activité est bien organisée aujourd’hui.</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <span className="rounded-2xl bg-white/90 px-4 py-2 text-sm font-semibold text-ink">
+            <span className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-ink shadow-md">
               <span className="text-accent-ink">{weekTotal}</span> rendez-vous cette semaine
             </span>
             <Link href="/demandes" className="flex items-center gap-1 rounded-2xl bg-ink px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
