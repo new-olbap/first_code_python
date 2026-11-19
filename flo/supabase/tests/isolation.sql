@@ -10,6 +10,9 @@ declare
   david constant uuid := '00000000-0000-0000-0000-00000000000d';
   a uuid; b uuid; n int;
 begin
+  -- Nettoie les comptes fictifs qu'une ancienne version de ce test a pu laisser.
+  delete from auth.users where id in (alice, bob, chloe, david);
+
   begin -- sous-bloc annulé à la fin grâce à l'erreur « sentinelle » FL000
     insert into auth.users (id, email, raw_user_meta_data) values
       (alice, 'a@test.flo', '{"first_name":"Alice"}'),
