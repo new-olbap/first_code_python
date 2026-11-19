@@ -1,6 +1,6 @@
 export const inputCls =
   "w-full border border-line bg-surface px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-white/50 focus:ring-2 focus:ring-white/15";
-const btn = " px-4 py-2.5 text-sm font-semibold transition";
+const btn = "px-4 py-2.5 text-sm font-semibold transition active:scale-[0.98]";
 export const primaryBtn = `${btn} bg-ink text-bg hover:opacity-90`;
 export const secondaryBtn = `${btn} border border-line bg-surface text-ink hover:bg-white/10`;
 export const buttonCls = `${primaryBtn} w-full py-3`;
@@ -39,7 +39,7 @@ export function Notice({ erreur, info }: { erreur?: string; info?: string }) {
   if (!erreur && !info) return null;
   return (
     <p role={erreur ? "alert" : "status"}
-      className={` px-4 py-3 text-sm font-medium ${erreur ? "bg-accent-2/15 text-accent-2" : "bg-white/10 text-ink"}`}>
+      className={`px-4 py-3 text-sm font-medium ${erreur ? "bg-accent-2/15 text-accent-2" : "bg-white/10 text-ink"}`}>
       {erreur ?? info}
     </p>
   );

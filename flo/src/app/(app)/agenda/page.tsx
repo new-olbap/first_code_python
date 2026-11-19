@@ -11,7 +11,7 @@ type Vue = keyof typeof VUES;
 
 function Chip({ a }: { a: AgendaRow }) {
   return (
-    <Link href={`/agenda/${a.id}`} className={`block px-2 py-1.5 text-sm hover:bg-white/10 ${STATUS_CLS[a.status]}`}>
+    <Link href={`/agenda/${a.id}`} className={`lift block px-2 py-1.5 text-sm ${STATUS_CLS[a.status]}`}>
       <span className="font-semibold">{a.start_time}</span>{" "}
       <span className="font-medium">{a.customer_name ?? "Sans client"}</span>
       {(

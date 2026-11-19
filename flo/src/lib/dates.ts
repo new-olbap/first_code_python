@@ -19,3 +19,5 @@ export function addMonths(iso: string, n: number) {
 }
 export const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
   new Intl.DateTimeFormat("fr-FR", { timeZone: "UTC", ...opts }).format(toDate(iso));
+export const nowTimeIn = (tz: string) =>
+  new Intl.DateTimeFormat("fr-FR", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date());

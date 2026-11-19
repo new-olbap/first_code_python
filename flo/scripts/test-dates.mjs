@@ -13,5 +13,6 @@ assert.equal(d.addMonths("2026-12-15", 1), "2027-01-01");
 assert.ok(d.isIsoDate("2028-02-29") && !d.isIsoDate("2026-02-30") && !d.isIsoDate("2026-1-5") && !d.isIsoDate(undefined));
 assert.ok(d.isTime("09:30") && d.isTime("23:59") && !d.isTime("24:00") && !d.isTime("9:30"));
 assert.match(d.todayIn("Europe/Paris"), /^\d{4}-\d{2}-\d{2}$/);
+assert.match(d.nowTimeIn("Europe/Paris"), /^([01]\d|2[0-3]):[0-5]\d$/);
 assert.equal(d.fmt("2026-11-19", { weekday: "long", day: "numeric", month: "long" }), "jeudi 19 novembre");
 console.log("dates : OK");

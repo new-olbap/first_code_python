@@ -10,7 +10,7 @@ const DUREES: Option[] = [["", "Selon la prestation"], ...[15, 30, 45, 60, 90, 1
   [String(m), m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60}` : ""}`])];
 
 export default function AppointmentForm({ id, values, customers, services, team, cancelHref }: {
-  id?: string; values: FormValues; customers: Option[]; services: Option[]; team: Member[]; cancelHref: string;
+  id?: string; values: FormValues; customers: Option[]; services: Option[]; team: Member[]; cancelHref?: string;
 }) {
   const durations = values.duration && !DUREES.some(([v]) => v === values.duration)
     ? [...DUREES, [values.duration, `${values.duration} min`] as Option] : DUREES;
@@ -31,7 +31,7 @@ export default function AppointmentForm({ id, values, customers, services, team,
       )}
       <div className="flex flex-wrap gap-3">
         <button className={primaryBtn}>{id ? "Enregistrer les modifications" : "Enregistrer le rendez-vous"}</button>
-        <Link href={cancelHref} className={secondaryBtn}>Annuler</Link>
+        {cancelHref && <Link href={cancelHref} className={secondaryBtn}>Annuler</Link>}
       </div>
     </form>
   );
