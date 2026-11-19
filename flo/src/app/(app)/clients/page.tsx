@@ -74,7 +74,7 @@ export default async function Clients({ searchParams }: {
             {rows.map((c) => (
               <li key={c.id}>
                 <Link href={`/clients/${c.id}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl px-3 py-3 hover:bg-white/70">
-                  <span className="min-w-0 flex-1 truncate font-semibold">{fullName(c)}</span>
+                  <span className="w-full truncate font-semibold sm:w-auto sm:min-w-0 sm:flex-1">{fullName(c)}</span>
                   <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${c.kind === "prospect" ? "bg-accent-2/10 text-[#a0236c]" : "bg-accent/10 text-accent-ink"}`}>
                     {c.kind === "prospect" ? "Prospect" : "Client"}
                   </span>

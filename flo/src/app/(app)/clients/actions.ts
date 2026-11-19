@@ -13,7 +13,7 @@ function parseCustomer(fd: FormData) {
     address: str(fd, "address", 300) || null,
     notes: str(fd, "notes", 5000) || null,
   };
-  const error = !c.first_name && !c.last_name ? "Indique au moins un prénom ou un nom."
+  const error = !c.first_name && !c.last_name ? "Indiquez le nom du client ou de la société."
     : c.email && !isEmail(c.email) ? "Adresse e-mail invalide."
     : c.phone && !isPhone(c.phone) ? "Numéro de téléphone invalide."
     : null;
@@ -27,7 +27,7 @@ export async function createCustomer(fd: FormData) {
   if (error) go("/clients?nouveau=1", "erreur", error);
   const sb = await createClient();
   const { data, error: e } = await sb.from("customers").insert({ ...c, organization_id: session.organization.id }).select("id").single();
-  if (e || !data) go("/clients?nouveau=1", "erreur", "Enregistrement impossible, réessaie.");
+  if (e || !data) go("/clients?nouveau=1", "erreur", "Enregistrement impossible, veuillez réessayer.");
   go(`/clients/${data.id}`, "info", "Fiche créée.");
 }
 

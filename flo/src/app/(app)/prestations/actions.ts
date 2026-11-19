@@ -5,7 +5,7 @@ import { go, isUuid, parsePrice, str } from "@/lib/form";
 
 function parseService(fd: FormData) {
   const s = { name: str(fd, "name", 120), duration_minutes: Number(str(fd, "duration")), price_cents: parsePrice(str(fd, "price", 20)) };
-  const error = s.name.length < 2 ? "Indique le nom de la prestation."
+  const error = s.name.length < 2 ? "Indiquez le nom de la prestation."
     : !Number.isInteger(s.duration_minutes) || s.duration_minutes < 5 || s.duration_minutes > 1440 ? "Durée invalide (5 min à 24 h)."
     : Number.isNaN(s.price_cents) ? "Prix invalide (ex. 80 ou 80,50)."
     : null;
@@ -25,7 +25,7 @@ export async function createService(fd: FormData) {
   if (error) go("/prestations", "erreur", error);
   const sb = await createClient();
   const { error: e } = await sb.from("services").insert({ ...s, organization_id: orgId });
-  if (e) go("/prestations", "erreur", "Enregistrement impossible, réessaie.");
+  if (e) go("/prestations", "erreur", "Enregistrement impossible, veuillez réessayer.");
   go("/prestations", "info", "Prestation ajoutée.");
 }
 

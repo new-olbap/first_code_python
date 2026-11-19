@@ -6,7 +6,7 @@ export default async function MotDePasseOublie({ searchParams }: { searchParams:
   return (
     <form action={forgotPassword} className="space-y-4">
       <h1 className="text-2xl font-bold">Mot de passe oublié</h1>
-      <p className="text-sm text-muted">Indique ton e-mail : tu recevras un lien pour choisir un nouveau mot de passe.</p>
+      <p className="text-sm text-muted">Indiquez votre e-mail : vous recevrez un lien pour choisir un nouveau mot de passe.</p>
       <Notice {...await searchParams} />
       <Field label="E-mail" name="email" type="email" autoComplete="email" required />
       <button className={buttonCls}>Envoyer le lien</button>

@@ -39,7 +39,7 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
         <p className="text-sm text-muted">La durée sert à bloquer le bon créneau dans l’agenda et sur la page de réservation.</p>
         <Notice {...await searchParams} />
         {canEdit && (
-          <form action={createService} className="space-y-3 rounded-3xl bg-white/70 p-4">
+          <form key={rows.length} action={createService} className="space-y-3 rounded-3xl bg-white/70 p-4">
             <h2 className="font-semibold">Ajouter une prestation</h2>
             <ServiceFields />
             <button className={primaryBtn}>Ajouter</button>
