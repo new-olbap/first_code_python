@@ -1,8 +1,10 @@
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-// Redirige avec un message affiché par <Notice> (?erreur=… ou ?info=…).
+// Redirige avec un message affiché par <Notice> (?erreur=… ou ?info=…). À appeler depuis une action serveur.
 // Déclaration `function` (et non flèche) pour que TypeScript sache que la suite n'est pas atteinte.
 export function go(path: string, key: "erreur" | "info", msg: string): never {
+  revalidatePath(path.split("?")[0]); // sinon, avec la fenêtre @modal, une redirection vers la même page ne la redessine pas
   redirect(`${path}${path.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(msg)}`);
 }
 

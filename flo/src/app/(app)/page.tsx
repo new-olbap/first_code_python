@@ -30,7 +30,8 @@ export default async function Dashboard() {
   const monthAll = all.filter(inMonth);
   const cancelRate = monthAll.length ? Math.round((100 * monthAll.filter((a) => a.status === "cancelled").length) / monthAll.length) : 0;
   const pending = all.filter((a) => a.status === "pending" && a.day >= today);
-  const upcoming = active.filter((a) => a.day > today || (a.day === today && a.end_time > now)).slice(0, 5);
+  // fin < début = le rendez-vous se termine après minuit
+  const upcoming = active.filter((a) => a.day > today || (a.day === today && (a.end_time > now || a.end_time < a.start_time))).slice(0, 5);
   const weekStart = startOfWeek(today);
   const weekTotal = active.filter((a) => a.day >= weekStart && a.day <= addDays(weekStart, 6)).length;
   const busyDays = new Set(active.filter(inMonth).map((a) => a.day));

@@ -1,5 +1,7 @@
+"use client";
+import { useActionState } from "react";
 import Link from "next/link";
-import { Field, Select, TextArea, primaryBtn, secondaryBtn } from "@/components/ui";
+import { Field, Notice, Select, TextArea, primaryBtn, secondaryBtn } from "@/components/ui";
 import type { Member } from "@/lib/team";
 import { saveAppointment } from "./actions";
 
@@ -9,13 +11,17 @@ type Option = [string, string];
 const DUREES: Option[] = [["", "Selon la prestation"], ...[15, 30, 45, 60, 90, 120, 180, 240, 360, 480].map((m): Option =>
   [String(m), m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60}` : ""}`])];
 
-export default function AppointmentForm({ id, values, customers, services, team, cancelHref }: {
+export default function AppointmentForm({ id, values: initial, customers, services, team, cancelHref }: {
   id?: string; values: FormValues; customers: Option[]; services: Option[]; team: Member[]; cancelHref?: string;
 }) {
+  const [state, action, pending] = useActionState(saveAppointment, { error: null, values: initial, n: 0 });
+  const values = state.values;
   const durations = values.duration && !DUREES.some(([v]) => v === values.duration)
     ? [...DUREES, [values.duration, `${values.duration} min`] as Option] : DUREES;
   return (
-    <form action={saveAppointment} className="space-y-4">
+    // key : remonte les champs avec la saisie renvoyée après une erreur (React vide le formulaire après l'envoi)
+    <form key={state.n} action={action} className="space-y-4">
+      <Notice erreur={state.error ?? undefined} />
       {id && <input type="hidden" name="id" value={id} />}
       <div className="grid gap-4 sm:grid-cols-2">
         <Select label="Client" name="client" defaultValue={values.client} required options={[["", "Choisir un client…"], ...customers]} />
@@ -30,21 +36,9 @@ export default function AppointmentForm({ id, values, customers, services, team,
         <p className="text-sm text-muted">Aucun client pour l’instant : <Link href="/clients?nouveau=1" className="underline">créez d’abord une fiche client</Link>.</p>
       )}
       <div className="flex flex-wrap gap-3">
-        <button className={primaryBtn}>{id ? "Enregistrer les modifications" : "Enregistrer le rendez-vous"}</button>
+        <button className={primaryBtn} disabled={pending}>{pending ? "Enregistrement…" : id ? "Enregistrer les modifications" : "Enregistrer le rendez-vous"}</button>
         {cancelHref && <Link href={cancelHref} className={secondaryBtn}>Annuler</Link>}
       </div>
     </form>
   );
-}
-
-// Options des listes, chargées une fois par page.
-export async function formOptions(sb: import("@supabase/supabase-js").SupabaseClient) {
-  const [{ data: c }, { data: s }] = await Promise.all([
-    sb.from("customers").select("id, first_name, last_name").is("archived_at", null).order("last_name").limit(500),
-    sb.from("services").select("id, name, duration_minutes").is("archived_at", null).order("name"),
-  ]);
-  return {
-    customers: (c ?? []).map((x): Option => [x.id, [x.first_name, x.last_name].filter(Boolean).join(" ")]),
-    services: (s ?? []).map((x): Option => [x.id, `${x.name} (${x.duration_minutes} min)`]),
-  };
 }

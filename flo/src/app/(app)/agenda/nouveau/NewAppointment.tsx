@@ -2,7 +2,8 @@ import { Notice } from "@/components/ui";
 import { isIsoDate, todayIn } from "@/lib/dates";
 import { createClient, getSession } from "@/lib/supabase/server";
 import { getTeam } from "@/lib/team";
-import AppointmentForm, { formOptions } from "../AppointmentForm";
+import AppointmentForm from "../AppointmentForm";
+import { formOptions } from "../options";
 
 export type NewSP = Partial<Record<"client" | "service" | "staff" | "date" | "time" | "duration" | "notes" | "erreur" | "info", string>>;
 

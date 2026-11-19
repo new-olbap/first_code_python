@@ -8,10 +8,11 @@ import { isUuid } from "@/lib/form";
 import { createClient } from "@/lib/supabase/server";
 import { getTeam } from "@/lib/team";
 import { setAppointmentStatus } from "../actions";
-import AppointmentForm, { formOptions } from "../AppointmentForm";
+import AppointmentForm from "../AppointmentForm";
+import { formOptions } from "../options";
 import { STATUS_LABEL, type AgendaRow, type Status } from "../types";
 
-type SP = Partial<Record<"client" | "service" | "staff" | "date" | "time" | "duration" | "notes" | "erreur" | "info", string>>;
+type SP = { erreur?: string; info?: string };
 
 function StatusButton({ id, status, label, icon }: { id: string; status: Status; label: string; icon: React.ReactNode }) {
   return (
@@ -35,10 +36,9 @@ export default async function RdvDetail({ params, searchParams }: { params: Prom
   // Client ou prestation archivés depuis : on les garde dans les listes pour ce rendez-vous.
   if (a.customer_id && !opts.customers.some(([v]) => v === a.customer_id)) opts.customers.push([a.customer_id, `${a.customer_name} (archivé)`]);
   if (a.service_id && !opts.services.some(([v]) => v === a.service_id)) opts.services.push([a.service_id, `${a.service_name} (archivée)`]);
-  // Valeurs saisies renvoyées après une erreur, sinon celles du rendez-vous.
   const values = {
-    client: sp.client ?? a.customer_id ?? "", service: sp.service ?? a.service_id ?? "", staff: sp.staff ?? a.staff_id,
-    date: sp.date ?? a.day, time: sp.time ?? a.start_time, duration: sp.duration ?? String(a.duration_minutes), notes: sp.notes ?? a.notes ?? "",
+    client: a.customer_id ?? "", service: a.service_id ?? "", staff: a.staff_id,
+    date: a.day, time: a.start_time, duration: String(a.duration_minutes), notes: a.notes ?? "",
   };
 
   return (

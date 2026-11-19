@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { go, isUuid, str } from "@/lib/form";
 import { isIsoDate, isTime } from "@/lib/dates";
+import type { FormValues } from "./AppointmentForm";
 
 const ERRORS: Record<string, string> = {
   "23P01": "Ce créneau chevauche un autre rendez-vous de cette personne.",
@@ -12,14 +13,15 @@ const ERRORS: Record<string, string> = {
   P0002: "Rendez-vous introuvable.",
 };
 
-export async function saveAppointment(fd: FormData) {
+export type SaveState = { error: string | null; values: FormValues; n: number };
+
+// Erreurs renvoyées au formulaire (sans changer d'adresse, donc sans rouvrir la fenêtre) ; succès : redirection.
+export async function saveAppointment(prev: SaveState, fd: FormData): Promise<SaveState> {
   const id = str(fd, "id");
   const v = {
     client: str(fd, "client"), service: str(fd, "service"), staff: str(fd, "staff"),
     date: str(fd, "date"), time: str(fd, "time"), duration: str(fd, "duration"), notes: str(fd, "notes", 2000),
   };
-  // En cas d'erreur, on revient au formulaire avec la saisie conservée dans l'adresse.
-  const back = (id ? `/agenda/${id}` : "/agenda/nouveau") + "?" + new URLSearchParams(v).toString();
   const duration = v.duration ? Number(v.duration) : null;
   const error = id && !isUuid(id) ? "Rendez-vous introuvable."
     : !isUuid(v.client) ? "Choisissez un client."
@@ -30,14 +32,15 @@ export async function saveAppointment(fd: FormData) {
     : duration !== null && (!Number.isInteger(duration) || duration < 5 || duration > 1440) ? "Durée invalide."
     : !v.service && duration === null ? ERRORS["22023"]
     : null;
-  if (error) go(back, "erreur", error);
+  const fail = (msg: string): SaveState => ({ error: msg, values: v, n: prev.n + 1 });
+  if (error) return fail(error);
 
   const sb = await createClient();
   const { data, error: e } = await sb.rpc("save_appointment", {
     p_id: id || null, p_customer: v.client, p_service: v.service || null, p_staff: v.staff,
     p_date: v.date, p_time: v.time, p_duration: duration, p_notes: v.notes || null,
   });
-  if (e || !data) go(back, "erreur", ERRORS[e?.code ?? ""] ?? "Enregistrement impossible, veuillez réessayer.");
+  if (e || !data) return fail(ERRORS[e?.code ?? ""] ?? "Enregistrement impossible, veuillez réessayer.");
   go(`/agenda?vue=jour&date=${v.date}`, "info", id ? "Rendez-vous modifié." : "Rendez-vous enregistré.");
 }
 
