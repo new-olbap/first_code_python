@@ -41,3 +41,29 @@ body {
   border-radius: 1.75rem;
   box-shadow: 0 10px 40px -12px rgb(5 147 198 / 0.22);
 }
+
+/* Verre cannelé (fluted glass) : nervures verticales posées sur des taches de couleur floues */
+@utility fluted {
+  background-image: repeating-linear-gradient(90deg,
+    rgb(255 255 255 / 0.24) 0px,
+    rgb(255 255 255 / 0.05) 6px,
+    rgb(0 20 40 / 0.07) 12px,
+    rgb(255 255 255 / 0.24) 14px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Trame halftone : points qui s'estompent depuis un coin (couleur = currentColor) */
+@utility halftone {
+  background-image: radial-gradient(circle, currentColor 1.2px, transparent 1.7px);
+  background-size: 9px 9px;
+  mask-image: radial-gradient(circle at 100% 100%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 0%, transparent 70%);
+}
+
+@theme {
+  --animate-drift: drift 16s ease-in-out infinite alternate;
+  @keyframes drift {
+    to { transform: translate(-12%, 10%) scale(1.15); }
+  }
+}

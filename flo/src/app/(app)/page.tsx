@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import Card from "@/components/Card";
+import FlutedBackdrop from "@/components/FlutedBackdrop";
 import MiniCalendar from "@/components/MiniCalendar";
 import WeekChart from "@/components/WeekChart";
 import { kpis, upcoming, week, type Status } from "@/lib/demo";
@@ -17,18 +18,20 @@ export default async function Dashboard() {
   const weekTotal = week.reduce((s, d) => s + d.rdv, 0);
   return (
     <main className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-      <Card i={0} className="relative overflow-hidden lg:col-span-2">
-        <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gradient-to-br from-accent/40 to-accent-2/30 blur-2xl" />
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted">Votre espace de travail</p>
-        <h1 className="mt-2 text-3xl font-bold md:text-4xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
-        <p className="mt-2 text-muted">Votre activité est bien organisée aujourd’hui.</p>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <span className="rounded-2xl bg-white/70 px-4 py-2 text-sm font-semibold">
-            <span className="text-accent-ink">{weekTotal}</span> rendez-vous cette semaine
-          </span>
-          <Link href="/demandes" className="flex items-center gap-1 rounded-2xl bg-ink px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
-            Demandes urgentes <ArrowRight size={16} aria-hidden />
-          </Link>
+      <Card i={0} className="relative overflow-hidden text-white lg:col-span-2">
+        <FlutedBackdrop />
+        <div className="relative">
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/80">Votre espace de travail</p>
+          <h1 className="mt-2 text-3xl font-bold md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
+          <p className="mt-2 max-w-sm text-white/90">Votre activité est bien organisée aujourd’hui.</p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <span className="rounded-2xl bg-white/90 px-4 py-2 text-sm font-semibold text-ink">
+              <span className="text-accent-ink">{weekTotal}</span> rendez-vous cette semaine
+            </span>
+            <Link href="/demandes" className="flex items-center gap-1 rounded-2xl bg-ink px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
+              Demandes urgentes <ArrowRight size={16} aria-hidden />
+            </Link>
+          </div>
         </div>
       </Card>
 
