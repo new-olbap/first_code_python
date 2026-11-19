@@ -1,6 +1,4 @@
-// Données fictives du prototype — seront remplacées par Supabase (étape 03).
-export const user = { firstName: "Thomas", company: "Martin Plomberie" };
-
+// Données fictives du prototype — seront remplacées par les vraies données (étape 04).
 export const kpis = [
   { label: "RDV ce mois", value: "24", delta: "+12 %" },
   { label: "Nouveaux prospects", value: "12", delta: "+4" },

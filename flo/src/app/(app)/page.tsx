@@ -3,9 +3,8 @@ import { ArrowRight, Clock } from "lucide-react";
 import Card from "@/components/Card";
 import MiniCalendar from "@/components/MiniCalendar";
 import WeekChart from "@/components/WeekChart";
-import { kpis, upcoming, user, week, type Status } from "@/lib/demo";
-
-export const dynamic = "force-dynamic"; // le calendrier suit la date du jour
+import { kpis, upcoming, week, type Status } from "@/lib/demo";
+import { getSession } from "@/lib/supabase/server";
 
 const badge: Record<Status, string> = {
   "confirmé": "bg-emerald-100 text-emerald-700",
@@ -13,14 +12,15 @@ const badge: Record<Status, string> = {
   "annulé": "bg-stone-200 text-stone-600",
 };
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await getSession();
   const weekTotal = week.reduce((s, d) => s + d.rdv, 0);
   return (
     <main className="grid grid-cols-1 gap-5 lg:grid-cols-3">
       <Card i={0} className="relative overflow-hidden lg:col-span-2">
         <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gradient-to-br from-accent/40 to-accent-2/30 blur-2xl" />
         <p className="text-xs font-semibold uppercase tracking-widest text-muted">Votre espace de travail</p>
-        <h1 className="mt-2 text-3xl font-bold md:text-4xl">Bonjour, {user.firstName} 👋</h1>
+        <h1 className="mt-2 text-3xl font-bold md:text-4xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
         <p className="mt-2 text-muted">Votre activité est bien organisée aujourd’hui.</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <span className="rounded-2xl bg-white/70 px-4 py-2 text-sm font-semibold">

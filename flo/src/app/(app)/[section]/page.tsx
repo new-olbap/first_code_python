@@ -1,15 +1,15 @@
 import { notFound } from "next/navigation";
 import Card from "@/components/Card";
 import { NAV } from "@/lib/nav";
+import { getSession } from "@/lib/supabase/server";
 
 // Pages pas encore construites : affiche les actions prévues (cahier des charges §4).
-export const dynamicParams = false;
-export const generateStaticParams = () => NAV.slice(1).map((n) => ({ section: n.href.slice(1) }));
 
 export default async function Section({ params }: { params: Promise<{ section: string }> }) {
   const { section } = await params;
   const page = NAV.find((n) => n.href === `/${section}`);
   if (!page) notFound();
+  if (page.ownerOnly && (await getSession())?.role !== "owner") notFound(); // contrôle côté serveur, pas seulement le menu
   const Icon = page.icon;
   return (
     <Card className="grid min-h-[60vh] place-items-center text-center">

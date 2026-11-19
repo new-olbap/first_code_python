@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV } from "@/lib/nav";
+import type { Role } from "@/lib/supabase/server";
 
 // Desktop: vertical glass sidebar. Mobile: compact bottom bar (icons only).
-export default function Sidebar() {
+export default function Sidebar({ orgName, role }: { orgName: string; role: Role }) {
   const path = usePathname();
   return (
     <nav
@@ -13,10 +14,11 @@ export default function Sidebar() {
         bottom-3 inset-x-3 overflow-x-auto
         md:inset-x-auto md:bottom-auto md:top-4 md:left-4 md:h-[calc(100vh-2rem)] md:w-60 md:flex-col md:p-4"
     >
-      <Link href="/" className="hidden md:block px-3 pb-6 pt-2 text-3xl font-black tracking-tight">
-        flo<span className="text-accent-2">.</span>
+      <Link href="/" className="hidden md:block px-3 pb-6 pt-2">
+        <span className="text-3xl font-black tracking-tight">flo<span className="text-accent-2">.</span></span>
+        <span className="mt-1 block truncate text-xs font-medium text-muted">{orgName}</span>
       </Link>
-      {NAV.map(({ href, label, icon: Icon }) => {
+      {NAV.filter((n) => !n.ownerOnly || role === "owner").map(({ href, label, icon: Icon }) => {
         const active = path === href;
         return (
           <Link
