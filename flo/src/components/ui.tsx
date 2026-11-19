@@ -1,5 +1,5 @@
 export const inputCls =
-  "w-full rounded-2xl border border-white/80 bg-white/70 px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30";
+  "w-full rounded-2xl border border-[#c9d8e4] bg-white/70 px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30";
 export const buttonCls =
   "w-full rounded-2xl bg-gradient-to-r from-accent-ink to-accent-2 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/30 hover:brightness-105";
 
