@@ -21,8 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <label className="sr-only" htmlFor="recherche-globale">Rechercher un client</label>
             <input id="recherche-globale" name="q" placeholder="Rechercher un client…" className="w-full min-w-0 bg-transparent text-ink outline-none placeholder:text-muted" />
           </form>
-          {/* shortcut: renvoie vers l'agenda (bientôt disponible) ; ouvrira le formulaire de RDV à l'étape 04 (2/3). */}
-          <Link href="/agenda" className="flex items-center gap-2 bg-ink px-4 py-2.5 text-sm font-semibold text-bg hover:opacity-90">
+          <Link href="/agenda/nouveau" className="flex items-center gap-2 bg-ink px-4 py-2.5 text-sm font-semibold text-bg hover:opacity-90">
             <Plus size={18} aria-hidden /> <span className="hidden sm:inline">Nouveau RDV</span><span className="sr-only sm:hidden">Nouveau RDV</span>
           </Link>
           <div title={session.firstName} className="hidden h-10 w-10 place-items-center border border-line bg-surface font-bold uppercase text-ink sm:grid">

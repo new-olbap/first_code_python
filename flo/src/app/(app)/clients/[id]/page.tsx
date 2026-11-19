@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Archive, ArchiveRestore, Mail, Phone } from "lucide-react";
+import { ArrowLeft, Archive, ArchiveRestore, Mail, Phone, Plus } from "lucide-react";
 import Card from "@/components/Card";
 import { Notice, primaryBtn, secondaryBtn } from "@/components/ui";
 import { isUuid } from "@/lib/form";
 import { createClient } from "@/lib/supabase/server";
 import { setCustomerArchived, updateCustomer } from "../actions";
+import { fmt } from "@/lib/dates";
+import { STATUS_CLS, STATUS_LABEL, type AgendaRow } from "../../agenda/types";
 import CustomerFields, { fullName, type Customer } from "../CustomerFields";
 
 export default async function ClientDetail({ params, searchParams }: {
@@ -17,6 +19,8 @@ export default async function ClientDetail({ params, searchParams }: {
   const { data } = await sb.from("customers").select("*").eq("id", id).maybeSingle(); // RLS : uniquement les fiches de l'entreprise
   if (!data) notFound();
   const c = data as Customer;
+  const { data: rdv } = await sb.rpc("agenda", { p_customer: id });
+  const history = ((rdv ?? []) as AgendaRow[]).reverse(); // plus récents d'abord
 
   return (
     <main className="space-y-5">
@@ -42,9 +46,24 @@ export default async function ClientDetail({ params, searchParams }: {
         </form>
       </Card>
 
-      <Card className="space-y-2">
-        <h2 className="font-semibold">Historique des rendez-vous</h2>
-        <p className="text-sm text-muted">Les rendez-vous de ce client apparaîtront ici dès que l’agenda sera en place.</p>
+      <Card className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-semibold">Rendez-vous ({history.length})</h2>
+          <Link href={`/agenda/nouveau?client=${c.id}`} className={`${secondaryBtn} flex items-center gap-2`}><Plus size={16} aria-hidden /> Nouveau rendez-vous</Link>
+        </div>
+        {history.length === 0 ? <p className="text-sm text-muted">Aucun rendez-vous pour l’instant.</p> : (
+          <ul className="space-y-1">
+            {history.map((a) => (
+              <li key={a.id}>
+                <Link href={`/agenda/${a.id}`} className={`flex flex-wrap gap-x-3 px-3 py-2 text-sm hover:bg-white/10 ${STATUS_CLS[a.status]}`}>
+                  <span className="font-semibold first-letter:uppercase">{fmt(a.day, { weekday: "short", day: "numeric", month: "short", year: "numeric" })} · {a.start_time}</span>
+                  <span>{a.service_name ?? "Sans prestation"}</span>
+                  <span className="text-muted">{STATUS_LABEL[a.status]}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </Card>
 
       <form action={setCustomerArchived}>

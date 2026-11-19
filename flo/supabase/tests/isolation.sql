@@ -1,4 +1,4 @@
--- Test d'isolation : à coller dans Supabase > SQL Editor > Run APRÈS les migrations 0001 et 0002.
+-- Test d'isolation : à coller dans Supabase > SQL Editor > Run APRÈS les migrations 0001, 0002 et 0003.
 -- Tout le test tient dans un seul bloc qui s'annule lui-même à la fin :
 -- aucune donnée de test ne reste dans la base.
 -- Résultat attendu : « OK : isolation vérifiée ». Sinon une erreur rouge indique le problème.
@@ -8,7 +8,7 @@ declare
   bob   constant uuid := '00000000-0000-0000-0000-00000000000b';
   chloe constant uuid := '00000000-0000-0000-0000-00000000000c';
   david constant uuid := '00000000-0000-0000-0000-00000000000d';
-  a uuid; b uuid; n int; client_a uuid; presta_a uuid;
+  a uuid; b uuid; n int; client_a uuid; presta_a uuid; client_b uuid; r1 uuid; r2 uuid; t text;
 begin
   -- Nettoie les comptes fictifs qu'une ancienne version de ce test a pu laisser.
   delete from auth.users where id in (alice, bob, chloe, david);
@@ -109,6 +109,74 @@ begin
     exception when insufficient_privilege then null;
     end;
 
+    -- ===== Agenda (migration 0003) =====
+    perform set_config('request.jwt.claims', json_build_object('sub', bob)::text, true);
+    insert into public.customers (organization_id, first_name) values (b, 'Client de Bob') returning id into client_b;
+
+    perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
+    r1 := public.save_appointment(null, client_a, presta_a, alice, '2026-12-01', '09:00', null, null);
+    select end_time into t from public.agenda(p_id => r1);
+    assert t = '10:00', 'la durée de la prestation n''est pas reprise (fin attendue 10:00, obtenu ' || coalesce(t, 'rien') || ')';
+    begin
+      perform public.save_appointment(null, client_a, presta_a, alice, '2026-12-01', '09:30', 30, null);
+      raise exception 'chevauchement accepté';
+    exception when exclusion_violation then null;
+    end;
+    r2 := public.save_appointment(null, client_a, presta_a, alice, '2026-12-01', '10:00', 30, null); -- collé : autorisé
+    perform public.save_appointment(null, client_a, presta_a, chloe, '2026-12-01', '09:00', 60, null); -- autre personne : autorisé
+    update public.appointments set status = 'cancelled' where id = r1;
+    perform public.save_appointment(null, client_a, presta_a, alice, '2026-12-01', '09:00', 60, null); -- créneau libéré
+    insert into public.time_off (organization_id, user_id, starts_on, ends_on, reason) values (a, alice, '2026-12-24', '2026-12-26', 'Noël');
+    begin
+      perform public.save_appointment(null, client_a, presta_a, alice, '2026-12-25', '10:00', 60, null);
+      raise exception 'rendez-vous accepté pendant une absence';
+    exception when sqlstate 'FL001' then null;
+    end;
+    r1 := public.save_appointment(null, client_a, presta_a, alice, '2026-03-29', '10:00', 60, null);
+    select start_time into t from public.agenda(p_id => r1);
+    assert t = '10:00', 'heure faussée le jour du passage à l''heure d''été (' || coalesce(t, 'rien') || ')';
+    begin
+      perform public.save_appointment(null, client_b, null, alice, '2026-12-02', '09:00', 60, null);
+      raise exception 'client d''une autre entreprise accepté';
+    exception when foreign_key_violation then null;
+    end;
+    begin
+      perform public.save_appointment(null, client_a, null, bob, '2026-12-02', '09:00', 60, null);
+      raise exception 'personne d''une autre entreprise acceptée';
+    exception when foreign_key_violation then null;
+    end;
+
+    perform set_config('request.jwt.claims', json_build_object('sub', bob)::text, true);
+    assert (select count(*) from public.agenda()) = 0, 'Bob voit l''agenda d''une autre entreprise';
+    assert (select count(*) from public.appointments) = 0, 'Bob voit les rendez-vous d''une autre entreprise';
+    assert (select count(*) from public.time_off) = 0, 'Bob voit les absences d''une autre entreprise';
+    update public.appointments set status = 'cancelled' where id = r2;
+    get diagnostics n = row_count;
+    assert n = 0, 'Bob a annulé un rendez-vous de A';
+    begin
+      perform public.save_appointment(r2, client_b, null, bob, '2026-12-03', '09:00', 60, null);
+      raise exception 'Bob a déplacé un rendez-vous de A';
+    exception when sqlstate 'P0002' then null;
+    end;
+
+    perform set_config('request.jwt.claims', json_build_object('sub', david)::text, true);
+    assert (select count(*) from public.agenda()) >= 4, 'un collaborateur ne voit pas l''agenda de son entreprise';
+    perform public.set_weekly_hours(david, '[{"weekday":1,"start_time":"08:00","end_time":"17:00"}]');
+    assert (select count(*) from public.availability_rules where user_id = david) = 1, 'un collaborateur ne peut pas régler ses horaires';
+    begin
+      perform public.set_weekly_hours(alice, '[{"weekday":1,"start_time":"08:00","end_time":"09:00"}]');
+      raise exception 'un collaborateur a modifié les horaires d''un autre';
+    exception when insufficient_privilege then null;
+    end;
+    begin
+      insert into public.time_off (organization_id, user_id, starts_on, ends_on) values (a, alice, '2027-01-01', '2027-01-02');
+      raise exception 'un collaborateur a posé une absence pour un autre';
+    exception when insufficient_privilege then null;
+    end;
+    delete from public.appointments where true;
+    get diagnostics n = row_count;
+    assert n = 0, 'un collaborateur a supprimé des rendez-vous';
+
     -- Un visiteur non connecté ne voit rien.
     set local role anon;
     assert (select count(*) from public.organizations) = 0, 'anonyme voit des entreprises';
@@ -116,6 +184,8 @@ begin
     assert (select count(*) from public.profiles) = 0, 'anonyme voit des profils';
     assert (select count(*) from public.customers) = 0, 'anonyme voit des clients';
     assert (select count(*) from public.services) = 0, 'anonyme voit des prestations';
+    assert (select count(*) from public.appointments) = 0, 'anonyme voit des rendez-vous';
+    assert (select count(*) from public.time_off) = 0, 'anonyme voit des absences';
 
     reset role;
     raise exception using errcode = 'FL000'; -- tout est bon : on annule les données de test

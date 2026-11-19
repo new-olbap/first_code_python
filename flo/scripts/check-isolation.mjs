@@ -55,11 +55,24 @@ const cliHack = await B.sb.from("customers").update({ notes: "piraté" }).eq("id
 check(!cliHack.error && cliHack.data.length === 0, "Bob ne peut pas modifier un client d'Alice");
 check(!!(await B.sb.from("customers").insert({ organization_id: A.orgId, first_name: "Intrus" })).error, "Bob ne peut pas ajouter un client chez Alice");
 
+// Agenda (étape 04, partie 2)
+const rdv = (time, duration) => A.sb.rpc("save_appointment", { p_id: null, p_customer: cliA.data?.id, p_service: preA.data?.id, p_staff: A.id, p_date: "2030-01-07", p_time: time, p_duration: duration, p_notes: null });
+const r1 = await rdv("09:00", null);
+check(!r1.error, "Alice prend un rendez-vous (durée reprise de la prestation)");
+check((await rdv("09:30", 30)).error?.code === "23P01", "Un rendez-vous qui chevauche est refusé");
+check(!(await rdv("10:00", 30)).error, "Un rendez-vous juste après est accepté");
+const agA = (await A.sb.rpc("agenda", { p_id: r1.data })).data?.[0];
+check(agA?.start_time === "09:00" && agA?.end_time === "10:00", "Heures correctes dans l'agenda (fuseau de l'entreprise)");
+check((await B.sb.rpc("agenda")).data?.length === 0 && (await B.sb.from("appointments").select("id")).data?.length === 0, "Bob ne voit pas l'agenda d'Alice");
+const rdvHack = await B.sb.from("appointments").update({ status: "cancelled" }).eq("id", r1.data).select();
+check(!rdvHack.error && rdvHack.data.length === 0, "Bob ne peut pas annuler un rendez-vous d'Alice");
+
 const anon = client();
 const anonOrgs = (await anon.from("organizations").select("id")).data;
 const anonRpc = await anon.rpc("create_organization", { p_name: "x", p_trade: "", p_address: "" });
 const anonCli = (await anon.from("customers").select("id")).data;
-check(anonOrgs?.length === 0 && anonCli?.length === 0 && !!anonRpc.error, "Un visiteur non connecté ne voit rien et ne crée rien");
+const anonRdv = (await anon.from("appointments").select("id")).data;
+check(anonOrgs?.length === 0 && anonCli?.length === 0 && anonRdv?.length === 0 && !!anonRpc.error, "Un visiteur non connecté ne voit rien et ne crée rien");
 
 console.log(failed ? `\n${failed} vérification(s) échouée(s)` : "\nOK : isolation vérifiée sur le vrai projet");
 process.exit(failed ? 1 : 0);
