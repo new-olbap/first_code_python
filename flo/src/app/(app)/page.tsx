@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import Card from "@/components/Card";
-import FlutedBackdrop from "@/components/FlutedBackdrop";
+import GlowBackdrop from "@/components/GlowBackdrop";
 import MiniCalendar from "@/components/MiniCalendar";
 import WeekChart from "@/components/WeekChart";
 import { kpis, upcoming, week, type Status } from "@/lib/demo";
@@ -19,7 +19,7 @@ export default async function Dashboard() {
   return (
     <main className="grid grid-cols-1 gap-5 lg:grid-cols-3">
       <Card i={0} className="relative overflow-hidden text-white lg:col-span-2">
-        <FlutedBackdrop />
+        <GlowBackdrop />
         <div className="relative">
           <p className="text-xs font-semibold uppercase tracking-widest text-white/80">Votre espace de travail</p>
           <h1 className="mt-2 text-3xl font-bold md:text-5xl">Bonjour{session?.firstName ? `, ${session.firstName}` : ""} 👋</h1>
