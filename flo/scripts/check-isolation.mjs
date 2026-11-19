@@ -45,10 +45,21 @@ check(profs?.length === 1 && profs[0].first_name === "Bob", "Bob ne voit que son
 const memB = (await B.sb.from("memberships").select("role")).data;
 check(memB?.length === 1 && memB[0].role === "owner", "Bob est propriétaire de son entreprise");
 
+// Clients et prestations (étape 04)
+const cliA = await A.sb.from("customers").insert({ organization_id: A.orgId, first_name: "Claire" }).select("id").single();
+const preA = await A.sb.from("services").insert({ organization_id: A.orgId, name: "Diagnostic", duration_minutes: 60 }).select("id").single();
+check(!cliA.error && !preA.error, "Alice ajoute un client et une prestation");
+check((await B.sb.from("customers").select("id")).data?.length === 0, "Bob ne voit pas les clients d'Alice");
+check((await B.sb.from("services").select("id")).data?.length === 0, "Bob ne voit pas les prestations d'Alice");
+const cliHack = await B.sb.from("customers").update({ notes: "piraté" }).eq("id", cliA.data?.id).select();
+check(!cliHack.error && cliHack.data.length === 0, "Bob ne peut pas modifier un client d'Alice");
+check(!!(await B.sb.from("customers").insert({ organization_id: A.orgId, first_name: "Intrus" })).error, "Bob ne peut pas ajouter un client chez Alice");
+
 const anon = client();
 const anonOrgs = (await anon.from("organizations").select("id")).data;
 const anonRpc = await anon.rpc("create_organization", { p_name: "x", p_trade: "", p_address: "" });
-check(anonOrgs?.length === 0 && !!anonRpc.error, "Un visiteur non connecté ne voit rien et ne crée rien");
+const anonCli = (await anon.from("customers").select("id")).data;
+check(anonOrgs?.length === 0 && anonCli?.length === 0 && !!anonRpc.error, "Un visiteur non connecté ne voit rien et ne crée rien");
 
 console.log(failed ? `\n${failed} vérification(s) échouée(s)` : "\nOK : isolation vérifiée sur le vrai projet");
 process.exit(failed ? 1 : 0);

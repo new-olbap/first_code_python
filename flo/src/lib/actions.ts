@@ -2,10 +2,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-
-const go = (path: string, key: "erreur" | "info", msg: string): never =>
-  redirect(`${path}?${key}=${encodeURIComponent(msg)}`);
-const str = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
+import { go, str } from "@/lib/form";
 const origin = async () => (await headers()).get("origin") ?? "";
 
 export async function signIn(fd: FormData) {
