@@ -24,7 +24,7 @@ export default function Dashboard() {
         <p className="mt-2 text-muted">Votre activité est bien organisée aujourd’hui.</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <span className="rounded-2xl bg-white/70 px-4 py-2 text-sm font-semibold">
-            <span className="text-accent">{weekTotal}</span> rendez-vous cette semaine
+            <span className="text-accent-ink">{weekTotal}</span> rendez-vous cette semaine
           </span>
           <Link href="/demandes" className="flex items-center gap-1 rounded-2xl bg-ink px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
             Demandes urgentes <ArrowRight size={16} aria-hidden />
@@ -42,7 +42,7 @@ export default function Dashboard() {
             <>
               <p className="text-3xl font-bold">{k.value}</p>
               <p className="mt-1 text-sm text-muted">{k.label}</p>
-              <span className={`mt-3 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${k.delta === "urgent" ? "bg-accent text-white" : "bg-white/80 text-accent"}`}>
+              <span className={`mt-3 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${k.delta === "urgent" ? "bg-accent-2 text-white" : "bg-white/80 text-accent-ink"}`}>
                 {k.delta}
               </span>
             </>
@@ -58,7 +58,7 @@ export default function Dashboard() {
       <Card i={6} className="lg:col-span-2">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="font-semibold">Rendez-vous sur 7 jours</h2>
-          <Link href="/statistiques" className="text-sm text-accent hover:underline">Statistiques</Link>
+          <Link href="/statistiques" className="text-sm text-accent-ink hover:underline">Statistiques</Link>
         </div>
         <WeekChart />
       </Card>
@@ -66,7 +66,7 @@ export default function Dashboard() {
       <Card i={7}>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-semibold">Prochains RDV</h2>
-          <Link href="/agenda" className="text-sm text-accent hover:underline">Agenda</Link>
+          <Link href="/agenda" className="text-sm text-accent-ink hover:underline">Agenda</Link>
         </div>
         <ul className="space-y-2">
           {upcoming.map((a) => (

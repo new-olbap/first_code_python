@@ -14,12 +14,12 @@ export default async function Section({ params }: { params: Promise<{ section: s
   return (
     <Card className="grid min-h-[60vh] place-items-center text-center">
       <div>
-        <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-3xl bg-gradient-to-br from-accent to-accent-2 text-white shadow-lg shadow-accent/30">
+        <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-3xl bg-gradient-to-br from-accent-ink to-accent-2 text-white shadow-lg shadow-accent/30">
           <Icon size={28} aria-hidden />
         </div>
         <h1 className="text-2xl font-bold">{page.label}</h1>
         <p className="mx-auto mt-2 max-w-md text-muted">{page.desc}</p>
-        <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-accent">Bientôt disponible</p>
+        <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-accent-ink">Bientôt disponible</p>
       </div>
     </Card>
   );

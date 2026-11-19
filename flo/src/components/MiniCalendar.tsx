@@ -21,11 +21,11 @@ export default function MiniCalendar({ today = new Date() }: { today?: Date }) {
             <span
               key={i}
               className={`relative grid aspect-square place-items-center rounded-xl text-sm
-                ${isToday ? "bg-gradient-to-br from-accent to-accent-2 font-bold text-white shadow-md shadow-accent/40" : d ? "hover:bg-white/70" : ""}`}
+                ${isToday ? "bg-gradient-to-br from-accent-ink to-accent-2 font-bold text-white shadow-md shadow-accent/40" : d ? "hover:bg-white/70" : ""}`}
             >
               {d}
               {d && busyDays.includes(d) && !isToday && (
-                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-accent" />
+                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-accent-2" />
               )}
             </span>
           );

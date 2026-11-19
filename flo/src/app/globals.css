@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
-/* Coral Glass — change these tokens to restyle the whole app */
+/* Sky Glass (Sky Blue + Hot Pink) — change these tokens to restyle the whole app */
 :root {
-  --bg: #fff4ef;
-  --ink: #2b1d1a;
-  --muted: #8a716b;
-  --accent: #ff6b57;
-  --accent-2: #ffa26b;
+  --bg: #f2f8fc;
+  --ink: #0f2236;
+  --muted: #5b6f84;
+  --accent: #0593c6;     /* Sky Blue — fonds, graphiques */
+  --accent-ink: #04739b; /* bleu foncé pour texte/boutons (contraste AA) */
+  --accent-2: #d83995;   /* Hot Pink — urgent, appels à l'action */
   --glass: rgb(255 255 255 / 0.55);
   --glass-border: rgb(255 255 255 / 0.8);
 }
@@ -17,15 +18,16 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
+  --color-accent-ink: var(--accent-ink);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
   color: var(--ink);
   background:
-    radial-gradient(40rem 30rem at 10% 0%, #ffd2c4 0%, transparent 60%),
-    radial-gradient(35rem 30rem at 100% 20%, #ffe0c2 0%, transparent 60%),
-    radial-gradient(40rem 30rem at 50% 100%, #ffc9d0 0%, transparent 60%),
+    radial-gradient(40rem 30rem at 10% 0%, #a9dcf2 0%, transparent 60%),
+    radial-gradient(35rem 30rem at 100% 15%, #f5c3df 0%, transparent 60%),
+    radial-gradient(40rem 30rem at 55% 100%, #c6e3f7 0%, transparent 60%),
     var(--bg);
   background-attachment: fixed;
   min-height: 100vh;
@@ -37,5 +39,5 @@ body {
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border-radius: 1.75rem;
-  box-shadow: 0 10px 40px -12px rgb(255 107 87 / 0.25);
+  box-shadow: 0 10px 40px -12px rgb(5 147 198 / 0.22);
 }
