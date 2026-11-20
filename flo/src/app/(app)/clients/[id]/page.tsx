@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Archive, ArchiveRestore, Mail, Phone, Plus } from "lucide-react";
+import { ArrowLeft, Archive, ArchiveRestore, Download, Mail, Phone, Plus, Trash2 } from "lucide-react";
 import Card from "@/components/Card";
 import { Notice, primaryBtn, secondaryBtn } from "@/components/ui";
 import { isUuid } from "@/lib/form";
-import { createClient } from "@/lib/supabase/server";
-import { setCustomerArchived, updateCustomer } from "../actions";
+import { createClient, getSession } from "@/lib/supabase/server";
+import { deleteCustomer, setCustomerArchived, updateCustomer } from "../actions";
 import { fmt } from "@/lib/dates";
 import { STATUS_CLS, STATUS_LABEL, type AgendaRow } from "../../agenda/types";
 import CustomerFields, { fullName, type Customer } from "../CustomerFields";
@@ -19,6 +19,7 @@ export default async function ClientDetail({ params, searchParams }: {
   const { data } = await sb.from("customers").select("*").eq("id", id).maybeSingle(); // RLS : uniquement les fiches de l'entreprise
   if (!data) notFound();
   const c = data as Customer;
+  const canDelete = (await getSession())?.role !== "member";
   const { data: rdv } = await sb.rpc("agenda", { p_customer: id });
   const history = ((rdv ?? []) as AgendaRow[]).reverse(); // plus récents d'abord
 
@@ -73,6 +74,22 @@ export default async function ClientDetail({ params, searchParams }: {
           {c.archived_at ? <><ArchiveRestore size={16} aria-hidden /> Restaurer la fiche</> : <><Archive size={16} aria-hidden /> Archiver la fiche</>}
         </button>
       </form>
+      <Card className="space-y-3">
+        <h2 className="font-semibold">Données personnelles (RGPD)</h2>
+        <p className="text-sm text-muted">Si ce client vous demande ses données ou leur suppression, vous pouvez y répondre ici.</p>
+        <a href={`/clients/${c.id}/export`} download className={`${secondaryBtn} inline-flex items-center gap-2`}><Download size={16} aria-hidden /> Exporter ses données</a>
+        {canDelete && (
+          <details className="border border-line p-3">
+            <summary className="cursor-pointer text-sm font-semibold text-accent-2">Supprimer définitivement ce client</summary>
+            <form action={deleteCustomer} className="mt-3 space-y-3">
+              <input type="hidden" name="id" value={c.id} />
+              <p className="text-sm text-muted">La fiche et les demandes de ce client sont effacées. Ses rendez-vous restent dans l’agenda, sans nom ni notes. C’est irréversible.</p>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="confirm" required className="h-4 w-4 accent-[var(--ink)]" /> Je confirme la suppression définitive</label>
+              <button className={`${secondaryBtn} flex items-center gap-2 border-accent-2 text-accent-2`}><Trash2 size={16} aria-hidden /> Supprimer définitivement</button>
+            </form>
+          </details>
+        )}
+      </Card>
     </main>
   );
 }

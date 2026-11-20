@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone, Plus, Search, Upload } from "lucide-react";
+import { Download, Mail, Phone, Plus, Search, Upload } from "lucide-react";
 import Card from "@/components/Card";
 import { Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import { createClient } from "@/lib/supabase/server";
@@ -34,6 +34,7 @@ export default async function Clients({ searchParams }: {
           <h1 className="text-2xl font-bold">Clients et prospects</h1>
           {!sp.nouveau && !sp.import && (
             <div className="flex flex-wrap gap-2">
+              <a href="/clients/export" download className={`${secondaryBtn} flex items-center gap-2`}><Download size={18} aria-hidden /> Exporter</a>
               <Link href="/clients?import=1" className={`${secondaryBtn} flex items-center gap-2`}><Upload size={18} aria-hidden /> Importer</Link>
               <Link href="/clients?nouveau=1" className={`${primaryBtn} flex items-center gap-2`}><Plus size={18} aria-hidden /> Nouvelle fiche</Link>
             </div>
