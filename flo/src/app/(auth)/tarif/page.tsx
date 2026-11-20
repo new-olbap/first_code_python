@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { primaryBtn } from "@/components/ui";
-import { CONTACT, TARIF, eur } from "@/lib/tarif";
+import { CONTACT, TARIF, eur, mensualite } from "@/lib/tarif";
 
 export const metadata = { title: "Tarif — Flo" };
 
@@ -30,6 +30,7 @@ export default function Tarif() {
           <span className="text-5xl font-black tracking-tight">{eur(TARIF.lancement)}</span>
           <s className="text-lg text-muted">{eur(TARIF.normal)}</s>
         </p>
+        <p className="mt-1 text-sm font-semibold">ou {TARIF.fois} × {eur(mensualite(TARIF.lancement))}, sans frais</p>
         <p className="mt-1 text-xs text-muted">Pour les {TARIF.places} premiers artisans, puis {eur(TARIF.normal)}. TVA non applicable, art. 293 B du CGI.</p>
         <ul className="mt-5 space-y-2 text-sm">
           {INCLUS.map((t) => <li key={t} className="flex items-center gap-2"><Check size={16} aria-hidden className="text-accent-2" />{t}</li>)}
@@ -37,7 +38,7 @@ export default function Tarif() {
       </div>
 
       <a href={`mailto:${CONTACT}?subject=${sujet}`} className={`${primaryBtn} block w-full py-3 text-center`}>Commander</a>
-      <p className="text-xs text-muted">Paiement par virement bancaire. Votre accès est activé dès réception, avec une facture.</p>
+      <p className="text-xs text-muted">Paiement par virement bancaire, en une fois ou en {TARIF.fois} fois (un virement par mois). Votre accès est activé dès le premier virement, avec une facture.</p>
       <p className="text-center text-sm"><Link href="/connexion" className="text-accent-ink hover:underline">Déjà client ? Se connecter</Link></p>
     </div>
   );
