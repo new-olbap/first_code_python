@@ -94,6 +94,6 @@ function MobileItem({ href, label, active, children }: { href: string; label: st
 function Pending({ mobile = false }: { mobile?: boolean }) {
   const { pending } = useLinkStatus();
   return (
-    <span aria-hidden className={`h-1.5 w-1.5 rounded-full bg-accent-2 transition-opacity motion-safe:animate-pulse ${mobile ? "absolute top-1.5" : "ml-auto"} ${pending ? "opacity-100" : "opacity-0"}`} />
+    <span aria-hidden className={`h-1.5 w-1.5 rounded-full bg-accent-2 ${mobile ? "absolute top-1.5" : "ml-auto"} ${pending ? "motion-safe:animate-pulse" : "invisible"}`} />
   );
 }
