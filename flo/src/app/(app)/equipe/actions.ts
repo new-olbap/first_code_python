@@ -41,3 +41,44 @@ export async function deleteTimeOff(fd: FormData) {
   if (!data?.length) go("/equipe", "erreur", NOT_ALLOWED);
   go("/equipe", "info", "Absence supprimée.");
 }
+
+const TEAM_ERRORS: Record<string, string> = {
+  FL005: "L’entreprise doit garder au moins un propriétaire : nommez d’abord quelqu’un d’autre propriétaire.",
+  "23503": "Cette personne a des rendez-vous dans l’agenda : réattribuez-les à quelqu’un d’autre avant de la retirer.",
+};
+
+export async function createInvitation(fd: FormData) {
+  const session = await getSession();
+  if (!session?.organization) redirect("/connexion");
+  const role = str(fd, "role") === "admin" ? "admin" : "member";
+  const sb = await createClient();
+  const { error } = await sb.from("invitations").insert({ organization_id: session.organization.id, role, created_by: session.user.id });
+  if (error) go("/equipe", "erreur", error.code === "42501" ? "Seuls le propriétaire et les administrateurs peuvent inviter." : "Impossible de créer l’invitation, veuillez réessayer.");
+  go("/equipe", "info", "Invitation créée : copiez le lien ci-dessous et envoyez-le (SMS, e-mail, WhatsApp…). Il est valable 7 jours.");
+}
+
+export async function revokeInvitation(fd: FormData) {
+  const id = str(fd, "id");
+  if (!isUuid(id)) redirect("/equipe");
+  const sb = await createClient();
+  await sb.from("invitations").delete().eq("id", id);
+  go("/equipe", "info", "Invitation annulée : le lien ne fonctionne plus.");
+}
+
+export async function setMemberRole(fd: FormData) {
+  const user = str(fd, "user"), role = str(fd, "role");
+  if (!isUuid(user) || !["owner", "admin", "member"].includes(role)) redirect("/equipe");
+  const sb = await createClient();
+  const { data, error } = await sb.from("memberships").update({ role }).eq("user_id", user).select("user_id");
+  if (error || !data?.length) go("/equipe", "erreur", TEAM_ERRORS[error?.code ?? ""] ?? "Vous n’avez pas le droit de modifier ce rôle.");
+  go("/equipe", "info", "Rôle modifié.");
+}
+
+export async function removeMember(fd: FormData) {
+  const user = str(fd, "user");
+  if (!isUuid(user)) redirect("/equipe");
+  const sb = await createClient();
+  const { data, error } = await sb.from("memberships").delete().eq("user_id", user).select("user_id");
+  if (error || !data?.length) go("/equipe", "erreur", TEAM_ERRORS[error?.code ?? ""] ?? "Vous n’avez pas le droit de retirer cette personne.");
+  go("/equipe", "info", "Personne retirée de l’entreprise.");
+}
