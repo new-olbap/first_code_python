@@ -14,5 +14,5 @@ export const NAV = [
   { href: "/equipe", label: "Équipe", icon: UsersRound, desc: "Inviter un collaborateur, définir son rôle et ses disponibilités." },
   { href: "/statistiques", label: "Statistiques", icon: BarChart3, desc: "Filtrer les périodes, suivre les réservations et les annulations." },
   { href: "/parametres", label: "Paramètres", icon: Settings, desc: "Modifier l’entreprise, connecter Google, configurer les rappels." },
-  { href: "/abonnement", label: "Abonnement", icon: CreditCard, desc: "Voir son offre, ses factures et gérer son paiement.", ownerOnly: true },
+  { href: "/abonnement", label: "Licence", icon: CreditCard, desc: "Votre licence à vie et sa facture.", ownerOnly: true },
 ];

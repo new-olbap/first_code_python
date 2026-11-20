@@ -27,7 +27,7 @@ export const getSession = cache(async () => {
   const { data } = await sb.auth.getClaims();
   const id = data?.claims?.sub;
   if (!id) return null;
-  const user = { id };
+  const user = { id, email: (data?.claims?.email as string | undefined) ?? "" };
   const [{ data: profile }, { data: membership }] = await Promise.all([
     sb.from("profiles").select("first_name").eq("id", user.id).maybeSingle(),
     // shortcut: une seule entreprise par utilisateur ; ajouter un sélecteur d'entreprise si besoin.

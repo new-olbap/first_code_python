@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { Check, Mail, MapPin, Phone, X } from "lucide-react";
+import { headers } from "next/headers";
+import { CalendarPlus, Check, Mail, MapPin, MessageSquare, Phone, X } from "lucide-react";
+import CopyButton from "@/components/CopyButton";
 import Card from "@/components/Card";
-import { Notice, primaryBtn, secondaryBtn } from "@/components/ui";
+import { Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import { fmt } from "@/lib/dates";
 import { createClient, getSession } from "@/lib/supabase/server";
 import type { AgendaRow } from "../agenda/types";
-import { resolveRequest } from "./actions";
+import { addEmailRequest, resolveRequest } from "./actions";
 
 type Req = {
   id: string; status: "new" | "accepted" | "refused"; source: "booking" | "email" | "manual"; message: string | null; created_at: string; appointment_id: string | null;
@@ -14,10 +16,12 @@ type Req = {
 const SOURCE = { booking: "Réservation en ligne", email: "E-mail", manual: "Saisie manuelle" };
 const ETAT = { new: "À traiter", accepted: "Acceptée", refused: "Refusée" };
 
-export default async function Demandes({ searchParams }: { searchParams: Promise<{ vue?: string; erreur?: string; info?: string }> }) {
+export default async function Demandes({ searchParams }: { searchParams: Promise<{ vue?: string; email?: string; erreur?: string; info?: string }> }) {
   const sp = await searchParams;
   const traitees = sp.vue === "traitees";
-  const tz = (await getSession())!.organization!.timezone;
+  const org = (await getSession())!.organization!, tz = org.timezone;
+  const h = await headers();
+  const bookingUrl = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}/r/${org.slug}`;
   const sb = await createClient();
   const q = sb.from("requests").select("id, status, source, message, created_at, appointment_id, customer:customers(id, first_name, last_name, phone, email, address)");
   const { data } = traitees ? await q.neq("status", "new").order("created_at", { ascending: false }).limit(50)
@@ -31,7 +35,15 @@ export default async function Demandes({ searchParams }: { searchParams: Promise
     <main className="space-y-5">
       <Card className="space-y-4">
         <h1 className="text-2xl font-bold">Demandes</h1>
-        <p className="text-sm text-muted">Les réservations faites sur votre page en ligne arrivent ici. Le créneau est bloqué en attendant votre réponse.</p>
+        <p className="text-sm text-muted">Les réservations faites sur votre page en ligne arrivent ici, ainsi que les e-mails que vous y ajoutez. Un créneau choisi par un client est bloqué en attendant votre réponse.</p>
+        <details open={!!sp.email} className="border border-line">
+          <summary className="cursor-pointer px-4 py-3 text-sm font-semibold">Ajouter une demande reçue par e-mail</summary>
+          <form action={addEmailRequest} className="space-y-3 border-t border-line p-4">
+            <p className="text-xs text-muted">Copiez tout l’e-mail du client (avec la ligne « De : » si possible) et collez-le ici. Flo retrouve la fiche du client par son e-mail ou son téléphone, ou la crée.</p>
+            <textarea name="texte" required maxLength={20000} placeholder={"De : Paul Durand <paul.durand@exemple.fr>\nObjet : Fuite sous l’évier\n\nBonjour, vous pourriez passer cette semaine ?\n06 12 34 56 78"} className={`${inputCls} min-h-40`} />
+            <button className={primaryBtn}>Ajouter la demande</button>
+          </form>
+        </details>
         <nav className="flex gap-1" aria-label="Filtrer">
           {[["", "À traiter"], ["traitees", "Traitées"]].map(([v, l]) => (
             <Link key={v} href={v ? `/demandes?vue=${v}` : "/demandes"} aria-current={traitees === !!v ? "page" : undefined}
@@ -68,11 +80,26 @@ export default async function Demandes({ searchParams }: { searchParams: Promise
               {c?.email && <a href={`mailto:${c.email}`} className={`${secondaryBtn} flex items-center gap-2`}><Mail size={16} aria-hidden />{c.email}</a>}
               {c?.address && <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}`} target="_blank" rel="noopener noreferrer" className={`${secondaryBtn} flex items-center gap-2`}><MapPin size={16} aria-hidden />{c.address}</a>}
             </div>
+            {r.status === "new" && !a && c && (() => {
+              const reply = `Bonjour${c.first_name ? ` ${c.first_name}` : ""},\n\nMerci pour votre message. Vous pouvez choisir directement le créneau qui vous convient ici :\n${bookingUrl}\n\nLes horaires proposés sont ceux où je suis disponible. Je confirme ensuite votre rendez-vous.\n\nCordialement,\n${org.name}`;
+              return (
+                <div className="space-y-3 bg-surface p-4">
+                  <p className="text-sm font-semibold">Pas encore de créneau : proposez vos disponibilités</p>
+                  <p className="text-xs text-muted">Le client choisit parmi vos créneaux libres. Cette demande se met alors à jour ici avec le créneau choisi, et le créneau est bloqué.{!org.booking_enabled && <strong className="text-accent-2"> Votre réservation en ligne est fermée : ouvrez-la dans Réservations, sinon le lien ne marchera pas.</strong>}</p>
+                  <div className="flex flex-wrap gap-2 text-sm">
+                    {c.email && <a href={`mailto:${c.email}?subject=${encodeURIComponent(`Votre demande — ${org.name}`)}&body=${encodeURIComponent(reply)}`} className={`${primaryBtn} flex items-center gap-2`}><Mail size={16} aria-hidden />Répondre par e-mail</a>}
+                    {c.phone && <a href={`sms:${c.phone.replace(/[^\d+]/g, "")}?body=${encodeURIComponent(reply)}`} className={`${secondaryBtn} flex items-center gap-2`}><MessageSquare size={16} aria-hidden />Répondre par SMS</a>}
+                    <CopyButton text={reply} label="Copier la réponse" />
+                    <Link href={`/agenda/nouveau?client=${c.id}`} className={`${secondaryBtn} flex items-center gap-2`}><CalendarPlus size={16} aria-hidden />Créer le rendez-vous moi-même</Link>
+                  </div>
+                </div>
+              );
+            })()}
             {r.status === "new" && (
               <div className="flex flex-wrap gap-2 border-t border-line pt-3">
-                {[["1", "Accepter", <Check key="i" size={16} aria-hidden />, primaryBtn], ["0", "Refuser", <X key="i" size={16} aria-hidden />, secondaryBtn]].map(([v, l, icon, cls]) => (
+                {[["1", a ? "Accepter" : "Marquer comme traitée", <Check key="i" size={16} aria-hidden />, primaryBtn], ["0", "Refuser", <X key="i" size={16} aria-hidden />, secondaryBtn]].map(([v, l, icon, cls]) => (
                   <form key={v as string} action={resolveRequest}>
-                    <input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value={v as string} />
+                    <input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value={v as string} /><input type="hidden" name="creneau" value={a ? "1" : ""} />
                     <button className={`${cls} flex items-center gap-2`}>{icon}{l}</button>
                   </form>
                 ))}
