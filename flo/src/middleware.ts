@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/"];
+const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/", "/r/", "/invitation/"]; // /r/… : réservation publique
 
 // Rafraîchit la session Supabase et renvoie vers /connexion si on n'est pas connecté.
 export async function middleware(request: NextRequest) {
@@ -16,7 +16,9 @@ export async function middleware(request: NextRequest) {
       },
     },
   });
-  const { data: { user } } = await supabase.auth.getUser();
+  // getClaims : rafraîchit la session si besoin et vérifie le jeton localement (plus rapide que getUser).
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims?.sub;
 
   const path = request.nextUrl.pathname;
   const isPublic = PUBLIC.some((p) => path === p || path.startsWith(p));

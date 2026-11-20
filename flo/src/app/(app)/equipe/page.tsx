@@ -1,10 +1,12 @@
-import { Trash2 } from "lucide-react";
+import { headers } from "next/headers";
+import { Trash2, UserPlus } from "lucide-react";
+import CopyButton from "@/components/CopyButton";
 import Card from "@/components/Card";
 import { Field, Notice, Select, primaryBtn, secondaryBtn } from "@/components/ui";
 import { fmt, todayIn } from "@/lib/dates";
-import { createClient, getSession } from "@/lib/supabase/server";
+import { createClient, getSession, type Role } from "@/lib/supabase/server";
 import { ROLE_LABEL, getTeam } from "@/lib/team";
-import { addTimeOff, deleteTimeOff, saveWeeklyHours } from "./actions";
+import { addTimeOff, createInvitation, deleteTimeOff, removeMember, revokeInvitation, saveWeeklyHours, setMemberRole } from "./actions";
 
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 type Rule = { user_id: string; weekday: number; start_time: string; end_time: string };
@@ -15,11 +17,18 @@ export default async function Equipe({ searchParams }: { searchParams: Promise<{
   const canManage = session.role === "owner" || session.role === "admin";
   const today = todayIn(session.organization!.timezone);
   const sb = await createClient();
-  const [team, { data: r }, { data: t }] = await Promise.all([
+  const [team, { data: r }, { data: t }, { data: inv }] = await Promise.all([
     getTeam(sb),
     sb.from("availability_rules").select("user_id, weekday, start_time, end_time").order("weekday"),
     sb.from("time_off").select("id, user_id, starts_on, ends_on, reason").gte("ends_on", today).order("starts_on"),
+    canManage ? sb.from("invitations").select("id, role, token, expires_at").is("used_at", null).gt("expires_at", new Date().toISOString()).order("created_at")
+      : Promise.resolve({ data: [] }),
   ]);
+  const invitations = (inv ?? []) as { id: string; role: Role; token: string; expires_at: string }[];
+  const h = await headers();
+  const site = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
+  // Le propriétaire gère tout le monde ; un administrateur, tous sauf les propriétaires ; personne ne se modifie soi-même.
+  const canChange = (m: { user_id: string; role: Role }) => m.user_id !== session.user.id && (session.role === "owner" || (session.role === "admin" && m.role !== "owner"));
   const rules = (r ?? []) as Rule[];
   const absences = (t ?? []) as TimeOff[];
   const editable = team.filter((m) => canManage || m.user_id === session.user.id);
@@ -28,9 +37,30 @@ export default async function Equipe({ searchParams }: { searchParams: Promise<{
     <main className="space-y-5">
       <Card className="space-y-2">
         <h1 className="text-2xl font-bold">Équipe</h1>
-        <p className="text-sm text-muted">Horaires de travail et absences. Un rendez-vous ne peut pas être pris pendant une absence.</p>
+        <p className="text-sm text-muted">Membres, horaires de travail et absences. Un rendez-vous ne peut pas être pris pendant une absence.</p>
         <Notice {...await searchParams} />
       </Card>
+
+      {canManage && (
+        <Card className="space-y-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold"><UserPlus size={20} aria-hidden /> Inviter un collaborateur</h2>
+          <form action={createInvitation} className="flex flex-wrap items-end gap-3">
+            <div className="w-56"><Select label="Rôle" name="role" defaultValue="member" options={[["member", "Collaborateur"], ["admin", "Administrateur"]]} /></div>
+            <button className={primaryBtn}>Créer un lien d’invitation</button>
+          </form>
+          <p className="text-xs text-muted">Collaborateur : agenda, clients et ses propres horaires. Administrateur : en plus l’équipe, les prestations et l’entreprise (pas l’abonnement).</p>
+          {invitations.map((i) => (
+            <div key={i.id} className="space-y-2 bg-surface p-3">
+              <p className="text-sm">Invitation <strong>{ROLE_LABEL[i.role].toLowerCase()}</strong> · expire le {new Date(i.expires_at).toLocaleDateString("fr-FR", { timeZone: session.organization!.timezone, day: "numeric", month: "long" })}</p>
+              <p className="break-all font-mono text-xs text-muted">{site}/invitation/{i.token}</p>
+              <div className="flex flex-wrap gap-2">
+                <CopyButton text={`${site}/invitation/${i.token}`} />
+                <form action={revokeInvitation}><input type="hidden" name="id" value={i.id} /><button className={secondaryBtn}>Annuler l’invitation</button></form>
+              </div>
+            </div>
+          ))}
+        </Card>
+      )}
 
       {team.map((m) => {
         const own = rules.filter((x) => x.user_id === m.user_id);
@@ -42,6 +72,19 @@ export default async function Equipe({ searchParams }: { searchParams: Promise<{
               <h2 className="text-lg font-semibold">{m.name}</h2>
               <span className="text-sm text-muted">{ROLE_LABEL[m.role]}</span>
               {fresh && <span className="text-sm text-accent-2">Aucun horaire enregistré</span>}
+              {canChange(m) && (
+                <div className="ml-auto flex flex-wrap items-center gap-2">
+                  <form action={setMemberRole} className="flex items-center gap-2">
+                    <input type="hidden" name="user" value={m.user_id} />
+                    <label className="sr-only" htmlFor={`role-${m.user_id}`}>Rôle de {m.name}</label>
+                    <select id={`role-${m.user_id}`} name="role" defaultValue={m.role} className="border border-line bg-surface px-2 py-1.5 text-sm">
+                      {(session.role === "owner" ? ["owner", "admin", "member"] : ["admin", "member"]).map((r) => <option key={r} value={r}>{ROLE_LABEL[r as Role]}</option>)}
+                    </select>
+                    <button className={`${secondaryBtn} px-3 py-1.5`}>Changer</button>
+                  </form>
+                  <form action={removeMember}><input type="hidden" name="user" value={m.user_id} /><button className={`${secondaryBtn} px-3 py-1.5`}>Retirer</button></form>
+                </div>
+              )}
             </div>
             <form action={saveWeeklyHours} className="space-y-3">
               <input type="hidden" name="user" value={m.user_id} />

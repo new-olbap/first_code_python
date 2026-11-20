@@ -4,34 +4,39 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { go, str } from "@/lib/form";
 const origin = async () => (await headers()).get("origin") ?? "";
+// Lien d'invitation en cours (?invitation=…) : après connexion ou inscription, on y retourne.
+const invitation = (fd: FormData) => { const t = str(fd, "invitation"); return /^[0-9a-f]{64}$/.test(t) ? t : null; };
+const withInv = (path: string, t: string | null) => (t ? `${path}?invitation=${t}` : path);
 
 export async function signIn(fd: FormData) {
+  const inv = invitation(fd);
   const sb = await createClient();
   const { error } = await sb.auth.signInWithPassword({ email: str(fd, "email"), password: String(fd.get("password") ?? "") });
   if (error) {
-    go("/connexion", "erreur",
+    go(withInv("/connexion", inv), "erreur",
       error.code === "invalid_credentials" ? "E-mail ou mot de passe incorrect."
       : error.code === "email_not_confirmed" ? "Confirmez d’abord votre adresse e-mail (lien reçu par mail)."
       : "Connexion impossible pour le moment, réessayez dans un instant.");
   }
-  redirect("/");
+  redirect(inv ? `/invitation/${inv}` : "/");
 }
 
 export async function signUp(fd: FormData) {
+  const inv = invitation(fd), next = inv ? `/invitation/${inv}` : "/bienvenue";
   const firstName = str(fd, "first_name");
   const password = String(fd.get("password") ?? "");
-  if (!firstName || firstName.length > 80) go("/inscription", "erreur", "Indiquez votre prénom.");
-  if (password.length < 8) go("/inscription", "erreur", "Le mot de passe doit faire au moins 8 caractères.");
+  if (!firstName || firstName.length > 80) go(withInv("/inscription", inv), "erreur", "Indiquez votre prénom.");
+  if (password.length < 8) go(withInv("/inscription", inv), "erreur", "Le mot de passe doit faire au moins 8 caractères.");
 
   const sb = await createClient();
   const { data, error } = await sb.auth.signUp({
     email: str(fd, "email"),
     password,
-    options: { data: { first_name: firstName }, emailRedirectTo: `${await origin()}/auth/callback?next=/bienvenue` },
+    options: { data: { first_name: firstName }, emailRedirectTo: `${await origin()}/auth/callback?next=${next}` },
   });
-  if (error) go("/inscription", "erreur", error.code === "user_already_exists" ? "Un compte existe déjà avec cet e-mail." : "Inscription impossible. Vérifiez l’e-mail et le mot de passe.");
-  if (!data.session) go("/connexion", "info", "Compte créé ! Cliquez sur le lien reçu par e-mail pour l’activer.");
-  redirect("/bienvenue");
+  if (error) go(withInv("/inscription", inv), "erreur", error.code === "user_already_exists" ? "Un compte existe déjà avec cet e-mail." : "Inscription impossible. Vérifiez l’e-mail et le mot de passe.");
+  if (!data.session) go(withInv("/connexion", inv), "info", "Compte créé ! Cliquez sur le lien reçu par e-mail pour l’activer.");
+  redirect(next);
 }
 
 export async function forgotPassword(fd: FormData) {
@@ -66,5 +71,15 @@ export async function createOrganization(fd: FormData) {
     p_name: name, p_trade: str(fd, "trade").slice(0, 80), p_address: str(fd, "address").slice(0, 300),
   });
   if (error) go("/bienvenue", "erreur", "Création impossible, veuillez réessayer.");
+  redirect("/");
+}
+
+export async function acceptInvitation(fd: FormData) {
+  const inv = invitation(fd);
+  if (!inv) redirect("/");
+  const sb = await createClient();
+  const { error } = await sb.rpc("accept_invitation", { p_token: inv });
+  if (error) go(`/invitation/${inv}`, "erreur", error.code === "FL004" ? "Ce compte appartient déjà à une entreprise."
+    : error.code === "P0002" ? "Cette invitation est expirée ou a déjà été utilisée : demandez un nouveau lien." : "Impossible de rejoindre l’entreprise, réessayez.");
   redirect("/");
 }

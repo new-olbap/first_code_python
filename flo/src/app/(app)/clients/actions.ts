@@ -2,6 +2,7 @@
 import { redirect } from "next/navigation";
 import { createClient, getSession } from "@/lib/supabase/server";
 import { go, isEmail, isPhone, isUuid, str } from "@/lib/form";
+import { csvToRecords, decode, dupKeys, parseCsv, toCustomers, vcfToRecords } from "@/lib/import";
 
 function parseCustomer(fd: FormData) {
   const c = {
@@ -50,4 +51,41 @@ export async function setCustomerArchived(fd: FormData) {
   const { data } = await sb.from("customers").update({ archived_at: archive ? new Date().toISOString() : null }).eq("id", id).select("id");
   if (!data?.length) go(`/clients/${id}`, "erreur", "Action impossible.");
   go(`/clients/${id}`, "info", archive ? "Fiche archivée." : "Fiche restaurée.");
+}
+
+// Import d'un fichier CSV (Excel, Google Contacts…) ou vCard (contacts du téléphone). Les doublons sont ignorés.
+export async function importCustomers(fd: FormData) {
+  const session = await getSession();
+  if (!session?.organization) redirect("/connexion");
+  const back = "/clients?import=1";
+  const file = fd.get("file");
+  if (!(file instanceof File) || file.size === 0) go(back, "erreur", "Choisissez un fichier.");
+  if (file.size > 2_000_000) go(back, "erreur", "Fichier trop lourd (2 Mo maximum).");
+  const text = decode(await file.arrayBuffer());
+  const records = /\.vcf$/i.test(file.name) || /BEGIN:VCARD/i.test(text.slice(0, 500)) ? vcfToRecords(text) : csvToRecords(parseCsv(text));
+  if (records.length > 5000) go(back, "erreur", "5 000 fiches maximum par import : découpez le fichier.");
+  const { customers, noName, badContact } = toCustomers(records, fd.get("prospects") === "on");
+  if (!customers.length) go(back, "erreur", "Aucune fiche lisible. La 1re ligne doit contenir les titres des colonnes (Nom, Prénom, Téléphone…).");
+
+  const sb = await createClient();
+  // shortcut: compare aux 10 000 premières fiches existantes ; au-delà, des doublons peuvent passer.
+  const { data: existing } = await sb.from("customers").select("first_name, last_name, email, phone").range(0, 9999);
+  const seen = new Set((existing ?? []).flatMap(dupKeys));
+  const fresh = customers.filter((c) => {
+    const keys = dupKeys(c);
+    if (keys.some((k) => seen.has(k))) return false;
+    keys.forEach((k) => seen.add(k));
+    return true;
+  });
+  for (let i = 0; i < fresh.length; i += 500) {
+    const { error } = await sb.from("customers").insert(fresh.slice(i, i + 500).map((c) => ({ ...c, organization_id: session.organization!.id })));
+    if (error) go(back, "erreur", i ? `Import interrompu après ${i} fiches : relancez-le, les fiches déjà importées seront ignorées.` : "Import impossible, veuillez réessayer.");
+  }
+  const n = (k: number, one: string, many: string) => `${k} ${k > 1 ? many : one}`;
+  go("/clients", "info", [
+    n(fresh.length, "fiche importée", "fiches importées"),
+    customers.length > fresh.length && n(customers.length - fresh.length, "déjà présente, ignorée", "déjà présentes, ignorées"),
+    noName && n(noName, "ligne sans nom ignorée", "lignes sans nom ignorées"),
+    badContact && n(badContact, "e-mail ou téléphone invalide laissé vide", "e-mails ou téléphones invalides laissés vides"),
+  ].filter(Boolean).join(" · "));
 }

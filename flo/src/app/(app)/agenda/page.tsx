@@ -2,26 +2,14 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import Card from "@/components/Card";
 import { Notice, primaryBtn, secondaryBtn } from "@/components/ui";
-import { addDays, addMonths, fmt, isIsoDate, startOfMonth, startOfWeek, todayIn } from "@/lib/dates";
+import { addDays, addMonths, fmt, isIsoDate, nowTimeIn, startOfMonth, startOfWeek, todayIn } from "@/lib/dates";
 import { createClient, getSession } from "@/lib/supabase/server";
+import { toMin } from "./grid";
+import TimeGrid from "./TimeGrid";
 import { STATUS_CLS, type AgendaRow } from "./types";
 
 const VUES = { jour: "Jour", semaine: "Semaine", mois: "Mois" } as const;
 type Vue = keyof typeof VUES;
-
-function Chip({ a }: { a: AgendaRow }) {
-  return (
-    <Link href={`/agenda/${a.id}`} className={`lift block px-2 py-1.5 text-sm ${STATUS_CLS[a.status]}`}>
-      <span className="font-semibold">{a.start_time}</span>{" "}
-      <span className="font-medium">{a.customer_name ?? "Sans client"}</span>
-      {(
-        <span className="block truncate text-xs text-muted">
-          {[a.service_name, a.staff_name].filter(Boolean).join(" · ")}{a.status === "pending" && " · à confirmer"}
-        </span>
-      )}
-    </Link>
-  );
-}
 
 export default async function Agenda({ searchParams }: { searchParams: Promise<{ vue?: string; date?: string; erreur?: string; info?: string }> }) {
   const sp = await searchParams;
@@ -93,24 +81,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
           </div>
         </Card>
       ) : (
-        <div className={`grid gap-3 ${vue === "semaine" ? "lg:grid-cols-7" : ""}`}>
-          {days.map((d) => {
-            const list = byDay.get(d) ?? [];
-            return (
-              <Card key={d} className="space-y-2 p-3">
-                <div className="flex items-center justify-between gap-2">
-                  <Link href={url("jour", d)} className={`text-sm font-semibold first-letter:uppercase hover:underline ${d === today ? "bg-accent-2 px-1.5 text-black" : ""}`}>
-                    {fmt(d, vue === "jour" ? { weekday: "long", day: "numeric", month: "long" } : { weekday: "short", day: "numeric" })}
-                  </Link>
-                  <Link href={`/agenda/nouveau?date=${d}`} aria-label={`Nouveau rendez-vous le ${fmt(d, { day: "numeric", month: "long" })}`} className="p-1 text-muted hover:bg-surface hover:text-ink">
-                    <Plus size={16} />
-                  </Link>
-                </div>
-                {list.length === 0 ? <p className="text-xs text-muted">Aucun rendez-vous</p> : list.map((a) => <Chip key={a.id} a={a} />)}
-              </Card>
-            );
-          })}
-        </div>
+        <TimeGrid days={days} byDay={byDay} today={today} nowMin={toMin(nowTimeIn(session.organization!.timezone))} />
       )}
     </main>
   );

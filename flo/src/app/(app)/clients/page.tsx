@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { Mail, Phone, Plus, Search } from "lucide-react";
+import { Mail, Phone, Plus, Search, Upload } from "lucide-react";
 import Card from "@/components/Card";
 import { Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import { createClient } from "@/lib/supabase/server";
-import { createCustomer } from "./actions";
+import { createCustomer, importCustomers } from "./actions";
 import CustomerFields, { fullName, type Customer } from "./CustomerFields";
 
 const VUES = { tous: "Tous", clients: "Clients", prospects: "Prospects", archives: "Archivés" } as const;
 type Vue = keyof typeof VUES;
 
 export default async function Clients({ searchParams }: {
-  searchParams: Promise<{ q?: string; vue?: string; nouveau?: string; erreur?: string; info?: string }>;
+  searchParams: Promise<{ q?: string; vue?: string; nouveau?: string; import?: string; erreur?: string; info?: string }>;
 }) {
   const sp = await searchParams;
   const vue: Vue = sp.vue && sp.vue in VUES ? (sp.vue as Vue) : "tous";
@@ -32,11 +32,38 @@ export default async function Clients({ searchParams }: {
       <Card className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-bold">Clients et prospects</h1>
-          {!sp.nouveau && (
-            <Link href="/clients?nouveau=1" className={`${primaryBtn} flex items-center gap-2`}><Plus size={18} aria-hidden /> Nouvelle fiche</Link>
+          {!sp.nouveau && !sp.import && (
+            <div className="flex flex-wrap gap-2">
+              <Link href="/clients?import=1" className={`${secondaryBtn} flex items-center gap-2`}><Upload size={18} aria-hidden /> Importer</Link>
+              <Link href="/clients?nouveau=1" className={`${primaryBtn} flex items-center gap-2`}><Plus size={18} aria-hidden /> Nouvelle fiche</Link>
+            </div>
           )}
         </div>
         <Notice erreur={sp.erreur} info={sp.info} />
+        {sp.import && (
+          <form action={importCustomers} className="space-y-4 bg-surface p-4">
+            <h2 className="font-semibold">Importer tous vos clients d’un coup</h2>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-muted">
+              <li><strong className="text-ink">Excel</strong> : Fichier → Enregistrer sous → « CSV (séparateur : point-virgule) ».</li>
+              <li><strong className="text-ink">Google Contacts</strong> : Exporter → « CSV Google ».</li>
+              <li><strong className="text-ink">iPhone</strong> : app Contacts → Listes → appui long sur une liste → Exporter (fichier .vcf).</li>
+              <li>Autre logiciel : exportez en CSV. Les colonnes Nom, Prénom, Téléphone, E-mail, Adresse, Ville… sont reconnues automatiquement.</li>
+            </ul>
+            <a href="/modele-clients.csv" download className="inline-block text-sm underline">Télécharger un modèle à remplir (Excel)</a>
+            <label className="block text-sm font-medium">
+              Fichier (.csv ou .vcf, 2 Mo maximum)
+              <input type="file" name="file" required accept=".csv,.txt,.vcf,text/csv,text/vcard" className={`${inputCls} mt-1 file:mr-3 file:border-0 file:bg-ink file:px-3 file:py-1 file:text-sm file:font-semibold file:text-bg`} />
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" name="prospects" className="h-4 w-4 accent-[var(--ink)]" /> Importer comme prospects
+            </label>
+            <p className="text-xs text-muted">Les fiches déjà présentes (même e-mail ou même téléphone) sont ignorées : vous pouvez relancer un import sans créer de doublons.</p>
+            <div className="flex gap-3">
+              <button className={primaryBtn}>Importer</button>
+              <Link href="/clients" className={secondaryBtn}>Annuler</Link>
+            </div>
+          </form>
+        )}
         {sp.nouveau && (
           <form action={createCustomer} className="space-y-4 bg-surface p-4">
             <h2 className="font-semibold">Nouvelle fiche</h2>

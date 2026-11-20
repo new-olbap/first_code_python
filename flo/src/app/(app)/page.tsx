@@ -53,7 +53,7 @@ export default async function Dashboard() {
 
   return (
     <main className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-      <Card i={0} className="relative overflow-hidden lg:col-span-2">
+      <Card className="relative overflow-hidden lg:col-span-2">
         {/* Mobile : bandeau de points en haut ; ordinateur : points à droite, à côté du texte */}
         <Halftone cols={34} rows={10} cx={0.7} cy={0.1} reach={0.6} className="absolute inset-x-0 top-0 h-28 w-full text-white/40 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)] md:hidden" />
         <Halftone className="absolute inset-y-0 right-0 hidden h-full w-3/5 text-white/40 [mask-image:linear-gradient(to_right,transparent,#000_35%)] md:block" />
@@ -70,13 +70,13 @@ export default async function Dashboard() {
         </div>
       </Card>
 
-      <Card i={1}>
+      <Card>
         <MiniCalendar today={today} busyDays={busyDays} />
       </Card>
 
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:col-span-3">
-        {kpis.map((k, i) => (
-          <Card key={k.label} i={i + 2} interactive className="p-0">
+        {kpis.map((k) => (
+          <Card key={k.label} interactive className="p-0">
             <Link href={k.href} className="block p-4 md:p-5">
               <p className="text-3xl font-bold">{k.value}</p>
               <p className="mt-1 text-sm text-muted">{k.label}</p>
@@ -86,12 +86,12 @@ export default async function Dashboard() {
         ))}
       </div>
 
-      <Card i={6} className="lg:col-span-2">
+      <Card className="lg:col-span-2">
         <h2 className="mb-2 font-semibold">Activité</h2>
         <WeekChart data={chart} />
       </Card>
 
-      <Card i={7}>
+      <Card>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-semibold">Prochains rendez-vous</h2>
           <Link href="/agenda" className="text-sm hover:underline">Agenda</Link>

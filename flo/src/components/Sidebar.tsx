@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { CalendarDays, LayoutDashboard, LogOut, Menu, Plus, Users, X } from "lucide-react";
 import { NAV } from "@/lib/nav";
@@ -11,7 +11,7 @@ import type { Role } from "@/lib/supabase/server";
 const isActive = (path: string, href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(href + "/"));
 
 // Ordinateur : colonne collée à gauche. Mobile : barre de 5 boutons en bas + panneau « Plus ».
-export default function Sidebar({ orgName, role }: { orgName: string; role: Role }) {
+export default function Sidebar({ orgName, role, newRequests }: { orgName: string; role: Role; newRequests: number }) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   useEffect(() => setOpen(false), [path]); // referme le panneau après navigation
@@ -32,6 +32,8 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
               className={`group flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${active ? "bg-ink text-bg" : "text-muted hover:bg-surface hover:text-ink"}`}>
               <Icon size={20} aria-hidden className="transition-transform motion-safe:group-hover:translate-x-0.5" />
               {label}
+              {href === "/demandes" && <Badge n={newRequests} />}
+              <Pending />
             </Link>
           );
         })}
@@ -46,8 +48,9 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
         </Link>
         <MobileItem href="/clients" label="Clients" active={isActive(path, "/clients")}><Users size={22} aria-hidden /></MobileItem>
         <button onClick={() => setOpen(true)} aria-expanded={open} aria-controls="menu-plus"
-          className={`flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${more.some((n) => isActive(path, n.href)) ? "text-ink" : "text-muted"}`}>
+          className={`relative flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${more.some((n) => isActive(path, n.href)) ? "text-ink" : "text-muted"}`}>
           <Menu size={22} aria-hidden /> Plus
+          {newRequests > 0 && <span className="absolute right-1/4 top-1 h-2 w-2 rounded-full bg-accent-2"><span className="sr-only">{newRequests} demandes à traiter</span></span>}
         </button>
       </nav>
 
@@ -63,6 +66,7 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
               {more.map(({ href, label, icon: Icon }) => (
                 <Link key={href} href={href} className={`flex items-center gap-3 px-3 py-3 text-sm font-medium ${isActive(path, href) ? "bg-ink text-bg" : "bg-surface text-ink"}`}>
                   <Icon size={18} aria-hidden />{label}
+                  {href === "/demandes" && <Badge n={newRequests} />}
                 </Link>
               ))}
             </div>
@@ -81,9 +85,23 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
 function MobileItem({ href, label, active, children }: { href: string; label: string; active: boolean; children: React.ReactNode }) {
   return (
     <Link href={href} aria-current={active ? "page" : undefined}
-      className={`flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${active ? "text-ink" : "text-muted"}`}>
+      className={`relative flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${active ? "text-ink" : "text-muted"}`}>
       {children}{label}
       <span className={`h-0.5 w-5 ${active ? "bg-ink" : "bg-transparent"}`} />
+      <Pending mobile />
     </Link>
   );
+}
+
+// Point orange pendant le chargement de la page cliquée : retour immédiat au clic.
+function Pending({ mobile = false }: { mobile?: boolean }) {
+  const { pending } = useLinkStatus();
+  return (
+    <span aria-hidden className={`h-1.5 w-1.5 rounded-full bg-accent-2 ${mobile ? "absolute top-1.5" : "ml-auto"} ${pending ? "motion-safe:animate-pulse" : "invisible"}`} />
+  );
+}
+
+// Nombre de demandes à traiter.
+function Badge({ n }: { n: number }) {
+  return n > 0 ? <span className="ml-auto bg-accent-2 px-1.5 text-xs font-bold text-black" aria-label={`${n} à traiter`}>{n}</span> : null;
 }

@@ -45,4 +45,4 @@ export function Notice({ erreur, info }: { erreur?: string; info?: string }) {
   );
 }
 
-export type Msg = Promise<{ erreur?: string; info?: string }>;
+export type Msg = Promise<{ erreur?: string; info?: string; invitation?: string }>;
