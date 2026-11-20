@@ -74,7 +74,7 @@ const contact = (f, l, i) => ({ email: `${f}.${l}`.normalize("NFD").replace(/[̀
 const C = ok(await T.sb.from("customers").insert([
   ...people.map(([f, l, address, notes], i) => ({ kind: "client", first_name: f, last_name: l, address, notes, ...contact(f, l, i) })),
   ...prospects.map(([f, l, address], i) => ({ kind: "prospect", first_name: f, last_name: l, address, created_at: hoursAgo(24 * (10 + 6 * i)), ...contact(f, l, i + 40) })),
-].map((c) => ({ ...c, organization_id: org }))).select("id, first_name, last_name"), "clients");
+].map((c) => ({ ...c, organization_id: org })), { defaultToNull: false }).select("id, first_name, last_name"), "clients"); // colonnes absentes = valeur par défaut (created_at), pas null
 const cid = (name) => C.find((c) => `${c.first_name} ${c.last_name}` === name).id;
 const clients = C.filter((c) => !prospects.some(([f, l]) => c.first_name === f && c.last_name === l)).map((c) => c.id);
 
