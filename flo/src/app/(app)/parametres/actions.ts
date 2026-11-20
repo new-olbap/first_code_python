@@ -42,3 +42,14 @@ export async function updateProfile(fd: FormData) {
   if (!data?.length) go("/parametres", "erreur", "Modification impossible.");
   go("/parametres", "info", "Profil mis à jour.");
 }
+
+export async function deleteMyAccount(fd: FormData) {
+  if (str(fd, "confirm") !== "SUPPRIMER") go("/parametres", "erreur", "Tapez SUPPRIMER en majuscules pour confirmer.");
+  const sb = await createClient();
+  const { error } = await sb.rpc("delete_my_account");
+  if (error) go("/parametres", "erreur", error.code === "FL006" ? "Vous êtes la seule personne propriétaire de l’équipe : nommez d’abord un autre propriétaire (page Équipe)."
+    : error.code === "FL007" ? "Vous avez des rendez-vous dans l’agenda : réattribuez-les à quelqu’un d’autre avant de supprimer votre compte."
+    : "Suppression impossible, veuillez réessayer.");
+  await sb.auth.signOut({ scope: "local" }); // le compte n'existe plus : on efface seulement la session de ce navigateur
+  go("/connexion", "info", "Votre compte a été supprimé.");
+}

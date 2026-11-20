@@ -89,3 +89,14 @@ export async function importCustomers(fd: FormData) {
     badContact && n(badContact, "e-mail ou téléphone invalide laissé vide", "e-mails ou téléphones invalides laissés vides"),
   ].filter(Boolean).join(" · "));
 }
+
+// Suppression définitive (RGPD) : demandes supprimées, rendez-vous anonymisés. Owner/admin seulement (vérifié en base).
+export async function deleteCustomer(fd: FormData) {
+  const id = str(fd, "id");
+  if (!isUuid(id)) redirect("/clients");
+  if (fd.get("confirm") !== "on") go(`/clients/${id}`, "erreur", "Cochez la case de confirmation pour supprimer définitivement.");
+  const sb = await createClient();
+  const { error } = await sb.rpc("delete_customer", { p_id: id });
+  if (error) go(`/clients/${id}`, "erreur", error.code === "42501" ? "Seuls le propriétaire et les administrateurs peuvent supprimer un client." : "Suppression impossible, veuillez réessayer.");
+  go("/clients", "info", "Client supprimé définitivement. Ses rendez-vous passés restent dans l’agenda, anonymisés.");
+}

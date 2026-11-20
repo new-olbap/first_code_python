@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import Card from "@/components/Card";
 import { Field, Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import { createClient, getSession } from "@/lib/supabase/server";
-import { updateOrganization, updateProfile, updateSlug } from "./actions";
+import { deleteMyAccount, updateOrganization, updateProfile, updateSlug } from "./actions";
 
 export default async function Parametres({ searchParams }: { searchParams: Promise<{ erreur?: string; info?: string }> }) {
   const session = (await getSession())!;
@@ -56,6 +56,18 @@ export default async function Parametres({ searchParams }: { searchParams: Promi
         </form>
         <Link href="/nouveau-mot-de-passe" className="inline-block text-sm underline">Changer mon mot de passe</Link>
       </Card>
+      <Card className="space-y-3">
+        <h2 className="text-lg font-semibold">Supprimer mon compte</h2>
+        <p className="text-sm text-muted">
+          Si vous êtes seul dans l’entreprise, <strong className="text-ink">l’entreprise et toutes ses données</strong> (clients, rendez-vous, demandes) sont supprimées avec votre compte.
+          Dans une équipe, seul votre compte est supprimé. Pensez à <a href="/clients/export" download className="underline">exporter vos clients</a> avant. C’est irréversible.
+        </p>
+        <form action={deleteMyAccount} className="flex flex-wrap items-end gap-3">
+          <div className="w-64"><Field label="Tapez SUPPRIMER pour confirmer" name="confirm" autoComplete="off" required pattern="SUPPRIMER" /></div>
+          <button className={`${secondaryBtn} border-accent-2 text-accent-2`}>Supprimer mon compte</button>
+        </form>
+      </Card>
+      <p className="text-xs text-muted"><Link href="/mentions-legales" className="underline">Mentions légales</Link> · <Link href="/cgu" className="underline">Conditions d’utilisation</Link> · <Link href="/confidentialite" className="underline">Confidentialité</Link></p>
     </main>
   );
 }

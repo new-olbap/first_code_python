@@ -113,14 +113,16 @@ export default async function Reserver({ params, searchParams }: { params: Promi
             </div>
             <label className="flex items-start gap-2 text-sm text-muted">
               <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--ink)]" />
-              J’accepte que mes coordonnées soient utilisées par {info.name} pour traiter ma demande de rendez-vous.
+              J’accepte que mes coordonnées soient utilisées par {info.name} pour traiter ma demande de rendez-vous (<Link href="/confidentialite" target="_blank" className="underline">confidentialité</Link>).
             </label>
             <button className={buttonCls}>Demander ce rendez-vous</button>
             <p className="text-xs text-muted">{info.name} vous confirmera le rendez-vous.</p>
           </form>
         </Step>
       )}
-      <footer className="border-t border-line pt-6 text-xs text-muted">Réservation en ligne propulsée par <strong className="text-ink">Flo</strong></footer>
+      <footer className="border-t border-line pt-6 text-xs text-muted">
+        Réservation en ligne propulsée par <strong className="text-ink">Flo</strong> · <Link href="/mentions-legales" className="underline">Mentions légales</Link> · <Link href="/confidentialite" className="underline">Confidentialité</Link>
+      </footer>
     </main>
   );
 }
