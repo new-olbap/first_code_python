@@ -62,7 +62,7 @@ export default async function Reserver({ params, searchParams }: { params: Promi
             {info.services.map((s) => (
               <Link key={s.id} href={`${base}?service=${s.id}`} className={`${choice(s.id === service?.id)} block`}>
                 <span className="block font-semibold">{s.name}</span>
-                <span className="flex items-center gap-1 text-xs opacity-80"><Clock size={12} aria-hidden />{duree(s.duration_minutes)}{prix(s.price_cents) && ` · à partir de ${prix(s.price_cents)}`}</span>
+                <span className="flex items-center gap-1 text-xs opacity-80"><Clock size={12} aria-hidden />{duree(s.duration_minutes)}{s.price_cents === 0 ? " · gratuit" : prix(s.price_cents) && ` · à partir de ${prix(s.price_cents)}`}</span>
               </Link>
             ))}
           </div>

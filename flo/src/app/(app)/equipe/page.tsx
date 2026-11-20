@@ -48,7 +48,7 @@ export default async function Equipe({ searchParams }: { searchParams: Promise<{
             <div className="w-56"><Select label="Rôle" name="role" defaultValue="member" options={[["member", "Collaborateur"], ["admin", "Administrateur"]]} /></div>
             <button className={primaryBtn}>Créer un lien d’invitation</button>
           </form>
-          <p className="text-xs text-muted">Collaborateur : agenda, clients et ses propres horaires. Administrateur : en plus l’équipe, les prestations et l’entreprise (pas l’abonnement).</p>
+          <p className="text-xs text-muted">Collaborateur : agenda, clients et ses propres horaires. Administrateur : en plus l’équipe, les prestations et l’entreprise (pas la licence).</p>
           {invitations.map((i) => (
             <div key={i.id} className="space-y-2 bg-surface p-3">
               <p className="text-sm">Invitation <strong>{ROLE_LABEL[i.role].toLowerCase()}</strong> · expire le {new Date(i.expires_at).toLocaleDateString("fr-FR", { timeZone: session.organization!.timezone, day: "numeric", month: "long" })}</p>

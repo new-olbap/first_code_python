@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <p className="mb-6 flex items-center gap-3"><span className="text-4xl font-black tracking-tight">Flo</span><Shape3D size={26} /></p>
         {children}
         <p className="mt-6 border-t border-line pt-4 text-center text-xs text-muted">
-          <Link href="/cgu" className="underline">Conditions d’utilisation</Link> · <Link href="/confidentialite" className="underline">Confidentialité</Link> · <Link href="/mentions-legales" className="underline">Mentions légales</Link>
+          <Link href="/tarif" className="underline">Tarif</Link> · <Link href="/cgu" className="underline">Conditions d’utilisation</Link> · <Link href="/confidentialite" className="underline">Confidentialité</Link> · <Link href="/mentions-legales" className="underline">Mentions légales</Link>
         </p>
       </div>
     </main>

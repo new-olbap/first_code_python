@@ -4,7 +4,10 @@ import { Field, Notice, Select, primaryBtn, secondaryBtn } from "@/components/ui
 import { createClient, getSession } from "@/lib/supabase/server";
 import { createService, setServiceArchived, updateService } from "./actions";
 
-type Service = { id: string; name: string; duration_minutes: number; price_cents: number | null; archived_at: string | null };
+type Service = { id: string; name: string; duration_minutes: number; price_cents: number | null; repeat_months: number | null; archived_at: string | null };
+
+// Prestation à refaire régulièrement : le client apparaît dans « À relancer » à l'approche de l'échéance.
+const REPEAT: [string, string][] = [["", "Non"], ["6", "Tous les 6 mois"], ["12", "Tous les ans"], ["24", "Tous les 2 ans"]];
 
 const DUREES: [string, string][] = [15, 30, 45, 60, 90, 120, 180, 240, 480].map((m) => [String(m), formatDuration(m)]);
 function formatDuration(m: number) {
@@ -17,10 +20,11 @@ function ServiceFields({ s }: { s?: Service }) {
   const d = String(s?.duration_minutes ?? 60);
   const options = DUREES.some(([v]) => v === d) ? DUREES : [...DUREES, [d, formatDuration(Number(d))] as [string, string]];
   return (
-    <div className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr]">
+    <div className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr_1fr]">
       <Field label="Prestation" name="name" defaultValue={s?.name ?? ""} placeholder="Ex. Diagnostic fuite" minLength={2} maxLength={120} required />
       <Select label="Durée" name="duration" defaultValue={d} options={options} />
       <Field label="Prix indicatif (€)" name="price" defaultValue={formatPrice(s?.price_cents ?? null)} placeholder="Ex. 80" inputMode="decimal" maxLength={20} />
+      <Select label="À refaire (relance)" name="repeat" defaultValue={String(s?.repeat_months ?? "")} options={REPEAT} />
     </div>
   );
 }
@@ -29,14 +33,14 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
   const session = await getSession();
   const canEdit = session?.role === "owner" || session?.role === "admin";
   const sb = await createClient();
-  const { data } = await sb.from("services").select("id,name,duration_minutes,price_cents,archived_at").order("archived_at", { nullsFirst: true }).order("name");
+  const { data } = await sb.from("services").select("id,name,duration_minutes,price_cents,repeat_months,archived_at").order("archived_at", { nullsFirst: true }).order("name");
   const rows = (data ?? []) as Service[];
 
   return (
     <main className="space-y-5">
       <Card className="space-y-4">
         <h1 className="text-2xl font-bold">Prestations</h1>
-        <p className="text-sm text-muted">La durée sert à bloquer le bon créneau dans l’agenda et sur la page de réservation.</p>
+        <p className="text-sm text-muted">La durée sert à bloquer le bon créneau dans l’agenda et sur la page de réservation. « À refaire » (entretien annuel…) fait apparaître le client dans « À relancer » un mois avant l’échéance.</p>
         <Notice {...await searchParams} />
         {canEdit && (
           <form key={rows.length} action={createService} className="space-y-3 bg-surface p-4">
@@ -66,6 +70,7 @@ export default async function Prestations({ searchParams }: { searchParams: Prom
           <div key={s.id} className="flex items-center gap-4 bg-surface p-4">
             <span className="flex-1 font-semibold">{s.name}</span>
             <span className="flex items-center gap-1 text-sm text-muted"><Clock size={14} aria-hidden />{formatDuration(s.duration_minutes)}</span>
+            {s.repeat_months && <span className="text-sm text-muted">{REPEAT.find(([v]) => v === String(s.repeat_months))?.[1] ?? `Tous les ${s.repeat_months} mois`}</span>}
             {s.price_cents !== null && <span className="text-sm font-semibold">{formatPrice(s.price_cents)} €</span>}
           </div>
         ))}
