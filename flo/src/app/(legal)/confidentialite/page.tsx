@@ -7,7 +7,7 @@ export default function Confidentialite() {
       <h1>Politique de confidentialité</h1>
       <h2>Qui est responsable ?</h2>
       <ul>
-        <li><strong>Comptes des professionnels</strong> (utilisateurs de Flo) : l’éditeur de Flo, <A>nom ou raison sociale</A>, est responsable de traitement.</li>
+        <li><strong>Comptes des professionnels</strong> (utilisateurs de Flo) : l’éditeur de Flo, Daniel Alexandre (entrepreneur individuel), est responsable de traitement.</li>
         <li><strong>Données des clients d’un professionnel</strong> (par exemple une personne qui réserve un rendez-vous) : le professionnel concerné est responsable de traitement ; Flo n’intervient que comme sous-traitant pour son compte.</li>
       </ul>
       <h2>Données traitées</h2>
@@ -23,7 +23,7 @@ export default function Confidentialite() {
         <li>Sécuriser le service et lutter contre les abus (intérêt légitime).</li>
       </ul>
       <h2>Qui y a accès ?</h2>
-      <p>Uniquement les membres de l’entreprise concernée — chaque entreprise est isolée des autres — et nos prestataires techniques : <strong>Supabase</strong> (base de données et connexion) et <strong>Vercel</strong> (hébergement). <A>ajouter le prestataire d’envoi d’e-mails quand il sera branché</A>. Ces prestataires peuvent être situés hors de l’Union européenne ; les transferts sont encadrés par <A>clauses contractuelles types / Data Privacy Framework — à vérifier</A>.</p>
+      <p>Uniquement les membres de l’entreprise concernée — chaque entreprise est isolée des autres — et nos prestataires techniques : <strong>Supabase</strong> (base de données et connexion) et <strong>Vercel</strong> (hébergement). <A>ajouter le prestataire d’envoi d’e-mails quand il sera branché</A>. Les données sont stockées et traitées sur des serveurs situés à Paris. Ces prestataires étant des sociétés américaines, un accès depuis l’étranger reste possible pour leurs besoins techniques ; il est encadré par <A>clauses contractuelles types / Data Privacy Framework — à vérifier</A>.</p>
       <h2>Combien de temps ?</h2>
       <ul>
         <li>Compte et données de l’entreprise : tant que le compte est actif, puis supprimés avec le compte.</li>
@@ -33,7 +33,7 @@ export default function Confidentialite() {
       <h2>Cookies</h2>
       <p>Flo n’utilise que les cookies strictement nécessaires à la connexion. Aucun cookie publicitaire ou de mesure d’audience : aucun consentement n’est donc demandé.</p>
       <h2>Vos droits</h2>
-      <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en demander la portabilité, vous opposer à leur traitement ou en demander la limitation. Si vous êtes client d’un professionnel, adressez-vous d’abord à lui. Sinon, écrivez à <A>adresse e-mail de contact</A>. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
+      <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en demander la portabilité, vous opposer à leur traitement ou en demander la limitation. Si vous êtes client d’un professionnel, adressez-vous d’abord à lui. Sinon, écrivez à <a href="mailto:ddmpalexandre@gmail.com" className="underline">ddmpalexandre@gmail.com</a>. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
       <h2>Sécurité</h2>
       <p>Connexion chiffrée (HTTPS), mots de passe chiffrés, isolation stricte des données de chaque entreprise vérifiée par des tests automatiques.</p>
     </>
