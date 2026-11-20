@@ -1,17 +1,16 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { Check, ExternalLink, TriangleAlert } from "lucide-react";
 import Card from "@/components/Card";
 import CopyButton from "@/components/CopyButton";
 import { Notice, primaryBtn, secondaryBtn } from "@/components/ui";
+import { bookingUrl } from "@/lib/booking";
 import { createClient, getSession } from "@/lib/supabase/server";
 import { setBookingEnabled } from "./actions";
 
 export default async function Reservations({ searchParams }: { searchParams: Promise<{ erreur?: string; info?: string }> }) {
   const session = (await getSession())!;
   const org = session.organization!;
-  const h = await headers();
-  const url = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}/r/${org.slug}`;
+  const url = await bookingUrl(org.slug);
   const sb = await createClient();
   const [{ count: services }, { data: rules }] = await Promise.all([
     sb.from("services").select("id", { count: "exact", head: true }).is("archived_at", null),

@@ -4,8 +4,10 @@ import { createClient, getSession } from "@/lib/supabase/server";
 import { go, isUuid, parsePrice, str } from "@/lib/form";
 
 function parseService(fd: FormData) {
-  const s = { name: str(fd, "name", 120), duration_minutes: Number(str(fd, "duration")), price_cents: parsePrice(str(fd, "price", 20)) };
+  const repeat = str(fd, "repeat");
+  const s = { name: str(fd, "name", 120), duration_minutes: Number(str(fd, "duration")), price_cents: parsePrice(str(fd, "price", 20)), repeat_months: repeat ? Number(repeat) : null };
   const error = s.name.length < 2 ? "Indiquez le nom de la prestation."
+    : s.repeat_months !== null && !(Number.isInteger(s.repeat_months) && s.repeat_months >= 1 && s.repeat_months <= 60) ? "Périodicité invalide."
     : !Number.isInteger(s.duration_minutes) || s.duration_minutes < 5 || s.duration_minutes > 1440 ? "Durée invalide (5 min à 24 h)."
     : Number.isNaN(s.price_cents) ? "Prix invalide (ex. 80 ou 80,50)."
     : null;

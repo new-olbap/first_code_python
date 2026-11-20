@@ -52,7 +52,7 @@ ok(await T.sb.from("time_off").insert({ organization_id: org, user_id: L.id, sta
 const S = Object.fromEntries(ok(await T.sb.from("services").insert([
   { name: "Dépannage fuite", duration_minutes: 60, price_cents: 8900 },
   { name: "Débouchage canalisation", duration_minutes: 60, price_cents: 11000 },
-  { name: "Entretien chaudière", duration_minutes: 60, price_cents: 12000 },
+  { name: "Entretien chaudière", duration_minutes: 60, price_cents: 12000, repeat_months: 12 },
   { name: "Installation chauffe-eau", duration_minutes: 180, price_cents: 45000 },
   { name: "Visite pour devis", duration_minutes: 30, price_cents: 0 },
 ].map((s) => ({ ...s, organization_id: org }))).select("id, name"), "prestations").map((s) => [s.name, s.id]));
@@ -73,7 +73,7 @@ const prospects = [["Amandine", "Colin", null], ["Hugo", "Masson", "10 rue Vaube
 const contact = (f, l, i) => ({ email: `${f}.${l}`.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase() + "@example.com", phone: `06 39 98 00 ${String(i + 10).padStart(2, "0")}` });
 const C = ok(await T.sb.from("customers").insert([
   ...people.map(([f, l, address, notes], i) => ({ kind: "client", first_name: f, last_name: l, address, notes, ...contact(f, l, i) })),
-  ...prospects.map(([f, l, address], i) => ({ kind: "prospect", first_name: f, last_name: l, address, ...contact(f, l, i + 40) })),
+  ...prospects.map(([f, l, address], i) => ({ kind: "prospect", first_name: f, last_name: l, address, created_at: hoursAgo(24 * (10 + 6 * i)), ...contact(f, l, i + 40) })),
 ].map((c) => ({ ...c, organization_id: org }))).select("id, first_name, last_name"), "clients");
 const cid = (name) => C.find((c) => `${c.first_name} ${c.last_name}` === name).id;
 const clients = C.filter((c) => !prospects.some(([f, l]) => c.first_name === f && c.last_name === l)).map((c) => c.id);
@@ -132,6 +132,8 @@ const req = async (r) => ok(await T.sb.from("requests").insert({ organization_id
 const paul = ok(await T.sb.from("customers").insert({ organization_id: org, kind: "prospect", first_name: "Paul", last_name: "Durand", email: "paul.durand@example.com", phone: "06 39 98 00 91" }).select("id").single(), "Paul").id;
 await req({ customer_id: paul, source: "email", created_at: hoursAgo(3), message: "Objet : Fuite sous l'évier\n\nBonjour,\nJ'ai une fuite sous l'évier de la cuisine depuis ce matin, j'ai coupé l'eau. Vous pourriez passer cette semaine ?\nMerci,\nPaul\n06 39 98 00 91" });
 // c) E-mail d'une cliente déjà connue, sans créneau
+// c bis) E-mail d'une prospecte resté sans réponse du client depuis 3 jours : il apparaît dans « À relancer »
+await req({ customer_id: cid("Amandine Colin"), source: "email", created_at: hoursAgo(75), message: "Objet : Ballon d'eau chaude\n\nBonjour, mon ballon fait un bruit bizarre, pouvez-vous passer le voir ?\nAmandine Colin" });
 await req({ customer_id: cid("Martine Roux"), source: "email", created_at: hoursAgo(26), message: "Objet : Entretien chaudière\n\nBonjour Monsieur Martin,\nC'est bientôt l'entretien annuel de ma chaudière. Quelles sont vos disponibilités ?\nBonne journée,\nMartine Roux" });
 // d) E-mail auquel l'artisan a répondu avec son lien : le client a choisi un créneau, à confirmer
 const sk = await slot("Visite pour devis", 3);

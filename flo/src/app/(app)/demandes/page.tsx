@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { headers } from "next/headers";
-import { CalendarPlus, Check, Mail, MapPin, MessageSquare, Phone, X } from "lucide-react";
-import CopyButton from "@/components/CopyButton";
+import { CalendarPlus, Check, Mail, MapPin, Phone, X } from "lucide-react";
+import ReplyButtons from "@/components/ReplyButtons";
 import Card from "@/components/Card";
 import { Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
+import { bookingUrl as getBookingUrl } from "@/lib/booking";
 import { fmt } from "@/lib/dates";
 import { createClient, getSession } from "@/lib/supabase/server";
 import type { AgendaRow } from "../agenda/types";
@@ -20,8 +20,7 @@ export default async function Demandes({ searchParams }: { searchParams: Promise
   const sp = await searchParams;
   const traitees = sp.vue === "traitees";
   const org = (await getSession())!.organization!, tz = org.timezone;
-  const h = await headers();
-  const bookingUrl = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}/r/${org.slug}`;
+  const bookingUrl = await getBookingUrl(org.slug);
   const sb = await createClient();
   const q = sb.from("requests").select("id, status, source, message, created_at, appointment_id, customer:customers(id, first_name, last_name, phone, email, address)");
   const { data } = traitees ? await q.neq("status", "new").order("created_at", { ascending: false }).limit(50)
@@ -86,11 +85,9 @@ export default async function Demandes({ searchParams }: { searchParams: Promise
                 <div className="space-y-3 bg-surface p-4">
                   <p className="text-sm font-semibold">Pas encore de créneau : proposez vos disponibilités</p>
                   <p className="text-xs text-muted">Le client choisit parmi vos créneaux libres. Cette demande se met alors à jour ici avec le créneau choisi, et le créneau est bloqué.{!org.booking_enabled && <strong className="text-accent-2"> Votre réservation en ligne est fermée : ouvrez-la dans Réservations, sinon le lien ne marchera pas.</strong>}</p>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    {c.email && <a href={`mailto:${c.email}?subject=${encodeURIComponent(`Votre demande — ${org.name}`)}&body=${encodeURIComponent(reply)}`} className={`${primaryBtn} flex items-center gap-2`}><Mail size={16} aria-hidden />Répondre par e-mail</a>}
-                    {c.phone && <a href={`sms:${c.phone.replace(/[^\d+]/g, "")}?body=${encodeURIComponent(reply)}`} className={`${secondaryBtn} flex items-center gap-2`}><MessageSquare size={16} aria-hidden />Répondre par SMS</a>}
-                    <CopyButton text={reply} label="Copier la réponse" />
-                    <Link href={`/agenda/nouveau?client=${c.id}`} className={`${secondaryBtn} flex items-center gap-2`}><CalendarPlus size={16} aria-hidden />Créer le rendez-vous moi-même</Link>
+                  <div className="flex flex-wrap gap-2">
+                    <ReplyButtons email={c.email} phone={c.phone} subject={`Votre demande — ${org.name}`} text={reply} />
+                    <Link href={`/agenda/nouveau?client=${c.id}`} className={`${secondaryBtn} flex items-center gap-2 text-sm`}><CalendarPlus size={16} aria-hidden />Créer le rendez-vous moi-même</Link>
                   </div>
                 </div>
               );
