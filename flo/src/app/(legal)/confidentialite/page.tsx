@@ -7,7 +7,7 @@ export default function Confidentialite() {
       <h1>Politique de confidentialité</h1>
       <h2>Qui est responsable ?</h2>
       <ul>
-        <li><strong>Comptes des professionnels</strong> (utilisateurs de Flo) : l’éditeur de Flo, Daniel Alexandre (entrepreneur individuel), est responsable de traitement.</li>
+        <li><strong>Comptes des professionnels</strong> (utilisateurs de Flo) : l’éditeur de Flo, Alexandre Daniel (entrepreneur individuel), est responsable de traitement.</li>
         <li><strong>Données des clients d’un professionnel</strong> (par exemple une personne qui réserve un rendez-vous) : le professionnel concerné est responsable de traitement ; Flo n’intervient que comme sous-traitant pour son compte.</li>
       </ul>
       <h2>Données traitées</h2>

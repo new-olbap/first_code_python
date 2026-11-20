@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/", "/r/", "/invitation/", "/mentions-legales", "/cgu", "/confidentialite"]; // /r/… : réservation publique
+const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/", "/r/", "/invitation/", "/mentions-legales", "/cgu", "/confidentialite", "/tarif"]; // /r/… : réservation publique
 
 // Rafraîchit la session Supabase et renvoie vers /connexion si on n'est pas connecté.
 export async function middleware(request: NextRequest) {

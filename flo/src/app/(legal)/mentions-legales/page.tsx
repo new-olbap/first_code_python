@@ -6,12 +6,12 @@ export default function MentionsLegales() {
     <>
       <h1>Mentions légales</h1>
       <h2>Éditeur du service</h2>
-      <p>Le service Flo est édité par <strong>Daniel Alexandre</strong>, entrepreneur individuel (micro-entreprise), <A>adresse</A>.</p>
+      <p>Le service Flo est édité par <strong>Alexandre Daniel</strong>, entrepreneur individuel (micro-entreprise), <A>adresse</A>.</p>
       <ul>
         <li>SIRET : <A>numéro SIRET</A></li>
         <li>TVA non applicable, article 293 B du Code général des impôts.</li>
         <li>Contact : <a href="mailto:ddmpalexandre@gmail.com" className="underline">ddmpalexandre@gmail.com</a></li>
-        <li>Directeur de la publication : Daniel Alexandre</li>
+        <li>Directeur de la publication : Alexandre Daniel</li>
       </ul>
       <h2>Hébergement</h2>
       <p>L’application est hébergée par <strong>Vercel Inc.</strong> (États-Unis), sur des serveurs situés en Europe (Paris). Les données sont stockées par <strong>Supabase Inc.</strong>, sur des serveurs situés à Paris (France).</p>
