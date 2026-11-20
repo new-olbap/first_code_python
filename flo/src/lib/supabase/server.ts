@@ -23,8 +23,11 @@ export type Role = "owner" | "admin" | "member";
 // Utilisateur connecté + son entreprise, mis en cache pour la durée d'une requête.
 export const getSession = cache(async () => {
   const sb = await createClient();
-  const { data: { user } } = await sb.auth.getUser();
-  if (!user) return null;
+  // Vérifie la signature du jeton localement (clé publique du projet) : pas d'aller-retour vers Supabase.
+  const { data } = await sb.auth.getClaims();
+  const id = data?.claims?.sub;
+  if (!id) return null;
+  const user = { id };
   const [{ data: profile }, { data: membership }] = await Promise.all([
     sb.from("profiles").select("first_name").eq("id", user.id).maybeSingle(),
     // shortcut: une seule entreprise par utilisateur ; ajouter un sélecteur d'entreprise si besoin.

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { CalendarDays, LayoutDashboard, LogOut, Menu, Plus, Users, X } from "lucide-react";
 import { NAV } from "@/lib/nav";
@@ -32,6 +32,7 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
               className={`group flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${active ? "bg-ink text-bg" : "text-muted hover:bg-surface hover:text-ink"}`}>
               <Icon size={20} aria-hidden className="transition-transform motion-safe:group-hover:translate-x-0.5" />
               {label}
+              <Pending />
             </Link>
           );
         })}
@@ -81,9 +82,18 @@ export default function Sidebar({ orgName, role }: { orgName: string; role: Role
 function MobileItem({ href, label, active, children }: { href: string; label: string; active: boolean; children: React.ReactNode }) {
   return (
     <Link href={href} aria-current={active ? "page" : undefined}
-      className={`flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${active ? "text-ink" : "text-muted"}`}>
+      className={`relative flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${active ? "text-ink" : "text-muted"}`}>
       {children}{label}
       <span className={`h-0.5 w-5 ${active ? "bg-ink" : "bg-transparent"}`} />
+      <Pending mobile />
     </Link>
+  );
+}
+
+// Point orange pendant le chargement de la page cliquée : retour immédiat au clic.
+function Pending({ mobile = false }: { mobile?: boolean }) {
+  const { pending } = useLinkStatus();
+  return (
+    <span aria-hidden className={`h-1.5 w-1.5 rounded-full bg-accent-2 transition-opacity motion-safe:animate-pulse ${mobile ? "absolute top-1.5" : "ml-auto"} ${pending ? "opacity-100" : "opacity-0"}`} />
   );
 }

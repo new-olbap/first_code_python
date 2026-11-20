@@ -16,7 +16,9 @@ export async function middleware(request: NextRequest) {
       },
     },
   });
-  const { data: { user } } = await supabase.auth.getUser();
+  // getClaims : rafraîchit la session si besoin et vérifie le jeton localement (plus rapide que getUser).
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims?.sub;
 
   const path = request.nextUrl.pathname;
   const isPublic = PUBLIC.some((p) => path === p || path.startsWith(p));
