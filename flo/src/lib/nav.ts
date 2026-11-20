@@ -5,7 +5,7 @@ import {
 
 // Pages du cahier des charges (section 4). href "/" = dashboard. ownerOnly = réservé au propriétaire.
 export const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard, desc: "" },
+  { href: "/", label: "Tableau de bord", icon: LayoutDashboard, desc: "" },
   { href: "/agenda", label: "Agenda", icon: CalendarDays, desc: "Créer, déplacer, modifier, annuler ou confirmer un RDV." },
   { href: "/clients", label: "Clients", icon: Users, desc: "Ajouter, rechercher, modifier, archiver un client." },
   { href: "/prestations", label: "Prestations", icon: Wrench, desc: "Vos services, leur durée et leur prix." },

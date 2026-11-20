@@ -42,9 +42,10 @@ if (!ok(await L.sb.from("memberships").select("organization_id").eq("user_id", L
 for (const t of ["requests", "appointments", "customers", "services", "time_off"]) ok(await T.sb.from(t).delete().eq("organization_id", org), `vidage ${t}`);
 
 // ===== 3. Horaires, absence, prestations =====
-const semaine = (am, pm) => [1, 2, 3, 4, 5].flatMap((d) => [{ weekday: d, start_time: "08:00", end_time: am }, { weekday: d, start_time: "13:30", end_time: pm }]);
-ok(await T.sb.rpc("set_weekly_hours", { p_user: T.id, p_rules: [...semaine("12:00", "18:00"), { weekday: 6, start_time: "09:00", end_time: "12:00" }] }), "horaires Thomas");
-ok(await T.sb.rpc("set_weekly_hours", { p_user: L.id, p_rules: semaine("12:00", "17:00") }), "horaires Lucas");
+// Une plage par jour, comme la page Équipe (qui n'en gère qu'une).
+const semaine = (fin) => [1, 2, 3, 4, 5].map((d) => ({ weekday: d, start_time: "08:00", end_time: fin }));
+ok(await T.sb.rpc("set_weekly_hours", { p_user: T.id, p_rules: [...semaine("18:00"), { weekday: 6, start_time: "09:00", end_time: "12:00" }] }), "horaires Thomas");
+ok(await T.sb.rpc("set_weekly_hours", { p_user: L.id, p_rules: semaine("17:00") }), "horaires Lucas");
 const conge = [...Array(14).keys()].map((i) => i + 7).find((n) => weekday(n) === 4); // jeudi de la semaine prochaine
 ok(await T.sb.from("time_off").insert({ organization_id: org, user_id: L.id, starts_on: day(conge), ends_on: day(conge + 1), reason: "Congés" }), "absence");
 
