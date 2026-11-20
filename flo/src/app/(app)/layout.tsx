@@ -3,16 +3,17 @@ import Link from "next/link";
 import { LogOut, Plus, Search } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import { signOut } from "@/lib/actions";
-import { getSession } from "@/lib/supabase/server";
+import { createClient, getSession } from "@/lib/supabase/server";
 
 export default async function AppLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   const session = await getSession();
   if (!session) redirect("/connexion");
   if (!session.organization || !session.role) redirect("/bienvenue");
+  const { count: newRequests } = await (await createClient()).from("requests").select("id", { count: "exact", head: true }).eq("status", "new");
 
   return (
     <>
-      <Sidebar orgName={session.organization.name} role={session.role} />
+      <Sidebar orgName={session.organization.name} role={session.role} newRequests={newRequests ?? 0} />
       <div className="px-4 pb-28 pt-4 md:pl-[17.5rem] md:pr-6 md:pb-8">
         <header className="glass mb-5 flex items-center gap-3 px-4 py-3">
           <span className="text-2xl font-black md:hidden">Flo</span>

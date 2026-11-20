@@ -31,12 +31,12 @@ export const getSession = cache(async () => {
   const [{ data: profile }, { data: membership }] = await Promise.all([
     sb.from("profiles").select("first_name").eq("id", user.id).maybeSingle(),
     // shortcut: une seule entreprise par utilisateur ; ajouter un sélecteur d'entreprise si besoin.
-    sb.from("memberships").select("role, organization:organizations(id, name, timezone)").eq("user_id", user.id).limit(1).maybeSingle(),
+    sb.from("memberships").select("role, organization:organizations(id, name, timezone, slug, booking_enabled)").eq("user_id", user.id).limit(1).maybeSingle(),
   ]);
   return {
     user,
     firstName: (profile?.first_name as string | null) ?? "",
     role: (membership?.role as Role | undefined) ?? null,
-    organization: (membership?.organization as unknown as { id: string; name: string; timezone: string } | null) ?? null,
+    organization: (membership?.organization as unknown as { id: string; name: string; timezone: string; slug: string; booking_enabled: boolean } | null) ?? null,
   };
 });
