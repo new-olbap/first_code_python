@@ -218,6 +218,18 @@ body::before { content: ""; position: fixed; inset: 0; z-index: 100; pointer-eve
   .gallery img { min-height: 160px; }
   .logo { font-size: 16px; }
 }
+
+/* Version claire : eau de piscine vue du dessus, bleu marine pour le texte */
+:root { --canvas: #f3f8f7; --card: #e4efee; --deep: #0b2a36; --line: #cfe0df; --accent: #0f7f8a; --accent-2: #7fd4d8; --ink: #0b2a36; --muted: #4b6670; --sand: #b8893a; }
+.pill:hover, .pill:focus-visible, .pill.fill, .badge.on, .marquee, .dock a:hover, .card .ph b { color: #fff; }
+.pill.fill:hover { color: var(--accent); }
+.badge { background: #fff; }
+a.card:hover { background: #fff; }
+.cover figcaption, .gallery figcaption { background: rgba(255,255,255,.92); color: var(--ink); }
+.veil { background: linear-gradient(90deg, rgba(243,248,247,.93) 0%, rgba(243,248,247,.72) 45%, rgba(243,248,247,.05) 100%); }
+#water { background: radial-gradient(120% 90% at 70% 20%, #bfeff0, #7fd4d8 50%, #3fb0c0); }
+footer { color: #cfe3e4; } footer .small, .foot ul, .legal { color: #a9c6c9; } footer .logo { color: #fff; } .foot h4 { color: var(--accent-2); } .legal { border-top-color: rgba(255,255,255,.15); }
+@media (max-width: 1080px) { .veil { background: linear-gradient(180deg, rgba(243,248,247,.92), rgba(243,248,247,.62) 55%, rgba(243,248,247,.2)); } }
 </style>
 </head>
 <body>
@@ -469,9 +481,9 @@ if (!calm && matchMedia('(hover: hover)').matches) addEventListener('pointermove
     float sky=smoothstep(.55,.97,sin(R.x*4.+R.y*2.5+1.)*.5+.5);
     float caus=pow(1.-abs(sin(c0*17.+t*.1)),10.);
     float fres=pow(1.-N.z,2.);
-    vec3 col=mix(vec3(.008,.06,.09),vec3(.03,.27,.37),smoothstep(.25,.8,c0));
-    col+=vec3(.3,.75,.8)*sky*.32+vec3(.8,.97,.97)*caus*.16*smoothstep(.35,.8,c0)+vec3(.55,.85,.9)*fres*.45;
-    col+=pow(max(dot(N,normalize(vec3(.4,.6,.7))),0.),70.)*.7;
+    vec3 col=mix(vec3(.24,.64,.74),vec3(.52,.85,.88),smoothstep(.25,.8,c0));
+    col+=vec3(.9,1.,1.)*sky*.16+vec3(1.)*caus*.38*smoothstep(.3,.8,c0)+vec3(.85,.97,.98)*fres*.3;
+    col+=pow(max(dot(N,normalize(vec3(.4,.6,.7))),0.),70.)*.45;
     gl_FragColor=vec4(col,1.);}`;
   const sh = (k, src) => { const o = gl.createShader(k); gl.shaderSource(o, src); gl.compileShader(o); return o; };
   const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0,1);}')); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); gl.useProgram(p);
