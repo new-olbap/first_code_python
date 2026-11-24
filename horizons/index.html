@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les Horizons Bleus — Pisciniste à Bordeaux</title>
+<meta name="description" content="Les Horizons Bleus, artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien de piscines. Plus de 350 piscines réalisées en Gironde, 5/5 sur Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+/* Même système que Vapote-Moi (fond sombre travaillé, un accent, titres géants, bandeau, cartes),
+   habillé pour un pisciniste : bleu de grand fond, turquoise d'eau, sable de margelle. Police large « horizon » : Archivo étirée. */
+:root {
+  --canvas: #061419; --card: #0c222a; --deep: #030c10; --line: #17343f;
+  --accent: #7fd4d8; --accent-2: #24707f; --ink: #eef5f3; --muted: #a2b7b9; --sand: #e4cf9d;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--canvas); color: var(--ink); font: 450 16px/1.45 'Archivo', system-ui, sans-serif; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+.display, h1, h2, h3, .logo, .stat, .marquee span, .step b { font-family: 'Archivo', sans-serif; font-stretch: 125%; font-weight: 800; text-transform: uppercase; }
+.hl { color: var(--accent); }
+.display { font-size: clamp(46px, 8.4vw, 136px); line-height: .92; letter-spacing: -.035em; }
+h2 { font-size: clamp(38px, 5.8vw, 92px); line-height: .92; letter-spacing: -.03em; }
+h3 { font-size: clamp(20px, 1.9vw, 27px); line-height: 1; letter-spacing: -.01em; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.lead { font-size: 18px; line-height: 1.45; max-width: 46ch; }
+.small { font-size: 14px; color: var(--muted); }
+.stars { color: var(--sand); letter-spacing: 2px; }
+
+/* Boutons et étiquettes : angles droits */
+.pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--accent); color: var(--accent); border-radius: 3px;
+  padding: 10px 18px; font: 600 13px 'Archivo', sans-serif; letter-spacing: .06em; text-transform: uppercase; background: transparent;
+  transition: background .2s, color .2s; cursor: pointer; white-space: nowrap; }
+.pill:hover, .pill:focus-visible { background: var(--accent); color: var(--deep); }
+.pill.fill { background: var(--accent); color: var(--deep); padding: 14px 24px; }
+.pill.fill:hover { background: transparent; color: var(--accent); }
+.badge { display: inline-block; border-radius: 3px; padding: 6px 12px; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: var(--deep); color: var(--accent); align-self: flex-start; }
+.badge.on { background: var(--accent); color: var(--deep); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.waves { border: 0; height: 12px; margin: 0; color: var(--accent); opacity: .5;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='12'%3E%3Cpath d='M0 6q10-8 20 0t20 0' fill='none' stroke='%237fd4d8' stroke-width='1.5'/%3E%3C/svg%3E") repeat-x center; }
+
+/* Navigation */
+header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--canvas) 86%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: 76px; }
+.nav ul { list-style: none; padding: 0; display: flex; gap: 8px; }
+.nav ul.r { justify-content: flex-end; }
+.logo { display: flex; align-items: center; gap: 12px; font-size: 19px; letter-spacing: -.01em; }
+.logo i { width: 34px; height: 34px; border: 2px solid var(--accent); display: grid; place-items: center; }
+.logo i svg { width: 20px; color: var(--accent); }
+.burger { display: none; }
+.menu { display: none; gap: 8px; padding: 8px 0 20px; }
+.menu .pill { justify-content: center; }
+
+/* Accueil : eau animée en fond (WebGL), voile pour lire, diaporama de photos à droite */
+.hero { position: relative; isolation: isolate; overflow: hidden; padding: clamp(48px, 7vw, 104px) 0 clamp(48px, 6vw, 84px); min-height: min(92vh, 900px); display: flex; align-items: center; }
+.hero > .wrap { width: 100%; }
+#water { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; background: radial-gradient(120% 90% at 70% 20%, #1d6c7c, #08303c 50%, #031016); }
+.veil { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(3,12,16,.9) 0%, rgba(3,12,16,.62) 48%, rgba(3,12,16,.12) 100%); }
+.hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; margin-top: 22px; }
+.hero .line { display: block; overflow: hidden; padding-top: .06em; margin-top: -.06em; }
+.hero .line > span { display: block; transform: translateY(105%); transition: transform 1s cubic-bezier(.2,.8,.1,1); }
+.ready .hero .line > span { transform: none; }
+.ready .hero .line:nth-child(2) span { transition-delay: .1s; }
+.ready .hero .line:nth-child(3) span { transition-delay: .2s; }
+.hero .lead { margin-top: 28px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.visual { position: relative; width: clamp(260px, 29vw, 420px); aspect-ratio: 4/5; }
+.visual .frame { position: absolute; inset: 0; border: 1.5px solid var(--accent); transform: translate(18px, 18px); opacity: .55; }
+.visual .main { position: absolute; inset: 0; overflow: hidden; background: var(--deep); }
+.visual .main img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.16); transition: opacity 1.4s ease, transform 6s ease-out; }
+.visual .main img.on { opacity: 1; transform: scale(1.04); }
+.visual .small { position: absolute; width: 38%; aspect-ratio: 1; overflow: hidden; outline: 4px solid var(--canvas); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.visual .small img { width: 100%; height: 100%; object-fit: cover; }
+.visual .small.a { right: -9%; top: 8%; } .visual .small.b { left: -18%; bottom: 10%; width: 32%; }
+.visual .count { position: absolute; left: -10%; top: -5%; background: var(--sand); color: var(--deep); padding: 12px 16px; line-height: 1; }
+.visual .count b { display: block; font: 800 34px 'Archivo', sans-serif; font-stretch: 125%; letter-spacing: -.03em; }
+.visual .count small { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.visual .dots { position: absolute; left: 0; right: 0; bottom: -30px; display: flex; gap: 6px; justify-content: center; }
+.visual .dots i { width: 22px; height: 3px; background: var(--line); transition: background .4s; }
+.visual .dots i.on { background: var(--accent); }
+
+/* Bandeau défilant */
+.marquee { overflow: hidden; background: var(--accent); color: var(--deep); padding: 16px 0; }
+.marquee div { display: flex; gap: 44px; width: max-content; animation: slide 40s linear infinite; }
+.marquee span { font-size: clamp(22px, 3vw, 38px); white-space: nowrap; letter-spacing: -.02em; }
+.marquee span::after { content: "≈"; margin-left: 44px; opacity: .45; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* Sections */
+section { padding: clamp(72px, 9vw, 120px) 0; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 44px; }
+.split { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: center; }
+.perks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.perk { background: var(--card); padding: 20px 16px; display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 14px; border-top: 2px solid var(--accent-2); }
+.perk svg { width: 34px; flex: none; color: var(--accent); }
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.card { background: var(--card); padding: 14px; display: flex; flex-direction: column; gap: 12px; transition: background .25s; }
+a.card:hover { background: var(--deep); }
+.card .ph { aspect-ratio: 4/3; overflow: hidden; background: var(--deep); position: relative; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+a.card:hover .ph img { transform: scale(1.06); }
+.card .ph b { position: absolute; left: 10px; top: 10px; background: var(--deep); color: var(--accent); font: 800 14px 'Archivo', sans-serif; font-stretch: 125%; padding: 6px 9px; }
+.card .go { margin-top: auto; color: var(--accent); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.stat { font-size: clamp(84px, 11vw, 170px); line-height: .82; color: var(--accent); letter-spacing: -.05em; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 36px; }
+.stats div { background: var(--card); padding: 20px; }
+.stats b { display: block; font: 800 clamp(36px, 4vw, 56px)/1 'Archivo', sans-serif; font-stretch: 125%; letter-spacing: -.04em; color: var(--sand); }
+.cover { position: relative; overflow: hidden; }
+.cover img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.cover figcaption { position: absolute; left: 12px; bottom: 12px; background: var(--deep); color: var(--muted); padding: 6px 12px; font-size: 12px; border-radius: 3px; }
+
+/* Réalisations : grandes cartes en alternance */
+.projects { display: grid; gap: 10px; }
+.project { display: grid; grid-template-columns: 1.5fr 1fr; background: var(--card); min-height: 380px; }
+.project:nth-child(even) { grid-template-columns: 1fr 1.5fr; }
+.project:nth-child(even) .pimg { order: 2; }
+.project .pimg { overflow: hidden; position: relative; }
+.project .pimg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.project:hover .pimg img { transform: scale(1.05); }
+.project .ptxt { padding: clamp(24px, 3vw, 44px); display: flex; flex-direction: column; gap: 16px; justify-content: space-between; }
+.project .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.project .num { font: 800 15px 'Archivo', sans-serif; font-stretch: 125%; color: var(--accent); }
+.project h3 { font-size: clamp(30px, 3.4vw, 52px); letter-spacing: -.03em; }
+
+/* Étapes */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; counter-reset: s; }
+.step { border-top: 1px solid var(--line); padding: 22px 4px 0; display: grid; gap: 12px; position: relative; }
+.step::before { content: ""; position: absolute; top: -1px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 1.2s cubic-bezier(.2,.7,.2,1) .2s; }
+.step.in::before { width: 100%; }
+.step b { font-size: 44px; color: var(--accent); letter-spacing: -.04em; line-height: 1; }
+
+/* Avis */
+.quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.quote { background: var(--card); padding: 22px; display: flex; flex-direction: column; gap: 16px; border-left: 2px solid var(--accent); }
+.quote p { font-size: 17px; line-height: 1.45; }
+.quote b { font-size: 13px; color: var(--muted); font-weight: 600; margin-top: auto; }
+
+/* Galerie */
+.gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto; gap: 10px; }
+.gallery figure { margin: 0; overflow: hidden; position: relative; }
+.gallery figure:first-child { grid-row: span 2; }
+.gallery img { width: 100%; height: 100%; min-height: 240px; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.gallery figure:hover img { transform: scale(1.06); }
+.gallery figcaption { position: absolute; left: 10px; bottom: 10px; background: var(--deep); color: var(--muted); padding: 5px 12px; font-size: 12px; border-radius: 3px; }
+
+/* Contact */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.duo .card { padding: clamp(24px, 3vw, 40px); gap: 18px; }
+.duo h2 { font-size: clamp(34px, 4.4vw, 68px); }
+.zones { display: flex; flex-wrap: wrap; gap: 6px; }
+.zones span { border: 1px solid var(--line); padding: 6px 10px; font-size: 13px; color: var(--muted); border-radius: 3px; }
+
+footer { background: var(--deep); padding: 64px 0 28px; }
+.foot { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+.foot h4 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.foot ul { list-style: none; padding: 0; display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
+.foot a:hover { color: var(--accent); }
+.legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+/* Bouton flottant */
+.dock { position: fixed; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 10px; z-index: 15; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity .3s, transform .3s; }
+.dock.on { opacity: 1; pointer-events: auto; transform: none; }
+.dock a { width: 52px; height: 52px; border-radius: 3px; border: 1px solid var(--accent); background: var(--canvas); color: var(--accent); display: grid; place-items: center; transition: background .2s, color .2s; }
+.dock a:hover { background: var(--accent); color: var(--deep); }
+.dock svg { width: 22px; }
+
+/* Fonds travaillés : lueurs d'eau et grain */
+.textured { position: relative; isolation: isolate; overflow: hidden; }
+.textured::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .6;
+  background: radial-gradient(60% 50% at 85% 15%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%), radial-gradient(50% 40% at 5% 95%, color-mix(in srgb, var(--accent-2) 26%, transparent), transparent 70%); }
+.ripples { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent); opacity: .08; pointer-events: none; z-index: -1; }
+body::before { content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* Apparition au défilement */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero .line > span { opacity: 1; transform: none; transition: none; }
+  .marquee div { animation: none; }
+}
+
+/* Tablette et téléphone */
+@media (max-width: 1080px) {
+  .nav { grid-template-columns: auto 1fr auto; }
+  .nav ul { display: none; }
+  .burger { display: inline-flex; grid-column: 3; }
+  .nav.open + .menu { display: grid; }
+  .hero-grid, .split, .duo { grid-template-columns: 1fr; }
+  .visual { width: min(76%, 340px); margin: 20px auto 30px; }
+  .veil { background: linear-gradient(180deg, rgba(3,12,16,.88) 0%, rgba(3,12,16,.55) 55%, rgba(3,12,16,.3) 100%); }
+  .perks, .cards, .steps { grid-template-columns: 1fr 1fr; }
+  .quotes { grid-template-columns: 1fr; }
+  .project, .project:nth-child(even) { grid-template-columns: 1fr; }
+  .project:nth-child(even) .pimg { order: 0; }
+  .project .pimg { aspect-ratio: 16/10; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery figure:first-child { grid-column: span 2; grid-row: auto; }
+  .foot { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .perks, .cards, .steps, .foot { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .gallery img { min-height: 160px; }
+  .logo { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<style>.mq-bar{background:#111;color:#fff;font:500 13px/1.4 system-ui,sans-serif;text-align:center;padding:9px 16px}.mq-bar b{font-weight:700}.mq-tag{position:fixed;left:12px;bottom:12px;z-index:200;background:#111;color:#fff;font:600 11px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:3px;opacity:.85;pointer-events:none}</style><div class="mq-bar">Maquette proposée par <b>Alexandre</b> à Les Horizons Bleus · ce n'est pas le site officiel · photos d'illustration</div><div class="mq-tag" aria-hidden="true">Maquette</div>
+<header>
+  <div class="wrap">
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <ul>
+        <li><a class="pill" href="#services">Services</a></li>
+        <li><a class="pill" href="#realisations">Réalisations</a></li>
+        <li><a class="pill" href="#avis">Avis</a></li>
+      </ul>
+      <a class="logo" href="#" aria-label="Les Horizons Bleus, accueil"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9q4.5-4 9 0t9 0M3 15q4.5-4 9 0t9 0"/></svg></i>Les Horizons Bleus</a>
+      <ul class="r">
+        <li><a class="pill" href="#methode">Méthode</a></li>
+        <li><a class="pill" href="tel:0685213497">06 85 21 34 97</a></li>
+        <li><a class="pill fill" style="padding:10px 18px" href="#contact">Devis gratuit</a></li>
+      </ul>
+      <button class="pill burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+    <div class="menu" id="menu">
+      <a class="pill" href="#services">Services</a><a class="pill" href="#realisations">Réalisations</a><a class="pill" href="#avis">Avis</a><a class="pill" href="#methode">Méthode</a><a class="pill fill" href="#contact">Devis gratuit</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <canvas id="water" aria-hidden="true"></canvas><div class="veil"></div>
+    <div class="wrap">
+      <p class="eyebrow">Pisciniste · Bordeaux et Gironde</p>
+      <div class="hero-grid">
+        <div>
+          <h1 class="display">
+            <span class="line"><span>Plonger</span></span>
+            <span class="line"><span>chez <span class="hl">soi.</span></span></span>
+          </h1>
+          <p class="lead">Artisan pisciniste à Bordeaux, nous construisons, rénovons et entretenons des piscines simples, belles et faites pour durer. <span class="stars">★★★★★</span> 5/5 sur Google.</p>
+          <div class="hero-actions">
+            <a class="pill fill" href="#contact">Demander un devis gratuit</a>
+            <a class="pill" href="tel:0685213497">06 85 21 34 97</a>
+          </div>
+        </div>
+        <div class="visual" id="visual" aria-label="Quelques piscines">
+          <span class="frame"></span>
+          <div class="main">
+            <img class="on" src="img/h-soir.webp" alt="Piscine contemporaine éclairée le soir">
+            <img src="img/h-villa.webp" alt="Grande piscine devant une maison moderne">
+            <img src="img/h-jardin.webp" alt="Piscine dans un jardin, plage claire">
+            <img src="img/h-facade.webp" alt="Piscine au pied d'une façade blanche">
+          </div>
+          <div class="small a" data-depth="18"><img src="img/h-eau.webp" alt=""></div>
+          <div class="small b" data-depth="-14"><img src="img/h-echelle.webp" alt=""></div>
+          <div class="count" data-depth="10"><b>350+</b><small>piscines en Gironde</small></div>
+          <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Construction</span><span>Rénovation</span><span>Liner</span><span>Volet roulant</span><span>Pompe à chaleur</span><span>Filtration</span><span>Hivernage</span><span>Dépannage</span>
+    <span>Construction</span><span>Rénovation</span><span>Liner</span><span>Volet roulant</span><span>Pompe à chaleur</span><span>Filtration</span><span>Hivernage</span><span>Dépannage</span>
+  </div></div>
+
+  <section aria-label="Nos engagements" style="padding-bottom:0">
+    <div class="wrap perks reveal">
+      <div class="perk"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 16l6 6L27 7"/><circle cx="16" cy="16" r="13"/></svg>Visite et devis gratuits</div>
+      <div class="perk"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20q6-6 12 0t12 0M4 26q6-6 12 0t12 0M10 14V5h12v9"/></svg>Plus de 350 piscines construites</div>
+      <div class="perk"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/></svg>Délais tenus, chantier propre</div>
+      <div class="perk"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 5l7 7-11 11-7 1 1-7zM6 27h20"/></svg>SAV et dépannage toute l'année</div>
+    </div>
+  </section>
+
+  <section class="textured" id="histoire">
+    <svg class="ripples" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="640" cy="160" r="40"/><circle cx="640" cy="160" r="90"/><circle cx="640" cy="160" r="150"/><circle cx="640" cy="160" r="220"/><circle cx="640" cy="160" r="300"/><circle cx="640" cy="160" r="390"/><circle cx="640" cy="160" r="490"/></svg>
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Qui sommes-nous</p>
+        <h2 style="margin:30px 0 26px">Une piscine, <span class="hl">c'est pour longtemps.</span></h2>
+        <p class="lead">Terrassement, maçonnerie, liner, plage, local technique : nous faisons tout nous-mêmes, avec la même équipe, de la première visite à la mise en eau. Puis nous restons là pour l'entretien, l'hivernage et les petits soucis.</p>
+        <div class="stats">
+          <div><b>350+</b><span class="small">piscines réalisées en Gironde</span></div>
+          <div><b>5/5</b><span class="small">note moyenne sur Google</span></div>
+        </div>
+      </div>
+      <figure class="cover reveal" style="margin:0"><img src="img/h-or.webp" alt="Piscine au coucher du soleil" loading="lazy"><figcaption>Photo d'illustration</figcaption></figure>
+    </div>
+  </section>
+
+  <hr class="waves">
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Nos <span class="hl">services</span></h2>
+        <p class="lead" style="max-width:36ch">De la première esquisse à l'hivernage, une seule équipe.</p>
+      </div>
+      <div class="cards">
+        <a class="card reveal" href="#contact"><div class="ph"><img src="img/h-blanche.webp" alt="Piscine neuve devant une maison blanche" loading="lazy"><b>01</b></div><h3>Construction</h3><p class="small">Piscines traditionnelles maçonnées et liner, adaptées à votre terrain et à votre budget.</p><span class="go">Demander un devis →</span></a>
+        <a class="card reveal" href="#contact"><div class="ph"><img src="img/h-plage.webp" alt="Bassin rénové et sa plage" loading="lazy"><b>02</b></div><h3>Rénovation</h3><p class="small">Nouveau liner, escalier, banquette, mise aux normes : votre bassin comme neuf.</p><span class="go">Demander un devis →</span></a>
+        <a class="card reveal" href="#contact"><div class="ph"><img src="img/h-echelle.webp" alt="Échelle inox de piscine" loading="lazy"><b>03</b></div><h3>Équipements</h3><p class="small">Filtration, pompe à chaleur, volet roulant, couverture et alarme.</p><span class="go">Demander un devis →</span></a>
+        <a class="card reveal" href="#contact"><div class="ph"><img src="img/h-eau.webp" alt="Eau claire au bord d'une plage en bois" loading="lazy"><b>04</b></div><h3>Entretien</h3><p class="small">Mise en service, hivernage, dépannage et contrat d'entretien à l'année.</p><span class="go">En savoir plus →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="waves">
+
+  <section id="realisations" class="textured">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Réalisations <span class="hl">récentes</span></h2>
+        <a class="pill" href="#contact">Votre projet →</a>
+      </div>
+      <div class="projects">
+        <article class="project reveal">
+          <div class="pimg"><img src="img/h-soir.webp" alt="Bassin sombre éclairé le soir" loading="lazy"></div>
+          <div class="ptxt"><span class="num">01</span><div><h3>Bassin miroir</h3><p class="small" style="margin-top:14px;max-width:38ch">Un liner sombre qui reflète le ciel, un liseré de pierre et une plage en bois.</p></div><div class="tags"><span class="badge on">Construction</span><span class="badge">Liner anthracite</span></div></div>
+        </article>
+        <article class="project reveal">
+          <div class="pimg"><img src="img/h-bleu.webp" alt="Long bassin bleu dans un jardin" loading="lazy"></div>
+          <div class="ptxt"><span class="num">02</span><div><h3>Couloir de nage</h3><p class="small" style="margin-top:14px;max-width:38ch">Tout en longueur, pour nager dans un jardin de ville sans sacrifier l'espace.</p></div><div class="tags"><span class="badge on">Construction</span><span class="badge">Jardin de ville</span></div></div>
+        </article>
+        <article class="project reveal">
+          <div class="pimg"><img src="img/h-jardin.webp" alt="Piscine bordée de pelouse et d'une plage claire" loading="lazy"></div>
+          <div class="ptxt"><span class="num">03</span><div><h3>Bois et graminées</h3><p class="small" style="margin-top:14px;max-width:38ch">Une plage en bois et des graminées qui adoucissent les lignes droites.</p></div><div class="tags"><span class="badge on">Construction</span><span class="badge">Plage en bois</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="methode" style="padding-top:0">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Comment <span class="hl">ça se passe</span></h2>
+        <p class="lead" style="max-width:36ch">Quatre étapes, un seul interlocuteur.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><b>01</b><h3>Visite</h3><p class="small">On vient chez vous, gratuitement, regarder le terrain, l'accès et vos envies.</p></div>
+        <div class="step reveal"><b>02</b><h3>Devis</h3><p class="small">Un devis clair et détaillé, avec plan du bassin et choix des finitions.</p></div>
+        <div class="step reveal"><b>03</b><h3>Chantier</h3><p class="small">Terrassement, maçonnerie, liner et plage, dans les délais annoncés.</p></div>
+        <div class="step reveal"><b>04</b><h3>Mise en eau</h3><p class="small">Mise en service, explications, puis entretien et hivernage si vous le souhaitez.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="waves">
+
+  <section class="textured" id="avis">
+    <div class="wrap">
+      <div class="split" style="align-items:end;margin-bottom:44px">
+        <div class="reveal"><p class="stat">5/5</p><h2 style="margin-top:14px">sur <span class="hl">Google</span></h2></div>
+        <p class="lead reveal">Des familles de toute la métropole nous ont confié leur piscine. Voici ce qu'elles en disent.</p>
+      </div>
+      <div class="quotes">
+        <div class="quote reveal"><span class="badge on">Avis Google</span><p>« Les travaux ont été effectués avec de l'avance sur le planning prévu. Très professionnels, toujours ponctuels, ils travaillent avec soin. »</p><b>Xavier M. · rénovation</b></div>
+        <div class="quote reveal"><span class="badge on">Avis Google</span><p>« La qualité du travail, les conseils, le respect des délais, le SAV : nous recommandons sans aucune hésitation. »</p><b>Margot · construction</b></div>
+        <div class="quote reveal"><span class="badge on">Avis Google</span><p>« Douze entreprises contactées, cinq devis, un seul choix. Délai respecté, travail de haute qualité, un véritable plaisir. »</p><b>Johann R. · mini piscine maçonnée</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Quelques bassins <span class="hl">de plus</span></h2>
+      </div>
+      <div class="gallery">
+        <figure class="reveal"><img src="img/h-villa.webp" alt="Grande piscine et plage claire" loading="lazy"><figcaption>Grande plage claire</figcaption></figure>
+        <figure class="reveal"><img src="img/h-facade.webp" alt="Piscine et façade blanche" loading="lazy"><figcaption>Bassin et escalier</figcaption></figure>
+        <figure class="reveal"><img src="img/h-reflets.webp" alt="Piscine aux reflets du ciel" loading="lazy"><figcaption>Forme libre</figcaption></figure>
+        <figure class="reveal"><img src="img/h-transats.webp" alt="Piscine et transats" loading="lazy"><figcaption>Plage et transats</figcaption></figure>
+        <figure class="reveal"><img src="img/h-blanche.webp" alt="Piscine dans un jardin" loading="lazy"><figcaption>Jardin et bassin</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="textured" id="contact" style="padding-top:0">
+    <div class="wrap duo">
+      <a class="card reveal" href="tel:0685213497">
+        <span class="badge on">Un projet ?</span>
+        <h2>Parlons de <span class="hl">votre piscine</span></h2>
+        <p class="lead">Visite gratuite, plan du bassin et devis détaillé. On vous rappelle vite.</p>
+        <span class="pill fill" style="align-self:flex-start">Appeler le 06 85 21 34 97</span>
+      </a>
+      <div class="card reveal">
+        <span class="badge">Où intervenons-nous</span>
+        <h2>Bordeaux <span class="hl">et alentours</span></h2>
+        <div class="zones"><span>Bordeaux</span><span>Mérignac</span><span>Bruges</span><span>Le Bouscat</span><span>Cenon</span><span>Lormont</span><span>Talence</span><span>Pessac</span><span>Villenave-d'Ornon</span><span>Bègles</span><span>Gradignan</span><span>Eysines</span><span>Saint-Jean-d'Illac</span><span>Saint-Médard-en-Jalles</span></div>
+        <a class="pill" style="align-self:flex-start" href="sms:0685213497">Envoyer un SMS</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9q4.5-4 9 0t9 0M3 15q4.5-4 9 0t9 0"/></svg></i>Les Horizons Bleus</a><p class="small" style="margin-top:14px;max-width:32ch">Artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien.</p></div>
+      <div><h4>Nous joindre</h4><ul><li><a href="tel:0685213497">06 85 21 34 97</a></li><li>38 cours du Chapeau-Rouge</li><li>33000 Bordeaux</li></ul></div>
+      <div><h4>Services</h4><ul><li>Construction</li><li>Rénovation</li><li>Équipements</li><li>Entretien et hivernage</li></ul></div>
+      <div><h4>Zones</h4><ul><li>Bordeaux Métropole</li><li>Gironde</li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Les Horizons Bleus · Pisciniste à Bordeaux · Photos d'illustration (Unsplash), remplacées par vos réalisations</span><span>Mentions légales · Confidentialité</span></div>
+  </div>
+</footer>
+
+<div class="dock">
+  <a href="tel:0685213497" aria-label="Appeler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg></a>
+  <a href="#contact" aria-label="Demander un devis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19l3-1 11-11-2-2L6 16zM14 7l2 2"/></svg></a>
+</div>
+
+<script>
+const burger = document.getElementById('burger'), nav = document.getElementById('nav');
+burger.onclick = () => { const o = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
+document.querySelectorAll('#menu a').forEach((a) => a.onclick = () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', false); });
+const dock = document.querySelector('.dock');
+addEventListener('scroll', () => dock.classList.toggle('on', scrollY > innerHeight * 0.8), { passive: true });
+requestAnimationFrame(() => document.body.classList.add('ready'));
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Diaporama de l'accueil et léger relief à la souris
+const vis = document.getElementById('visual'), imgs = [...vis.querySelectorAll('.main img')], dots = [...vis.querySelectorAll('.dots i')];
+let cur = 0;
+if (!calm) setInterval(() => { imgs[cur].classList.remove('on'); dots[cur].classList.remove('on'); cur = (cur + 1) % imgs.length; imgs[cur].classList.add('on'); dots[cur].classList.add('on'); }, 4200);
+if (!calm && matchMedia('(hover: hover)').matches) addEventListener('pointermove', (e) => {
+  const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+  vis.querySelectorAll('[data-depth]').forEach((el) => { const d = +el.dataset.depth; el.style.transform = `translate(${x * d}px, ${y * d}px)`; });
+});
+
+// Eau animée : surface de bruit lente, normales, reflet du ciel, caustiques et ondes sous la souris (même principe que le métal liquide)
+(() => {
+  const c = document.getElementById('water'), gl = c.getContext('webgl');
+  if (!gl) return;
+  const fs = `precision highp float; uniform vec2 r; uniform float t; uniform vec2 m;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+  float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+  float H(vec2 p){float s=t*.03; vec2 q=vec2(fbm(p+s),fbm(p-s+3.1));
+    float d=length(p-m)*1.4; return fbm(p*1.3+1.5*q+vec2(s,-s))+.16*exp(-d*d*3.)*sin(d*16.-t*.9);}
+  void main(){
+    vec2 uv=gl_FragCoord.xy/r.y; float e=.004;
+    float c0=H(uv*.75), cx=H(uv*.75+vec2(e,0)), cy=H(uv*.75+vec2(0,e));
+    vec3 N=normalize(vec3((c0-cx)/e*.3,(c0-cy)/e*.3,1.));
+    vec3 R=reflect(vec3(0,0,-1),N);
+    float sky=smoothstep(.55,.97,sin(R.x*4.+R.y*2.5+1.)*.5+.5);
+    float caus=pow(1.-abs(sin(c0*17.+t*.1)),10.);
+    float fres=pow(1.-N.z,2.);
+    vec3 col=mix(vec3(.008,.06,.09),vec3(.03,.27,.37),smoothstep(.25,.8,c0));
+    col+=vec3(.3,.75,.8)*sky*.32+vec3(.8,.97,.97)*caus*.16*smoothstep(.35,.8,c0)+vec3(.55,.85,.9)*fres*.45;
+    col+=pow(max(dot(N,normalize(vec3(.4,.6,.7))),0.),70.)*.7;
+    gl_FragColor=vec4(col,1.);}`;
+  const sh = (k, src) => { const o = gl.createShader(k); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+  const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0,1);}')); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); gl.useProgram(p);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const a = gl.getAttribLocation(p, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  const ur = gl.getUniformLocation(p, 'r'), ut = gl.getUniformLocation(p, 't'), um = gl.getUniformLocation(p, 'm');
+  const size = () => { const k = Math.min(devicePixelRatio, 1.5) * .7; c.width = c.clientWidth * k; c.height = c.clientHeight * k; gl.viewport(0, 0, c.width, c.height); };
+  addEventListener('resize', size); size();
+  const mouse = [-9, -9], tgt = [-9, -9];
+  c.parentElement.addEventListener('pointermove', (e) => { const b = c.getBoundingClientRect(); tgt[0] = (e.clientX - b.left) / b.height * .75; tgt[1] = (b.bottom - e.clientY) / b.height * .75; if (mouse[0] < -5) { mouse[0] = tgt[0]; mouse[1] = tgt[1]; } });
+  let on = true; new IntersectionObserver(([en]) => on = en.isIntersecting).observe(c);
+  const t0 = performance.now();
+  const draw = () => { if (on) { mouse[0] += (tgt[0] - mouse[0]) * .035; mouse[1] += (tgt[1] - mouse[1]) * .035;
+    gl.uniform2f(ur, c.width, c.height); gl.uniform1f(ut, calm ? 6 : (performance.now() - t0) / 1000); gl.uniform2f(um, mouse[0], mouse[1]);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); } if (!calm) requestAnimationFrame(draw); };
+  draw();
+})();
+</script>
+</body>
+</html>
