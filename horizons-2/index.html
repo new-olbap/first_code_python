@@ -13,6 +13,7 @@
 <meta property="og:image:height" content="630">
 <title>Les Horizons Bleus — Pisciniste à Bordeaux</title>
 <meta name="description" content="Les Horizons Bleus, artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien de piscines. Plus de 350 piscines réalisées en Gironde, 5/5 sur Google.">
+<link rel="icon" type="image/png" href="../horizons/img/hb-favicon.png">
 <meta name="theme-color" content="#f3efe8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -211,6 +212,12 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
 .rv .link { align-self: flex-start; font-size: 14px; }
 .rv-note { font-size: 13px; color: var(--gray); margin-top: 16px; }
 @media (max-width: 960px) { .rv { flex-basis: 86%; } .arrow { display: none; } .rv-actions .btn { width: 100%; } .rv-actions { width: 100%; } }
+
+/* Logo de l'entreprise (fichiers d'origine, couleur turquoise conservée) */
+.logo .lg-icon { height: 34px; width: auto; }
+.logo .lg-text { height: 19px; width: auto; }
+.foot-logo img { width: 170px; height: auto; }
+@media (max-width: 960px) { .logo .lg-icon { height: 30px; } .logo .lg-text { height: 16px; } }
 .callbar { display: none; }
 .mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
@@ -264,7 +271,7 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
 
 <header id="hdr">
   <div class="wrap top">
-    <a class="logo" href="#" aria-label="Les Horizons Bleus, accueil"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12q6.5-6 13 0t13 0M3 20q6.5-6 13 0t13 0"/></svg>Les Horizons Bleus</a>
+    <a class="logo" href="#" aria-label="Les Horizons Bleus, accueil"><img class="lg-icon" src="../horizons/img/hb-icon.png" alt=""><img class="lg-text" src="../horizons/img/hb-text.png" alt="Les Horizons Bleus"></a>
     <nav class="nav" aria-label="Navigation principale"><a href="#metiers">Métiers</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a><a href="#avis">Avis</a></nav>
     <div class="right"><a href="tel:0685213497">06 85 21 34 97</a><a class="btn soft" href="#contact">Devis gratuit</a></div>
     <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sheet"><i></i><i></i></button>
@@ -392,7 +399,7 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
 <footer>
   <div class="wrap">
     <div class="cols">
-      <div><a class="logo" href="#"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" style="width:26px;color:#7fe3e6"><path d="M3 12q6.5-6 13 0t13 0M3 20q6.5-6 13 0t13 0"/></svg>Les Horizons Bleus</a><p>Artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien.</p></div>
+      <div><a class="logo foot-logo" href="#"><img src="../horizons/img/hb-logo.png" alt="Les Horizons Bleus"></a><p>Artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien.</p></div>
       <div><h4>Métiers</h4><ul><li>Construction</li><li>Rénovation</li><li>Équipements</li><li>Entretien</li></ul></div>
       <div><h4>Contact</h4><ul><li><a href="tel:0685213497">06 85 21 34 97</a></li><li>38 cours du Chapeau-Rouge</li><li>33000 Bordeaux</li></ul></div>
       <div><h4>Infos</h4><ul><li>Mentions légales</li><li>Confidentialité</li></ul></div>
