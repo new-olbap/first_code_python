@@ -187,6 +187,30 @@ footer ul { list-style: none; padding: 0; display: grid; gap: 10px; }
 footer .logo { color: #fff; margin-bottom: 12px; }
 footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; }
 
+
+/* Avis Google vérifiables */
+.g { width: 22px; height: 22px; flex: none; }
+.rv-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 28px; }
+.rv-score { display: flex; gap: 16px; align-items: center; }
+.rv-score .g { width: 44px; height: 44px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 9px; box-sizing: content-box; }
+.rv-score .score { font-size: clamp(56px, 6vw, 84px); }
+.rv-score .score + p { margin-top: 4px; }
+.rv-actions { display: flex; gap: 8px; align-items: center; }
+.btn.white-b { background: #fff; color: var(--ink); border-color: var(--line); }
+.btn.white-b:hover { border-color: var(--ink); }
+.arrow { width: 48px; height: 48px; border-radius: var(--r-btn); border: 1px solid var(--line); background: #fff; font-size: 18px; cursor: pointer; color: var(--ink); }
+.arrow:hover { border-color: var(--ink); }
+.rv-rail { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.rv-rail::-webkit-scrollbar { display: none; }
+.rv { flex: 0 0 calc((100% - 28px) / 3); scroll-snap-align: start; background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.rv-top { display: flex; align-items: center; gap: 10px; }
+.rv-top div { flex: 1; } .rv-top b { display: block; font-weight: 600; font-size: 15px; } .rv-top small { font-size: 13px; color: var(--gray); }
+.av { width: 38px; height: 38px; border-radius: 50%; background: var(--mist); color: var(--primary); display: grid; place-items: center; font-weight: 600; }
+.rv .stars, .rv-score .stars { color: #fbbc04; letter-spacing: 1px; }
+.rv p { font-size: 16px; line-height: 1.5; flex: 1; }
+.rv .link { align-self: flex-start; font-size: 14px; }
+.rv-note { font-size: 13px; color: var(--gray); margin-top: 16px; }
+@media (max-width: 960px) { .rv { flex-basis: 86%; } .arrow { display: none; } .rv-actions .btn { width: 100%; } .rv-actions { width: 100%; } }
 .callbar { display: none; }
 .mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
@@ -267,8 +291,8 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
       <div class="bar"><span></span></div>
     </div>
     <div class="glass float b">
-      <div class="row"><span class="ic" style="font-weight:600">G</span><div><b>Johann R.</b><small>Avis Google · <span class="stars">★★★★★</span></small></div></div>
-      <p>« Douze entreprises contactées, cinq devis, un seul choix. Délai respecté, travail de haute qualité. »</p>
+      <div class="row"><span class="ic" style="background:#fff"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></span><div><b>Johann R.</b><small>Avis Google · <span class="stars" style="color:#fbbc04">★★★★★</span></small></div></div>
+      <p>« Le délai annoncé totalement respecté, et le travail réalisé est de haute qualité. »</p>
     </div>
     <div class="glass float c">
       <div class="row"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10l4 4 8-9"/></svg></span><div><b>Visite et devis gratuits</b><small>On vient voir votre terrain</small></div></div>
@@ -278,7 +302,7 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
   <div class="wrap">
     <div class="facts reveal">
       <div><b>350+</b><span>piscines</span></div>
-      <div><b>5/5</b><span>avis Google</span></div>
+      <div><b>5,0 ★</b><span>35 avis Google</span></div>
       <div><b>Maçonnée</b><span>ou liner</span></div>
       <div><b>Volet</b><span>et chauffage</span></div>
       <div><b>Hivernage</b><span>et SAV</span></div>
@@ -332,12 +356,13 @@ footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(
   </section>
 
   <section id="avis">
-    <div class="wrap reviews">
-      <div class="reveal"><p class="score">5/5</p><p>sur Google. Des familles de toute la métropole nous ont confié leur piscine.</p></div>
-      <div class="qs">
-        <div class="q reveal"><span class="stars">★★★★★</span><p>« Les travaux ont été effectués avec de l'avance sur le planning prévu. Très professionnels, toujours ponctuels, ils travaillent avec soin. »</p><small>Xavier M. · rénovation</small></div>
-        <div class="q reveal"><span class="stars">★★★★★</span><p>« La qualité du travail, les conseils, le respect des délais, le SAV : nous recommandons sans aucune hésitation. »</p><small>Margot · construction</small></div>
+    <div class="wrap">
+      <div class="rv-head reveal">
+        <div class="rv-score"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><div><p class="score">5,0</p><p><span class="stars">★★★★★</span> · 35 avis Google, tous à 5 étoiles</p></div></div>
+        <div class="rv-actions"><a class="btn white-b" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir les 35 avis sur Google <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 11l6-6M6 5h5v5"/></svg></a><button class="arrow" id="rprev" aria-label="Avis précédents">←</button><button class="arrow" id="rnext" aria-label="Avis suivants">→</button></div>
       </div>
+      <div class="rv-rail reveal" id="rvrail"><article class="rv"><div class="rv-top"><span class="av">X</span><div><b>Xavier M.</b><small>juillet 2026 · Rénovation</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« La rénovation de ma piscine s'est très bien déroulée. Les travaux ont été effectués avec de l'avance sur le planning prévu. Très bonne communication tout le long du planning. Ils sont très professionnels, toujours ponctuels et travaillent avec soins. »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article><article class="rv"><div class="rv-top"><span class="av">M</span><div><b>Margot</b><small>avril 2026 · Construction</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Ravis par les prestations des Horizons Bleus, la qualité du travail, les conseils, le respect des délais, le SAV, une équipe très à l'écoute du client, réactive, disponible et d'une grande gentillesse… »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article><article class="rv"><div class="rv-top"><span class="av">M</span><div><b>Maxime S.</b><small>mars 2026 · Rénovation · liner</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Rapide et réactif, devis moins cher que d'autres avec une impression plus sérieuse, le travail a été réalisé avec soin […] Je suis particulièrement content du rendu du liner Fidji sur ma piscine. »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article><article class="rv"><div class="rv-top"><span class="av">M</span><div><b>Michael D.</b><small>janvier 2026 · Volet de piscine</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous avons fait appel à la société "Les horizons bleus" pour l'installation d'un volet sur notre piscine. Nous sommes vraiment ravie du résultat et de tous les bons conseils qu'on a obtenu des intervenants pour l'entretien. »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article><article class="rv"><div class="rv-top"><span class="av">J</span><div><b>Johann R.</b><small>juillet 2024 · Mini piscine maçonnée</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Le devis a été rapidement envoyé, la date de démarrage proposée rapidement, le délai annoncé totalement respecté, et le travail réalisé est de haute qualité. Le chantier s'est parfaitement bien déroulé, sans aucun accroc, un véritable plaisir ! »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article><article class="rv"><div class="rv-top"><span class="av">L</span><div><b>Laurence P.</b><small>mai 2024 · Dépannage</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Le bon fonctionnement de ma piscine est juste vital pour mon activité […] J'ai donc pu réouvrir mon centre au public dans la journée. »</p><a class="link" href="https://www.google.com/maps/place/?q=place_id:ChIJsz2_IncoVQ0RsnXeF_EGMrg" target="_blank" rel="noopener">Voir sur Google</a></article></div>
+      <p class="rv-note">Avis publiés sur la fiche Google de l'entreprise, recopiés mot pour mot (passages coupés signalés par « … »).</p>
     </div>
   </section>
 
@@ -391,6 +416,11 @@ sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => men
 
 const hdr = document.getElementById('hdr'), callbar = document.getElementById('callbar');
 addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 10); callbar.classList.toggle('on', scrollY > innerHeight * .6); }, { passive: true });
+
+// Avis : flèches
+const rr = document.getElementById('rvrail'), rstep = () => rr.querySelector('.rv').offsetWidth + 14;
+document.getElementById('rprev').onclick = () => rr.scrollBy({ left: -rstep(), behavior: 'smooth' });
+document.getElementById('rnext').onclick = () => rr.scrollBy({ left: rstep(), behavior: 'smooth' });
 
 // Métiers : onglets
 const check = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10l4 4 8-9"/></svg>';
