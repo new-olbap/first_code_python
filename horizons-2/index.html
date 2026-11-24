@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Les Horizons Bleus · maquette de site">
+<meta property="og:description" content="Proposition de nouveau site pour Les Horizons Bleus, pisciniste à Bordeaux.">
+<meta property="og:url" content="https://maquette-alexandre.netlify.app/horizons-2/">
+<meta property="og:image" content="https://maquette-alexandre.netlify.app/horizons-2/apercu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Les Horizons Bleus — Pisciniste à Bordeaux</title>
+<meta name="description" content="Les Horizons Bleus, artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien de piscines. Plus de 350 piscines réalisées en Gironde, 5/5 sur Google.">
+<meta name="theme-color" content="#f3efe8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Inspiré de la référence « Superhuman » (Refero) : fond crème éditorial, titres fins (460), grande photo cinéma
+   avec cartes en verre qui flottent dessus, une seule bande sombre, un seul bouton de couleur.
+   Couleurs traduites dans le métier : pierre de margelle, bleu marine, turquoise, lagon. */
+:root {
+  --canvas: #f3efe8; --paper: #ffffff; --line: #e4e0d8; --ink: #26292a; --gray: #646767;
+  --primary: #0f3440; --link: #0b7d86; --mist: #cdeceb; --lagoon: #0c4045; --foot: #0f2c36;
+  --r-card: 16px; --r-btn: 12px; --r-tab: 8px;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { background: var(--canvas); color: var(--ink); font: 460 16px/1.5 'Geist', system-ui, sans-serif; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); }
+h1, h2, h3 { font-weight: 460; color: var(--ink); }
+.display { font-size: clamp(42px, 5.8vw, 80px); line-height: .98; letter-spacing: -.03em; }
+.h2 { font-size: clamp(34px, 4.2vw, 56px); line-height: 1.04; letter-spacing: -.027em; }
+.lead { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.5; color: var(--gray); }
+.link { color: var(--link); background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .2s ease; }
+.link:hover { background-size: 100% 1px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: var(--r-btn); font: 540 16px 'Geist', sans-serif; border: 1px solid transparent; transition: background .2s, color .2s, transform .2s; white-space: nowrap; cursor: pointer; }
+.btn svg { width: 16px; transition: transform .2s; }
+.btn:hover svg { transform: translateX(3px); }
+.btn.primary { background: var(--primary); color: #fff; }
+.btn.primary:hover { background: #164b5c; }
+.btn.soft { background: var(--mist); color: var(--ink); border-color: var(--ink); min-height: 40px; padding: 0 16px; border-radius: var(--r-tab); }
+.btn.white { background: #fff; color: var(--ink); }
+.btn.outline-w { border-color: rgba(255,255,255,.8); color: #fff; }
+.btn.outline-w:hover { background: #fff; color: var(--ink); }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+
+/* Bandeau d'annonce (maquette) */
+.announce { background: var(--foot); color: #fff; font-size: 13px; text-align: center; padding: 9px 16px; }
+.announce b { font-weight: 600; }
+
+/* En-tête : flou, liseré qui apparaît au défilement */
+header { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: color-mix(in srgb, var(--canvas) 78%, transparent); border-bottom: 1px solid transparent; transition: border-color .3s; }
+header.scrolled { border-bottom-color: var(--line); }
+.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+.logo svg { width: 26px; color: var(--link); }
+.nav { display: flex; gap: 30px; font-size: 15px; }
+.nav a:hover { color: var(--link); }
+.right { justify-self: end; display: flex; align-items: center; gap: 18px; font-size: 15px; }
+.burger { display: none; justify-self: end; background: none; border: 0; width: 44px; height: 44px; cursor: pointer; padding: 11px; }
+.burger i { display: block; height: 1.5px; background: var(--ink); margin: 6px 0; }
+.sheet { position: fixed; inset: 0; z-index: 40; background: var(--canvas); padding: 88px 24px 32px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transition: opacity .35s; }
+.sheet.open { opacity: 1; pointer-events: auto; }
+.sheet a.big { font-size: 34px; letter-spacing: -.025em; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.sheet .x { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--r-tab); background: #fff; font-size: 18px; cursor: pointer; }
+.sheet .btn { margin-top: auto; }
+
+/* Accueil : photo cinéma plein cadre, titre centré, cartes en verre */
+.hero { position: relative; isolation: isolate; min-height: min(100svh - 100px, 860px); display: flex; flex-direction: column; overflow: hidden; color: #fff; }
+.hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; z-index: -2; transform: scale(1.06); animation: settle 2.4s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes settle { to { transform: scale(1); } }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(48% 42% at 50% 42%, rgba(8,22,30,.5), transparent 70%), linear-gradient(180deg, rgba(8,22,30,.55) 0%, rgba(8,22,30,.15) 45%, rgba(8,22,30,.35) 100%); }
+.hero-copy { text-align: center; padding-top: clamp(56px, 9vh, 110px); }
+.hero h1 { color: #fff; max-width: 15ch; margin: 18px auto 0; }
+.hero .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 6px 12px; border-radius: 999px; }
+.hero .kicker i { width: 7px; height: 7px; border-radius: 50%; background: #7fe3e6; }
+.hero p.sub { text-shadow: 0 1px 12px rgba(0,0,0,.35); max-width: 46ch; margin: 18px auto 0; font-size: 18px; color: rgba(255,255,255,.88); }
+.hero .ctas { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.glass { background: rgba(255,255,255,.86); color: var(--ink); border: 1px solid rgba(255,255,255,.2); border-radius: var(--r-card); padding: 16px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.float { position: absolute; width: 270px; opacity: 0; transform: translateY(16px); transition: opacity .9s, transform .9s cubic-bezier(.2,.7,.2,1); }
+.ready .float { opacity: 1; transform: none; }
+.float.a { left: clamp(18px, 4vw, 56px); bottom: 56px; transition-delay: .5s; }
+.float.b { right: clamp(18px, 4vw, 56px); bottom: 150px; transition-delay: .7s; }
+.float.c { right: clamp(60px, 9vw, 140px); bottom: 40px; width: 240px; transition-delay: .9s; }
+.float .row { display: flex; align-items: center; gap: 10px; }
+.float .ic { width: 34px; height: 34px; border-radius: 10px; background: var(--mist); display: grid; place-items: center; color: var(--primary); flex: none; }
+.float .ic svg { width: 18px; }
+.float b { font-weight: 600; font-size: 15px; display: block; }
+.float small { font-size: 13px; color: var(--gray); }
+.float .big { font-size: 34px; letter-spacing: -.03em; line-height: 1; margin-top: 12px; }
+.float p { font-size: 14px; line-height: 1.4; margin-top: 8px; }
+.float .stars { color: #c99a3e; letter-spacing: 1px; font-size: 13px; }
+.float .bar { height: 6px; border-radius: 3px; background: #e8eceb; margin-top: 12px; overflow: hidden; }
+.float .bar span { display: block; height: 100%; width: 0; background: var(--link); border-radius: 3px; transition: width 1.6s 1.2s cubic-bezier(.2,.7,.2,1); }
+.ready .float .bar span { width: 100%; }
+
+/* Bande de faits (cases blanches en ligne) */
+.facts { display: grid; grid-template-columns: repeat(6, 1fr); background: #fff; border: 1px solid var(--line); margin-top: -1px; }
+.facts div { padding: 24px 14px; text-align: center; border-right: 1px solid var(--line); }
+.facts div:last-child { border-right: 0; }
+.facts b { display: block; font-size: 22px; font-weight: 500; letter-spacing: -.02em; }
+.facts span { font-size: 13px; color: var(--gray); }
+
+section { padding: clamp(64px, 8vw, 96px) 0; }
+.head { max-width: 640px; margin-bottom: 36px; }
+.head .lead { margin-top: 14px; }
+
+/* Métiers : barre d'onglets + carte */
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border: 1px solid var(--line); border-radius: var(--r-tab); padding: 4px; gap: 4px; }
+.tabs button { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; border: 0; border-radius: 6px; background: none; font: 500 16px 'Geist', sans-serif; color: var(--ink); cursor: pointer; transition: background .2s; }
+.tabs button svg { width: 18px; color: var(--gray); }
+.tabs button[aria-selected="true"] { background: var(--mist); }
+.tabs button[aria-selected="true"] svg { color: var(--primary); }
+.panel { display: grid; grid-template-columns: 1fr 1.15fr; gap: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; margin-top: 12px; min-height: 420px; }
+.panel .tx { padding: clamp(22px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; animation: in .5s ease; }
+.panel h3 { font-size: clamp(28px, 2.6vw, 36px); letter-spacing: -.022em; line-height: 1.1; }
+.panel ul { list-style: none; padding: 0; display: grid; gap: 10px; margin-top: 6px; }
+.panel li { display: flex; gap: 10px; align-items: flex-start; }
+.panel li svg { width: 18px; flex: none; color: var(--link); margin-top: 2px; }
+.panel .tx .link { margin-top: auto; align-self: flex-start; }
+.panel .ph { position: relative; min-height: 300px; }
+.panel .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: in .6s ease; }
+@keyframes in { from { opacity: 0; } }
+
+/* Réalisations : cartes blanches */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+.card .ph { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.card:hover .ph img { transform: scale(1.05); }
+.card .body { padding: 4px 6px 8px; display: grid; gap: 6px; }
+.card .tag { font-size: 13px; color: var(--gray); }
+.card h3 { font-size: 20px; letter-spacing: -.01em; }
+.card p { font-size: 15px; color: var(--gray); }
+
+/* Bande sombre « lagon » : collage + méthode */
+.band { background: var(--lagoon); color: #fff; }
+.band .grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.collage { position: relative; aspect-ratio: 1; max-width: 520px; }
+.collage .ph { position: absolute; inset: 8% 14% 14% 8%; border-radius: var(--r-card); overflow: hidden; }
+.collage .ph img { width: 100%; height: 100%; object-fit: cover; }
+.collage .sq { position: absolute; border-radius: 12px; mix-blend-mode: screen; }
+.collage .sq.s1 { width: 46%; height: 34%; right: 0; top: 0; background: rgba(127,227,230,.45); }
+.collage .sq.s2 { width: 38%; height: 30%; left: 0; bottom: 4%; background: rgba(205,236,235,.4); }
+.collage .sq.s3 { width: 24%; height: 22%; right: 8%; bottom: 0; background: rgba(228,207,157,.5); }
+.collage .note { position: absolute; font: 500 clamp(22px, 2.4vw, 30px) 'Caveat', cursive; color: #fff; transform: rotate(-6deg); }
+.collage .note.n1 { left: 2%; top: -2%; } .collage .note.n2 { right: -2%; bottom: 26%; transform: rotate(5deg); }
+.band h2 { color: #fff; }
+.band .lead { color: rgba(255,255,255,.78); }
+.steps { list-style: none; padding: 0; margin: 28px 0 30px; display: grid; gap: 0; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.14); }
+.steps li::before { counter-increment: s; content: "0" counter(s); font-size: 14px; color: #7fe3e6; padding-top: 3px; }
+.steps b { font-weight: 540; font-size: 18px; display: block; }
+.steps span { font-size: 15px; color: rgba(255,255,255,.72); }
+
+/* Bande d'ambiance : eau animée claire */
+.atmo { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--r-card); padding: clamp(36px, 6vw, 72px) clamp(22px, 5vw, 64px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+#water { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(60% 80% at 68% 50%, #9fe1e4, transparent), radial-gradient(50% 70% at 93% 50%, #8fc6ea, transparent), radial-gradient(60% 60% at 50% 98%, #f3d9b5, transparent), #cfeff0; }
+.atmo h2 { max-width: 16ch; }
+
+/* Avis */
+.reviews { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
+.score { font-size: clamp(72px, 8vw, 112px); line-height: .9; letter-spacing: -.04em; }
+.score + p { color: var(--gray); margin-top: 10px; }
+.qs { display: grid; gap: 12px; }
+.q { background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); padding: 20px; }
+.q .stars { color: #c99a3e; letter-spacing: 1px; font-size: 14px; }
+.q p { font-size: 18px; line-height: 1.45; margin-top: 8px; letter-spacing: -.008em; }
+.q small { display: block; color: var(--gray); margin-top: 10px; font-size: 14px; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+.contact .box { background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); padding: clamp(22px, 3vw, 36px); display: flex; flex-direction: column; gap: 14px; }
+.contact .tel { font-size: clamp(34px, 4vw, 52px); letter-spacing: -.03em; line-height: 1; }
+.contact .zones { display: flex; flex-wrap: wrap; gap: 6px; }
+.contact .zones span { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--gray); }
+
+footer { background: var(--foot); color: rgba(255,255,255,.7); padding: 64px 0 36px; font-size: 14px; }
+footer .cols { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 28px; }
+footer h4 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+footer ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+footer .logo { color: #fff; margin-bottom: 12px; }
+footer .legal { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; }
+
+.callbar { display: none; }
+.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal, .float { opacity: 1; transform: none; transition: none; } .hero > img { animation: none; transform: none; } }
+
+@media (max-width: 960px) {
+  .nav, .right { display: none; }
+  .top { grid-template-columns: 1fr auto; height: 58px; }
+  .burger { display: block; }
+  .hero { min-height: calc(100svh - 96px); }
+  .hero-copy { padding-top: 40px; }
+  .hero p.sub { font-size: 16px; }
+  .hero .ctas .btn { flex: 1; max-width: 220px; }
+  .float.b, .float.c { display: none; }
+  .float.a { left: 16px; right: 16px; width: auto; bottom: 16px; }
+  .facts { grid-template-columns: repeat(3, 1fr); }
+  .facts div:nth-child(3) { border-right: 0; }
+  .facts div:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .tabs { grid-template-columns: repeat(4, auto); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { padding: 0 14px; font-size: 15px; }
+  .panel { grid-template-columns: 1fr; min-height: 0; }
+  .panel .ph { order: -1; min-height: 0; aspect-ratio: 16/10; }
+  .cards { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -18px; padding: 0 18px; }
+  .cards::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 80%; scroll-snap-align: center; }
+  .band .grid { grid-template-columns: 1fr; }
+  .collage { max-width: 360px; margin: 0 auto; width: 100%; }
+  .reviews, .contact { grid-template-columns: 1fr; }
+  footer .cols { grid-template-columns: 1fr 1fr; }
+  footer .cols > :first-child { grid-column: 1 / -1; }
+  .callbar { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--canvas) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .35s; }
+  .callbar.on { transform: none; }
+  .callbar .btn { min-height: 50px; }
+  .callbar .ghost { background: #fff; border-color: var(--line); color: var(--ink); }
+  footer { padding-bottom: 110px; }
+}
+@media (max-width: 560px) {
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .facts div:nth-child(3) { border-right: 1px solid var(--line); }
+  .facts div:nth-child(2n) { border-right: 0; }
+  .facts div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .facts div { padding: 18px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="announce">Maquette proposée par <b>Alexandre</b> à Les Horizons Bleus · ce n'est pas le site officiel · photos d'illustration</div>
+<div class="mq-tag" aria-hidden="true">Maquette</div>
+
+<header id="hdr">
+  <div class="wrap top">
+    <a class="logo" href="#" aria-label="Les Horizons Bleus, accueil"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12q6.5-6 13 0t13 0M3 20q6.5-6 13 0t13 0"/></svg>Les Horizons Bleus</a>
+    <nav class="nav" aria-label="Navigation principale"><a href="#metiers">Métiers</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a><a href="#avis">Avis</a></nav>
+    <div class="right"><a href="tel:0685213497">06 85 21 34 97</a><a class="btn soft" href="#contact">Devis gratuit</a></div>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sheet"><i></i><i></i></button>
+  </div>
+</header>
+<div class="sheet" id="sheet" aria-hidden="true">
+  <button class="x" id="close" aria-label="Fermer le menu">✕</button>
+  <a class="big" href="#metiers">Métiers</a><a class="big" href="#realisations">Réalisations</a><a class="big" href="#methode">Méthode</a><a class="big" href="#avis">Avis</a><a class="big" href="#contact">Contact</a>
+  <a class="btn primary" href="tel:0685213497">Appeler le 06 85 21 34 97</a>
+</div>
+
+<main>
+  <section class="hero" style="padding:0">
+    <img src="../horizons/img/h-soir-hd.webp" alt="Piscine contemporaine éclairée à la tombée du jour" fetchpriority="high">
+    <div class="wrap hero-copy">
+      <span class="kicker"><i></i>Pisciniste à Bordeaux et en Gironde</span>
+      <h1 class="display">La piscine dont vous rêvez, construite pour durer.</h1>
+      <p class="sub">Construction, rénovation, équipements et entretien. Plus de 350 piscines réalisées, une seule équipe du premier coup de pelle à l'hivernage.</p>
+      <div class="ctas"><a class="btn primary" href="#contact">Demander un devis gratuit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="btn white" href="tel:0685213497">06 85 21 34 97</a></div>
+    </div>
+    <div class="glass float a">
+      <div class="row"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12q4-4 8 0t8 0M2 16q4-4 8 0t8 0M6 9V3h8v6"/></svg></span><div><b>Piscines construites</b><small>Bordeaux et Gironde</small></div></div>
+      <div class="big">350+</div>
+      <div class="bar"><span></span></div>
+    </div>
+    <div class="glass float b">
+      <div class="row"><span class="ic" style="font-weight:600">G</span><div><b>Johann R.</b><small>Avis Google · <span class="stars">★★★★★</span></small></div></div>
+      <p>« Douze entreprises contactées, cinq devis, un seul choix. Délai respecté, travail de haute qualité. »</p>
+    </div>
+    <div class="glass float c">
+      <div class="row"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10l4 4 8-9"/></svg></span><div><b>Visite et devis gratuits</b><small>On vient voir votre terrain</small></div></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="facts reveal">
+      <div><b>350+</b><span>piscines</span></div>
+      <div><b>5/5</b><span>avis Google</span></div>
+      <div><b>Maçonnée</b><span>ou liner</span></div>
+      <div><b>Volet</b><span>et chauffage</span></div>
+      <div><b>Hivernage</b><span>et SAV</span></div>
+      <div><b>Gratuit</b><span>visite et devis</span></div>
+    </div>
+  </div>
+
+  <section id="metiers">
+    <div class="wrap">
+      <div class="head reveal"><h2 class="h2">Tout votre projet, avec une seule équipe.</h2><p class="lead">De la première esquisse à l'eau claire de juillet : choisissez ce dont vous avez besoin.</p></div>
+      <div class="tabs reveal" role="tablist" id="tabs">
+        <button role="tab" aria-selected="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 16h16M4 16V8l6-4 6 4v8"/></svg>Construction</button>
+        <button role="tab" aria-selected="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3h3"/></svg>Rénovation</button>
+        <button role="tab" aria-selected="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3"/></svg>Équipements</button>
+        <button role="tab" aria-selected="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3c3 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z"/></svg>Entretien</button>
+      </div>
+      <div class="panel reveal" id="panel" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section id="realisations" style="padding-top:0">
+    <div class="wrap">
+      <div class="head reveal"><h2 class="h2">Quelques réalisations.</h2><p class="lead">Chaque bassin est dessiné pour son jardin, jamais l'inverse.</p></div>
+      <div class="cards">
+        <article class="card reveal"><div class="ph"><img src="../horizons/img/h-soir.webp" alt="Bassin sombre éclairé le soir" loading="lazy"></div><div class="body"><span class="tag">Construction · liner anthracite</span><h3>Bassin miroir</h3><p>Un liner sombre qui reflète le ciel, un liseré de pierre et une plage en bois.</p><a class="link" href="#contact">Un projet similaire ?</a></div></article>
+        <article class="card reveal"><div class="ph"><img src="../horizons/img/h-bleu.webp" alt="Long bassin bleu dans un jardin" loading="lazy"></div><div class="body"><span class="tag">Construction · jardin de ville</span><h3>Couloir de nage</h3><p>Tout en longueur, pour nager sans sacrifier le jardin.</p><a class="link" href="#contact">Un projet similaire ?</a></div></article>
+        <article class="card reveal"><div class="ph"><img src="../horizons/img/h-jardin.webp" alt="Piscine bordée de pelouse" loading="lazy"></div><div class="body"><span class="tag">Construction · plage en bois</span><h3>Bois et graminées</h3><p>Une plage en bois et des graminées qui adoucissent les lignes droites.</p><a class="link" href="#contact">Un projet similaire ?</a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="methode">
+    <div class="wrap grid">
+      <div class="collage reveal" aria-hidden="true">
+        <div class="ph"><img src="../horizons/img/h-villa-hd.webp" alt="" loading="lazy"></div>
+        <span class="sq s1"></span><span class="sq s2"></span><span class="sq s3"></span>
+        <span class="note n1">visite gratuite !</span><span class="note n2">mise en eau ✓</span>
+      </div>
+      <div class="reveal">
+        <h2 class="h2">De la visite à la mise en eau.</h2>
+        <p class="lead" style="margin-top:14px">Quatre étapes, un seul interlocuteur, des délais tenus.</p>
+        <ol class="steps">
+          <li><div><b>La visite</b><span>On vient chez vous regarder le terrain, l'accès et vos envies.</span></div></li>
+          <li><div><b>Le devis</b><span>Clair et détaillé, avec le plan du bassin et les finitions.</span></div></li>
+          <li><div><b>Le chantier</b><span>Terrassement, maçonnerie, liner et plage, dans les délais.</span></div></li>
+          <li><div><b>La mise en eau</b><span>Mise en service, explications, puis entretien si vous le souhaitez.</span></div></li>
+        </ol>
+        <a class="btn outline-w" href="#contact">Planifier une visite</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis">
+    <div class="wrap reviews">
+      <div class="reveal"><p class="score">5/5</p><p>sur Google. Des familles de toute la métropole nous ont confié leur piscine.</p></div>
+      <div class="qs">
+        <div class="q reveal"><span class="stars">★★★★★</span><p>« Les travaux ont été effectués avec de l'avance sur le planning prévu. Très professionnels, toujours ponctuels, ils travaillent avec soin. »</p><small>Xavier M. · rénovation</small></div>
+        <div class="q reveal"><span class="stars">★★★★★</span><p>« La qualité du travail, les conseils, le respect des délais, le SAV : nous recommandons sans aucune hésitation. »</p><small>Margot · construction</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="atmo reveal"><canvas id="water" aria-hidden="true"></canvas><h2 class="h2">Votre piscine prête pour l'été prochain ?</h2><a class="btn white" href="#contact">Prendre rendez-vous <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-top:0">
+    <div class="wrap contact">
+      <div class="box reveal">
+        <h2 class="h2">Parlons de votre piscine.</h2>
+        <p class="lead">Visite gratuite, plan du bassin et devis détaillé. On vous rappelle vite.</p>
+        <a class="tel" href="tel:0685213497">06 85 21 34 97</a>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn primary" href="tel:0685213497">Appeler</a><a class="btn soft" style="min-height:48px;border-radius:var(--r-btn)" href="sms:0685213497">Envoyer un SMS</a></div>
+      </div>
+      <div class="box reveal">
+        <b style="font-weight:540;font-size:19px">Où intervenons-nous ?</b>
+        <div class="zones"><span>Bordeaux</span><span>Mérignac</span><span>Bruges</span><span>Le Bouscat</span><span>Cenon</span><span>Lormont</span><span>Talence</span><span>Pessac</span><span>Villenave-d'Ornon</span><span>Bègles</span><span>Gradignan</span><span>Eysines</span><span>Saint-Jean-d'Illac</span><span>Saint-Médard-en-Jalles</span></div>
+        <p class="lead" style="font-size:15px;margin-top:auto">38 cours du Chapeau-Rouge, 33000 Bordeaux</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="#"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" style="width:26px;color:#7fe3e6"><path d="M3 12q6.5-6 13 0t13 0M3 20q6.5-6 13 0t13 0"/></svg>Les Horizons Bleus</a><p>Artisan pisciniste à Bordeaux : construction, rénovation, équipements et entretien.</p></div>
+      <div><h4>Métiers</h4><ul><li>Construction</li><li>Rénovation</li><li>Équipements</li><li>Entretien</li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:0685213497">06 85 21 34 97</a></li><li>38 cours du Chapeau-Rouge</li><li>33000 Bordeaux</li></ul></div>
+      <div><h4>Infos</h4><ul><li>Mentions légales</li><li>Confidentialité</li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Les Horizons Bleus</span><span>Photos d'illustration (Unsplash), remplacées par vos réalisations</span></div>
+  </div>
+</footer>
+
+<div class="callbar" id="callbar"><a class="btn ghost" href="tel:0685213497">Appeler</a><a class="btn primary" href="#contact">Devis gratuit</a></div>
+
+<script>
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+requestAnimationFrame(() => document.body.classList.add('ready'));
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+const sheet = document.getElementById('sheet'), burger = document.getElementById('burger');
+const menu = (o) => { sheet.classList.toggle('open', o); sheet.setAttribute('aria-hidden', !o); burger.setAttribute('aria-expanded', o); };
+burger.onclick = () => menu(true); document.getElementById('close').onclick = () => menu(false);
+sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu(false)));
+
+const hdr = document.getElementById('hdr'), callbar = document.getElementById('callbar');
+addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 10); callbar.classList.toggle('on', scrollY > innerHeight * .6); }, { passive: true });
+
+// Métiers : onglets
+const check = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10l4 4 8-9"/></svg>';
+const trades = [
+  ['Construction', '../horizons/img/h-blanche.webp', 'Piscines traditionnelles maçonnées et liner, dessinées pour votre terrain et votre budget.', ['Étude du terrain et plan du bassin', 'Terrassement et maçonnerie', 'Liner, margelles et plage']],
+  ['Rénovation', '../horizons/img/h-plage.webp', 'Votre bassin comme neuf, sans tout casser.', ['Remplacement du liner', 'Escalier, banquette et plage', 'Mise aux normes de sécurité']],
+  ['Équipements', '../horizons/img/h-echelle.webp', 'Le confort et la sécurité, posés et réglés par la même équipe.', ['Filtration et pompe à chaleur', 'Volet roulant et couverture', 'Alarme et éclairage']],
+  ['Entretien', '../horizons/img/h-eau.webp', 'Une eau claire toute l\'année, sans y penser.', ['Mise en service et hivernage', 'Dépannage et SAV', 'Contrat d\'entretien à l\'année']],
+];
+const panel = document.getElementById('panel'), tabs = [...document.querySelectorAll('#tabs button')];
+const show = (k) => { const [t, img, txt, list] = trades[k]; tabs.forEach((b, i) => b.setAttribute('aria-selected', i === k));
+  panel.innerHTML = `<div class="tx"><h3>${t}</h3><p class="lead">${txt}</p><ul>${list.map((l) => `<li>${check}${l}</li>`).join('')}</ul><a class="link" href="#contact">Demander un devis pour ce projet</a></div><div class="ph"><img src="${img}" alt="${t}"></div>`; };
+tabs.forEach((b, i) => b.onclick = () => show(i)); show(0);
+
+// Bande d'ambiance : eau claire animée (WebGL), lente
+(() => {
+  const c = document.getElementById('water'), gl = c.getContext('webgl');
+  if (!gl) return;
+  const fs = `precision highp float; uniform vec2 r; uniform float t;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+  float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+  void main(){vec2 uv=gl_FragCoord.xy/r.y; float s=t*.03; vec2 q=vec2(fbm(uv+s),fbm(uv-s+3.1));
+    float f=fbm(uv*1.4+1.5*q);
+    float caus=pow(1.-abs(sin(f*16.+t*.1)),10.);
+    vec3 col=mix(vec3(.72,.9,.92),vec3(.86,.96,.95),smoothstep(.3,.75,f));
+    col=mix(col,vec3(.96,.88,.76),smoothstep(.55,1.,gl_FragCoord.x/r.x)*.35);
+    col+=caus*.22;
+    gl_FragColor=vec4(col,1.);}`;
+  const sh = (k, src) => { const o = gl.createShader(k); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+  const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0,1);}')); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); gl.useProgram(p);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const a = gl.getAttribLocation(p, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  const ur = gl.getUniformLocation(p, 'r'), ut = gl.getUniformLocation(p, 't');
+  const size = () => { const k = Math.min(devicePixelRatio, 1.5) * .6; c.width = c.clientWidth * k; c.height = c.clientHeight * k; gl.viewport(0, 0, c.width, c.height); };
+  addEventListener('resize', size); size();
+  let on = false; new IntersectionObserver(([en]) => on = en.isIntersecting).observe(c);
+  const t0 = performance.now();
+  const draw = () => { if (on || calm) { gl.uniform2f(ur, c.width, c.height); gl.uniform1f(ut, calm ? 6 : (performance.now() - t0) / 1000); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); } if (!calm) requestAnimationFrame(draw); };
+  draw();
+})();
+</script>
+</body>
+</html>
