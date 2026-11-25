@@ -37,7 +37,7 @@ button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
 h1, h2, h3.serif { font-family: var(--serif); font-weight: 400; color: var(--ink); }
-h1 em, h2 em { font-style: italic; font-weight: 300; color: var(--olive); }
+h1 em, h2 em { font-style: normal; font-weight: 400; color: var(--olive); }
 .label { font-size: 14px; color: var(--ash); letter-spacing: .01em; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 8px; font: 480 16px var(--sans); border: 1px solid var(--ink); white-space: nowrap; cursor: pointer; transition: background .25s, color .25s, border-color .25s; background: none; }
 .btn.fill { background: var(--ink); color: #fff; }
@@ -143,10 +143,10 @@ h2 { font-size: clamp(36px, 5.2vw, 64px); line-height: 1.12; letter-spacing: -0.
 .methode .grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
 .steps { list-style: none; padding: 0; margin-top: 36px; border-top: 1px solid var(--line); }
 .steps li { display: grid; grid-template-columns: 48px 1fr; gap: 6px 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
-.steps .n { font: italic 300 26px/1 var(--serif); color: var(--olive); padding-top: 2px; }
+.steps .n { font: 400 24px/1 var(--serif); color: var(--olive); padding-top: 2px; }
 .steps h3 { font: 500 19px/1.3 var(--sans); }
 .steps p { grid-column: 2; color: var(--muted); font-size: 16px; }
-.quote-s { margin-top: 28px; font: italic 400 20px/1.45 var(--serif); color: #33372f; }
+.quote-s { margin-top: 28px; font: 400 20px/1.45 var(--serif); color: #33372f; }
 .quote-s cite { display: block; font: 400 14px var(--sans); color: var(--ash); margin-top: 8px; font-style: normal; }
 .panel { background: var(--mist); border-radius: 0; padding: clamp(24px, 4vw, 48px); position: relative; overflow: hidden; }
 .panel .phone { max-width: 400px; margin: 0 auto; padding: 18px; }
@@ -169,7 +169,7 @@ h2 { font-size: clamp(36px, 5.2vw, 64px); line-height: 1.12; letter-spacing: -0.
 
 /* La carte d'accent (une seule) */
 .accent { background: var(--wash); color: var(--olive); border-radius: 0; padding: clamp(32px, 6vw, 72px); display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 4vw, 56px); align-items: start; }
-.accent .mark { font: italic 300 clamp(80px, 10vw, 140px)/.7 var(--serif); }
+.accent .mark { font: 300 clamp(80px, 10vw, 140px)/.7 var(--serif); }
 .accent blockquote { font: 400 clamp(23px, 2.8vw, 34px)/1.35 var(--serif); letter-spacing: -.01em; }
 .accent cite { display: flex; gap: 10px; align-items: center; font: 400 15px var(--sans); font-style: normal; margin-top: 22px; }
 
