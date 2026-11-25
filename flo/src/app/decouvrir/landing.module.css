@@ -3,7 +3,7 @@
 .page {
   --canvas: #f4f2ee; --paper: #ffffff; --ink: #121212; --muted: #5f5e5b; --line: #e2dfd9; --orange: #ff5a1f; --dark: #121212;
   background: var(--canvas); color: var(--ink); color-scheme: light; min-height: 100vh;
-  font: 450 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; overflow-x: hidden;
+  font: 450 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; overflow-x: clip; /* clip et non hidden : hidden casse les scènes épinglées (position: sticky) */
 }
 .page a { color: inherit; text-decoration: none; }
 .page img { display: block; max-width: 100%; }
