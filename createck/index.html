@@ -6,385 +6,618 @@
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Créateck Paysage · maquette de site">
-<meta property="og:description" content="Proposition de nouveau site pour Créateck Paysage, paysagiste à Bordeaux.">
+<meta property="og:description" content="Proposition de nouveau site pour Créateck Paysage, paysagiste à Bordeaux et en Gironde.">
 <meta property="og:url" content="https://maquette-alexandre.netlify.app/createck/">
 <meta property="og:image" content="https://maquette-alexandre.netlify.app/createck/apercu.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <title>Créateck Paysage — Paysagiste à Bordeaux et en Gironde</title>
-<meta name="description" content="Créateck Paysage, paysagiste à Bordeaux depuis 20 ans : conception 3D, création et entretien de jardins, terrasses et allées. 4,9/5 sur 134 avis Google.">
-<meta name="theme-color" content="#f2eee5">
+<meta name="description" content="Créateck Paysage, paysagiste à Bordeaux et en Gironde depuis 20 ans : conception en 3D, aménagement et entretien de jardins, avec un rapport de chantier chaque jour. 4,9/5 sur 134 avis Google.">
+<meta name="theme-color" content="#fcfbf8">
+<link rel="icon" href="img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
 <style>
-/* Structure propre à Créateck : composition centrée et calme, motif de l'arche (triptyque d'accueil, métiers),
-   projet signature plein écran, méthode montrée sur un téléphone (le rapport du soir), avis centrés un par un. */
-:root { --bg: #f2eee5; --paper: #faf8f2; --line: #d9d1c0; --forest: #1f3527; --moss: #4f6b3a; --clay: #b5653b; --ink: #1b2a1f; --muted: #5d665c; --sand: #e3b88d; }
+/* Créateck : papier chaud, titres en sérif fin, une grande photo et des « fiches de chantier » qui flottent autour.
+   Une seule couleur : le vert tendre de leur logo, en lavis très pâle, avec son encre olive. */
+:root {
+  --canvas: #fcfbf8; --fog: #f7f6f1; --mist: #f0eee8; --line: #e6e3da;
+  --ink: #1c1e1a; --muted: #6f736a; --ash: #95978f;
+  --wash: #edf2da; --olive: #3d5016; --leaf: #6f8f2a;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --float: 0 0 0 1px rgba(30,35,20,.06), 0 20px 25px -5px rgba(20,25,10,.10), 0 8px 10px -6px rgba(20,25,10,.08);
+}
 * { box-sizing: border-box; margin: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+body { background: var(--canvas); color: var(--ink); font: 400 17px/1.45 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-.wrap { max-width: 1280px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
-.serif { font-family: 'Fraunces', Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-weight: 450; letter-spacing: -.03em; color: var(--forest); }
-em { font-style: italic; color: var(--clay); font-weight: 350; }
-.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--moss); }
-.muted { color: var(--muted); }
-.center { text-align: center; }
-:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 24px; border-radius: 3px; font: 600 14px 'Inter', sans-serif; letter-spacing: .02em; border: 1px solid var(--forest); color: var(--forest); transition: background .2s, color .2s, border-color .2s; white-space: nowrap; background: none; cursor: pointer; }
-.btn.solid { background: var(--forest); color: var(--bg); }
-.btn.solid:hover { background: var(--clay); border-color: var(--clay); }
-.btn.line:hover { background: var(--forest); color: var(--bg); }
-.arch { border-radius: 999px 999px 0 0; overflow: hidden; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+h1, h2, h3.serif { font-family: var(--serif); font-weight: 400; color: var(--ink); }
+h1 em, h2 em { font-style: italic; font-weight: 300; color: var(--olive); }
+.label { font-size: 14px; color: var(--ash); letter-spacing: .01em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 10px; font: 480 16px var(--sans); border: 1px solid var(--ink); white-space: nowrap; cursor: pointer; transition: background .25s, color .25s, border-color .25s; background: none; }
+.btn.fill { background: var(--ink); color: #fff; }
+.btn.fill:hover { background: var(--olive); border-color: var(--olive); }
+.btn.ghost:hover { background: var(--ink); color: #fff; }
+.arrow { font-weight: 480; display: inline-flex; gap: 6px; align-items: center; }
+.arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+.stars { color: #e0a613; letter-spacing: 1px; }
+svg.g { width: 18px; height: 18px; flex: none; }
 
-/* En-tête : liens à gauche, logo au centre, rendez-vous à droite */
-header { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 72px; }
-.links { display: flex; gap: 24px; font: italic 400 17px 'Fraunces', serif; }
-.links a:hover { color: var(--clay); }
-.logo { display: flex; align-items: center; gap: 10px; font: 450 25px 'Fraunces', serif; font-variation-settings: "SOFT" 100, "WONK" 1; letter-spacing: -.02em; color: var(--forest); }
-.logo i { width: 34px; height: 40px; border-radius: 999px 999px 0 0; background: var(--forest); color: var(--bg); display: grid; place-items: end center; padding-bottom: 5px; font: italic 400 20px 'Fraunces', serif; }
-.top .btn { justify-self: end; min-height: 44px; }
-.menu-btn { display: none; justify-self: end; background: none; border: 0; font: italic 400 19px 'Fraunces', serif; color: var(--forest); cursor: pointer; padding: 10px 0; }
-.overlay { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; opacity: 0; pointer-events: none; transition: opacity .4s; }
-.overlay.open { opacity: 1; pointer-events: auto; }
-.overlay a.big { font: italic 400 46px/1.15 'Fraunces', serif; color: var(--forest); }
-.overlay .x { position: absolute; top: 18px; right: 18px; background: none; border: 0; font: italic 400 19px 'Fraunces', serif; color: var(--forest); padding: 10px; cursor: pointer; }
-.overlay .btn { margin-top: 26px; }
-
-/* Accueil centré : titre, triptyque d'arches, lumière à travers les feuilles */
-.hero { position: relative; isolation: isolate; overflow: hidden; padding: clamp(36px, 6vw, 84px) 0 clamp(56px, 7vw, 96px); text-align: center; }
-#leaves { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
-.hero h1 { font-size: clamp(50px, 8.2vw, 132px); line-height: .95; margin: 20px auto 0; max-width: 12ch; }
-.hero h1 .l { display: block; overflow: hidden; padding: .02em 0 .1em; margin-bottom: -.1em; }
-.hero h1 .l > span { display: block; transform: translateY(110%); transition: transform 1s cubic-bezier(.2,.8,.1,1); }
-.ready .hero h1 .l > span { transform: none; }
-.ready .hero h1 .l:nth-child(2) > span { transition-delay: .1s; } .ready .hero h1 .l:nth-child(3) > span { transition-delay: .2s; }
-.trip { display: grid; grid-template-columns: 1fr 1.45fr 1fr; gap: clamp(10px, 2vw, 26px); align-items: end; max-width: 980px; margin: clamp(30px, 4vw, 52px) auto 0; position: relative; }
-.trip .arch { aspect-ratio: 3/4.2; position: relative; background: var(--line); transform: translateY(30px); opacity: 0; transition: transform 1.1s cubic-bezier(.2,.7,.2,1), opacity 1s; }
-.trip .arch:nth-child(2) { aspect-ratio: 3/4; transition-delay: .15s; }
-.trip .arch:nth-child(3) { transition-delay: .3s; }
-.trip .side { margin-bottom: 12%; }
-.ready .trip .arch { transform: none; opacity: 1; }
-.trip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s; }
-.trip img.on { opacity: 1; }
-.seal { position: absolute; right: 13%; bottom: -34px; width: 116px; height: 116px; border-radius: 50%; background: var(--clay); color: var(--paper); display: grid; place-items: center; line-height: 1; z-index: 2; }
-.seal b { display: block; font: italic 450 38px 'Fraunces', serif; }
-.seal small { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-.seal svg { position: absolute; inset: 0; width: 100%; animation: turn 30s linear infinite; }
-@keyframes turn { to { transform: rotate(360deg); } }
-.hero .lead { font-size: 18px; max-width: 46ch; margin: clamp(48px, 5vw, 64px) auto 0; }
-.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px; }
-.rating { margin-top: 18px; font-size: 14px; color: var(--muted); }
-.rating .stars { color: var(--clay); letter-spacing: 2px; }
-
-section { padding: clamp(64px, 9vw, 124px) 0; }
-.sec-title { font-size: clamp(42px, 6vw, 92px); line-height: .98; }
-
-/* Projet signature */
-.feature { position: relative; color: var(--paper); min-height: min(90vh, 760px); display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; padding: 0; }
-.feature > img { position: absolute; inset: -8% 0; width: 100%; height: 116%; object-fit: cover; z-index: -2; }
-.feature::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(20,34,25,.92), rgba(20,34,25,.45) 50%, rgba(20,34,25,.05)); }
-.feature .wrap { width: 100%; padding-top: 120px; padding-bottom: clamp(32px, 5vw, 64px); text-align: center; }
-.feature .tag { display: inline-block; border: 1px solid rgba(250,248,242,.5); padding: 6px 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; border-radius: 3px; }
-.feature h2 { color: var(--paper); font-size: clamp(42px, 7vw, 112px); line-height: .98; margin: 20px auto 18px; max-width: 14ch; }
-.feature h2 em { color: var(--sand); }
-.feature p { max-width: 46ch; margin: 0 auto; color: #e9e5da; font-size: 17px; }
-.facts { display: flex; justify-content: center; gap: clamp(20px, 5vw, 72px); margin-top: 34px; flex-wrap: wrap; }
-.facts b { display: block; font: italic 400 clamp(34px, 4vw, 52px)/1 'Fraunces', serif; }
-.facts span { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
-
-/* Métiers en arches */
-.trades { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 3vw, 40px); margin-top: clamp(36px, 5vw, 60px); }
-.trade { text-align: center; }
-.trade .arch { aspect-ratio: 3/4; }
-.trade .arch img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2,.7,.2,1); }
-.trade:hover .arch img { transform: scale(1.05); }
-.trade .n { display: block; margin-top: 20px; font: italic 400 18px 'Fraunces', serif; color: var(--clay); }
-.trade h3 { font-size: clamp(30px, 2.8vw, 40px); margin-top: 4px; }
-.trade p { margin: 10px auto 0; max-width: 32ch; color: var(--muted); font-size: 15px; }
-
-/* Méthode : le rapport du soir sur un téléphone */
-.method { background: var(--forest); color: var(--bg); }
-.method .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(36px, 6vw, 96px); align-items: center; }
-.method .sec-title { color: var(--bg); }
-.method .sec-title em { color: var(--sand); }
-.mlist { list-style: none; padding: 0; margin-top: 36px; display: grid; gap: 22px; }
-.mlist li { display: grid; grid-template-columns: 84px 1fr; gap: 16px; align-items: baseline; border-top: 1px solid rgba(242,238,229,.16); padding-top: 18px; }
-.mlist b { font: italic 400 34px/1 'Fraunces', serif; color: var(--sand); }
-.mlist h3 { font: 450 24px 'Fraunces', serif; color: var(--bg); }
-.mlist p { color: #c9d2c4; font-size: 15px; margin-top: 4px; }
-.phone { width: min(320px, 100%); margin: 0 auto; background: #0e1a12; border-radius: 40px; padding: 12px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); position: relative; }
-.screen { background: #ece7dc; border-radius: 30px; overflow: hidden; color: var(--ink); min-height: 560px; display: flex; flex-direction: column; }
-.screen .bar { background: var(--paper); padding: 30px 16px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); }
-.screen .bar i { width: 34px; height: 34px; border-radius: 50%; background: var(--forest); color: var(--bg); display: grid; place-items: center; font: italic 400 17px 'Fraunces', serif; }
-.screen .bar b { font-size: 14px; display: block; } .screen .bar small { font-size: 11px; color: var(--muted); }
-.msgs { padding: 14px 12px; display: flex; flex-direction: column; gap: 8px; }
-.msg { background: var(--paper); border-radius: 14px 14px 14px 4px; padding: 10px 12px; font-size: 13.5px; line-height: 1.4; max-width: 88%; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
-.msg img { border-radius: 8px; margin: -2px -4px 6px; width: calc(100% + 8px); aspect-ratio: 16/10; object-fit: cover; }
-.msg time { display: block; font-size: 10.5px; color: var(--muted); margin-top: 4px; text-align: right; }
-.msg .bar2 { height: 6px; background: var(--line); border-radius: 3px; margin-top: 8px; overflow: hidden; }
-.msg .bar2 span { display: block; height: 100%; width: 0; background: var(--moss); transition: width 1.4s .3s cubic-bezier(.2,.7,.2,1); }
-.phone.in .msg { opacity: 1; transform: none; }
-.phone.in .msg:nth-child(2) { transition-delay: .5s; } .phone.in .msg:nth-child(3) { transition-delay: 1s; }
-.phone.in .bar2 span { width: 80%; }
-.phone .ex { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--sand); color: var(--forest); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 5px 10px; border-radius: 3px; white-space: nowrap; }
-
-/* Avis centrés, un par un */
-.score { font: 450 clamp(90px, 12vw, 180px)/.85 'Fraunces', serif; font-variation-settings: "SOFT" 100, "WONK" 1; color: var(--forest); letter-spacing: -.05em; }
-.quotes { position: relative; max-width: 900px; margin: 36px auto 0; min-height: 230px; }
-.quotes blockquote { position: absolute; inset: 0; opacity: 0; transform: translateY(10px); transition: opacity .8s, transform .8s; font: 400 clamp(24px, 3vw, 40px)/1.3 'Fraunces', serif; font-variation-settings: "SOFT" 100, "WONK" 0; color: var(--forest); }
-.quotes blockquote.on { opacity: 1; transform: none; }
-.quotes cite { display: block; margin-top: 18px; font: 500 14px 'Inter', sans-serif; font-style: normal; color: var(--muted); }
-.qdots { display: flex; justify-content: center; gap: 10px; }
-.qdots button { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--forest); background: none; cursor: pointer; padding: 0; }
-.qdots button.on { background: var(--forest); }
-
-/* Galerie en colonnes */
-.masonry { columns: 3; column-gap: 14px; margin-top: 40px; }
-.masonry figure { margin: 0 0 14px; break-inside: avoid; position: relative; overflow: hidden; }
-.masonry img { width: 100%; transition: transform 1s cubic-bezier(.2,.7,.2,1); }
-.masonry figure:hover img { transform: scale(1.04); }
-.masonry figcaption { position: absolute; left: 10px; bottom: 10px; background: var(--paper); font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 3px; }
-
-/* Contact centré */
-.contact .tel { display: inline-block; font: italic 400 clamp(36px, 6vw, 80px)/1 'Fraunces', serif; color: var(--forest); margin-top: 26px; border-bottom: 1px solid var(--clay); padding-bottom: 6px; }
-.contact .mail { display: inline-block; margin-top: 14px; font-size: 17px; }
-.zones { margin: 32px auto 0; max-width: 62ch; color: var(--muted); font-size: 15px; }
-
-footer { background: var(--forest); color: #c9d2c4; padding: 48px 0 40px; font-size: 14px; }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 40px; }
-footer .logo { color: var(--bg); } footer .logo i { background: var(--bg); color: var(--forest); }
-
-.callbar { display: none; }
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal, .hero h1 .l > span, .trip .arch, .msg { opacity: 1; transform: none; transition: none; } .seal svg { animation: none; } }
-
-@media (max-width: 900px) {
-  .top { grid-template-columns: 1fr auto; height: 62px; }
-  .links, .top .btn { display: none; }
-  .menu-btn { display: block; }
-  .logo { font-size: 21px; }
-  .hero h1 { font-size: clamp(42px, 12.4vw, 70px); }
-  .trip { gap: 8px; margin-top: 26px; }
-  .seal { width: 88px; height: 88px; right: 4%; bottom: -26px; }
-  .seal b { font-size: 28px; }
-  .hero .lead { font-size: 16px; margin-top: 44px; }
-  .actions .btn { flex: 1; }
-  .trades { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 32px -18px 0; padding: 0 18px; gap: 14px; }
-  .trades::-webkit-scrollbar { display: none; }
-  .trade { flex: 0 0 74%; scroll-snap-align: center; }
-  .method .grid { grid-template-columns: 1fr; }
-  .mlist li { grid-template-columns: 64px 1fr; }
-  .quotes { min-height: 250px; }
-  .masonry { columns: 2; column-gap: 10px; } .masonry figure { margin-bottom: 10px; }
-  .callbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .35s; }
-  .callbar.on { transform: none; }
-  footer { padding-bottom: 100px; }
-}
-
+/* Bandeau maquette */
 .mq-bar { background: #111; color: #fff; font: 500 12px/1.4 system-ui, sans-serif; text-align: center; padding: 8px 16px; }
-.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .75; pointer-events: none; }
+.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
+
+/* En-tête discret */
+header { position: sticky; top: 0; z-index: 50; background: rgba(252,251,248,.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: box-shadow .3s; }
+header.scrolled { box-shadow: 0 1px 0 var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+.nav .logo img { height: 38px; width: auto; }
+.nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: 16px; }
+.nav ul a { padding: 2px 0; }
+.nav ul a:hover { color: var(--olive); }
+.nav .right { display: flex; align-items: center; gap: 22px; font-size: 16px; }
+.nav .right .btn { min-height: 42px; padding: 0 18px; }
+
+/* Accueil : titre centré, puis la grande photo entourée de ses fiches */
+.hero { padding: clamp(22px, 4vw, 48px) 0 0; text-align: center; }
+.hero .label { display: inline-flex; align-items: center; gap: 10px; }
+.hero .label i { width: 6px; height: 6px; border-radius: 50%; background: var(--leaf); display: inline-block; }
+.hero h1 { font-size: clamp(40px, 5.6vw, 78px); line-height: 1.08; letter-spacing: -0.025em; max-width: 19ch; margin: 18px auto 0; }
+.hero .sub { font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); max-width: 50ch; margin: 20px auto 0; line-height: 1.4; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
+.stage { position: relative; margin: clamp(28px, 4vw, 48px) auto 0; max-width: 1200px; padding: 0 clamp(16px, 4vw, 40px); }
+.photo { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 8.2; background: var(--mist); isolation: isolate; }
+.photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 2.4s cubic-bezier(.2,.7,.2,1); }
+.ready .photo img { transform: none; }
+.photo canvas { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: multiply; pointer-events: none; opacity: 0; transition: opacity 2s; }
+.photo canvas.on { opacity: .8; }
+.card { background: #fff; border-radius: 16px; box-shadow: var(--float); text-align: left; }
+.fl { position: absolute; z-index: 2; opacity: 0; transform: translateY(18px); transition: opacity 1s, transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.ready .fl { opacity: 1; transform: none; }
+.fl.report { left: -10px; top: 9%; width: 290px; padding: 14px 14px 12px; transition-delay: .35s; }
+.fl.rating { right: -6px; top: 7%; width: 236px; padding: 16px 18px; transition-delay: .55s; }
+.fl.plan { left: 4%; bottom: -46px; width: 252px; padding: 12px; transition-delay: .75s; }
+.fl.composer { right: 6%; bottom: -34px; width: min(470px, 46%); padding: 10px 10px 10px 18px; display: flex; align-items: center; gap: 12px; transition-delay: .9s; }
+.rep-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.rep-head b { color: var(--ink); font-weight: 500; font-size: 15px; }
+.rep-pics { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
+.rep-pics img { aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; width: 100%; }
+.rep-list { list-style: none; padding: 0; font-size: 13.5px; line-height: 1.5; }
+.rep-list li { display: flex; gap: 8px; }
+.rep-list li::before { content: "✓"; color: var(--leaf); font-weight: 600; }
+.rep-list li.next::before { content: "→"; color: var(--ash); }
+.rep-list li.next { color: var(--muted); }
+.bar { height: 4px; background: var(--mist); border-radius: 4px; margin-top: 10px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--olive); border-radius: 4px; transition: width 1.6s 1.4s cubic-bezier(.2,.7,.2,1); }
+.ready .bar span { width: 66%; }
+.rating .top { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.rating .big { font: 500 34px/1 var(--sans); letter-spacing: -.02em; margin-top: 10px; display: flex; align-items: baseline; gap: 10px; }
+.rating .big small { font-size: 15px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+.rating .stars { font-size: 15px; margin-top: 4px; }
+.plan .tag { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; padding: 2px 4px 8px; }
+.plan .tag b { color: var(--ink); font-weight: 500; }
+.plan svg { width: 100%; height: auto; display: block; background: var(--wash); border-radius: 10px; }
+.composer .ph { flex: 1; color: var(--ash); font-size: 16px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.composer .ph b { color: var(--ink); font-weight: 400; }
+.composer .send { width: 44px; height: 44px; border-radius: 10px; background: var(--ink); color: #fff; display: grid; place-items: center; flex: none; }
+.composer .send svg { width: 18px; height: 18px; }
+
+/* Clients */
+.clients { padding: 96px 0 0; text-align: center; }
+.clients ul { list-style: none; padding: 0; margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 34px; font: 400 clamp(19px, 2vw, 24px) var(--serif); color: var(--muted); }
+section { padding: clamp(72px, 9vw, 112px) 0; }
+.sec-head { max-width: 760px; }
+.sec-head.c { margin: 0 auto; text-align: center; }
+h2 { font-size: clamp(36px, 5.2vw, 64px); line-height: 1.12; letter-spacing: -0.015em; }
+.sec-head p { color: var(--muted); font-size: 18px; margin-top: 16px; max-width: 52ch; }
+.sec-head.c p { margin-left: auto; margin-right: auto; }
+
+/* Carrousels au doigt */
+.rail { display: grid; grid-auto-flow: column; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; }
+.rail-nav { display: flex; gap: 8px; }
+.rail-nav button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); background: #fff; cursor: pointer; display: grid; place-items: center; transition: border-color .2s; }
+.rail-nav button:hover { border-color: var(--ink); }
+.rail-nav svg { width: 18px; height: 18px; }
+.row-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+
+/* Métiers */
+.metiers { background: var(--fog); }
+.metiers .rail { grid-auto-columns: calc((100% - 32px) / 3); margin-top: 48px; }
+.m-card { background: var(--mist); border-radius: 20px; padding: 12px 12px 22px; display: flex; flex-direction: column; }
+.m-card .pic { border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 3.1; }
+.m-card .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.m-card:hover .pic img { transform: scale(1.04); }
+.m-card .label { margin: 18px 8px 0; }
+.m-card h3 { font: 500 21px/1.3 var(--sans); margin: 6px 8px 0; letter-spacing: -.01em; }
+.m-card p { font-size: 16px; line-height: 1.5; color: #3e423a; margin: 8px 8px 0; flex: 1; }
+.m-card .arrow { margin: 16px 8px 0; font-size: 16px; }
+
+/* Méthode : le rapport du soir */
+.methode .grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.steps { list-style: none; padding: 0; margin-top: 36px; border-top: 1px solid var(--line); }
+.steps li { display: grid; grid-template-columns: 48px 1fr; gap: 6px 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.steps .n { font: italic 300 26px/1 var(--serif); color: var(--olive); padding-top: 2px; }
+.steps h3 { font: 500 19px/1.3 var(--sans); }
+.steps p { grid-column: 2; color: var(--muted); font-size: 16px; }
+.quote-s { margin-top: 28px; font: italic 400 20px/1.45 var(--serif); color: #33372f; }
+.quote-s cite { display: block; font: 400 14px var(--sans); color: var(--ash); margin-top: 8px; font-style: normal; }
+.panel { background: var(--mist); border-radius: 24px; padding: clamp(24px, 4vw, 48px); position: relative; overflow: hidden; }
+.panel .phone { max-width: 400px; margin: 0 auto; padding: 18px; }
+.panel .ex { position: absolute; top: 16px; right: 18px; }
+.msg { font-size: 15px; line-height: 1.5; margin-top: 12px; }
+.msg p + p { margin-top: 8px; }
+.msg .time { font-size: 12px; color: var(--ash); margin-top: 6px; }
+.panel .rep-pics { grid-template-columns: 1.4fr 1fr; }
+.panel .rep-pics img:first-child { grid-row: span 2; aspect-ratio: auto; height: 100%; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.chips span { font-size: 13px; padding: 5px 10px; border-radius: 8px; background: var(--wash); color: var(--olive); }
+
+/* Projet */
+.projet .frame { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 16 / 7.5; }
+.projet .frame img { width: 100%; height: 130%; object-fit: cover; position: absolute; top: -15%; left: 0; will-change: transform; }
+.projet .cap { position: absolute; left: 24px; bottom: 24px; max-width: 430px; padding: 22px 24px; }
+.projet .cap h3 { font: 400 26px/1.22 var(--serif); letter-spacing: -.01em; margin-top: 6px; }
+.projet .cap p { color: var(--muted); font-size: 16px; margin-top: 8px; }
+.projet .cap .arrow { margin-top: 14px; font-size: 16px; }
+
+/* La carte d'accent (une seule) */
+.accent { background: var(--wash); color: var(--olive); border-radius: 24px; padding: clamp(32px, 6vw, 72px); display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 4vw, 56px); align-items: start; }
+.accent .mark { font: italic 300 clamp(80px, 10vw, 140px)/.7 var(--serif); }
+.accent blockquote { font: 400 clamp(23px, 2.8vw, 34px)/1.35 var(--serif); letter-spacing: -.01em; }
+.accent cite { display: flex; gap: 10px; align-items: center; font: 400 15px var(--sans); font-style: normal; margin-top: 22px; }
+
+/* Avis */
+.avis .score { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; color: var(--muted); font-size: 16px; }
+.avis .score b { font: 500 22px var(--sans); color: var(--ink); }
+.avis .rail { grid-auto-columns: calc((100% - 32px) / 3); }
+.r-card { background: var(--fog); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 20px; display: flex; flex-direction: column; }
+.r-card .stars { font-size: 15px; }
+.r-card p { font-size: 16px; line-height: 1.55; margin-top: 12px; flex: 1; color: #2b2e28; }
+.r-card .who { display: flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 15px; }
+.r-card .who .av { width: 36px; height: 36px; border-radius: 50%; background: var(--mist); display: grid; place-items: center; font-weight: 500; font-size: 14px; color: var(--olive); }
+.r-card .who small { display: block; color: var(--ash); font-size: 13px; }
+.r-card .who svg.g { margin-left: auto; }
+.avis .more { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Réalisations */
+.reals { background: var(--fog); }
+.reals .rail { grid-auto-columns: 380px; }
+.real .pic { border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 4.6; }
+.real .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.real:hover .pic img { transform: scale(1.04); }
+.real h3 { font: 500 17px/1.35 var(--sans); margin-top: 14px; }
+.real .label { margin-top: 4px; display: block; }
+
+/* Zone + contact */
+.zone ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.zone li { font-size: 15px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 10px; color: #3e423a; }
+.contact .grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.coord { margin-top: 36px; border-top: 1px solid var(--line); }
+.coord a, .coord div { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
+.coord span { color: var(--ash); }
+.coord a:hover b { color: var(--olive); }
+.coord b { font-weight: 480; text-align: right; }
+form.card { padding: 22px; }
+form .f { display: block; margin-bottom: 12px; }
+form .f span { font-size: 14px; color: var(--muted); display: block; margin-bottom: 6px; }
+form input, form textarea, form select { width: 100%; font: 400 16px var(--sans); color: var(--ink); background: var(--fog); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; outline: none; transition: border-color .2s, background .2s; }
+form textarea { min-height: 120px; resize: vertical; }
+form input:focus, form textarea:focus, form select:focus { border-color: var(--ink); background: #fff; }
+form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+form .types { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+form .types label { cursor: pointer; }
+form .types input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+form .types span { display: block; font-size: 14px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: #fff; transition: all .2s; }
+form .types input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+form .types input:focus-visible + span { outline: 2px solid var(--olive); outline-offset: 2px; }
+form .btn { width: 100%; margin-top: 6px; }
+form .note { font-size: 13px; color: var(--ash); margin-top: 10px; text-align: center; }
+
+footer { border-top: 1px solid var(--line); padding: 48px 0 40px; font-size: 15px; color: var(--muted); }
+footer .grid { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; align-items: start; }
+footer img { height: 40px; width: auto; margin-bottom: 12px; }
+footer nav { display: flex; gap: 22px; flex-wrap: wrap; }
+footer nav a:hover { color: var(--ink); }
+footer .small { margin-top: 32px; font-size: 13px; color: var(--ash); }
+
+/* Barre fixe en bas (téléphone) */
+.dock { display: none; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s, transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 1100px) {
+  .fl.report { display: none; }
+  .fl.plan { left: 3%; }
+}
+@media (max-width: 900px) {
+  .nav ul, .nav .right .tel { display: none; }
+  .metiers .rail, .avis .rail { grid-auto-columns: 78%; }
+  .methode .grid, .contact .grid { grid-template-columns: 1fr; }
+  .fl.plan { display: none; }
+  .fl.composer { width: auto; left: 6%; right: 6%; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; padding-bottom: 76px; }
+  .nav { height: 60px; }
+  .nav .logo img { height: 32px; }
+  .nav .right .btn { min-height: 40px; padding: 0 14px; font-size: 15px; }
+  .hero { padding-top: 22px; }
+  .hero h1 { font-size: 40px; margin-top: 12px; letter-spacing: -0.02em; }
+  .hero .sub { font-size: 16px; margin-top: 14px; }
+  .hero .actions { display: none; }
+  .stage { margin-top: 22px; }
+  .photo { aspect-ratio: 4 / 4.4; }
+  .fl.rating { right: 10px; top: auto; bottom: 64px; width: auto; padding: 10px 14px; }
+  .fl.rating .top { display: none; }
+  .fl.rating .big { font-size: 24px; margin-top: 0; }
+  .fl.composer { left: 10px; right: 10px; bottom: -28px; padding: 8px 8px 8px 14px; }
+  .composer .ph { font-size: 15px; }
+  .clients { padding-top: 72px; }
+  .clients ul { gap: 6px 18px; font-size: 18px; }
+  .sec-head p { font-size: 16px; }
+  .row-head { margin-bottom: 28px; }
+  .row-head .rail-nav { display: none; }
+  .metiers .rail, .avis .rail { grid-auto-columns: 86%; }
+  .reals .rail { grid-auto-columns: 78%; }
+  .rail { margin-right: calc(-1 * clamp(16px, 4vw, 40px)); padding-right: clamp(16px, 4vw, 40px); scroll-padding-left: 0; }
+  .projet .frame { aspect-ratio: 4 / 5; }
+  .projet .cap { left: 12px; right: 12px; bottom: 12px; padding: 18px; }
+  .projet .cap h3 { font-size: 22px; }
+  .accent { grid-template-columns: 1fr; gap: 0; }
+  .accent .mark { font-size: 80px; height: 44px; }
+  form .two { grid-template-columns: 1fr; gap: 0; }
+  .coord a, .coord div { font-size: 16px; }
+  .dock { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(252,251,248,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
+  .dock .btn { min-height: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .reveal, .fl { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
 <div class="mq-bar">Maquette proposée par <b>Alexandre</b> à Créateck Paysage · ce n'est pas le site officiel · photos d'illustration</div>
 <div class="mq-tag" aria-hidden="true">Maquette</div>
 
-<header>
-  <div class="wrap top">
-    <nav class="links" aria-label="Navigation principale"><a href="#metiers">Métiers</a><a href="#signature">Projet</a><a href="#methode">Méthode</a><a href="#avis">Avis</a></nav>
-    <a class="logo" href="#" aria-label="Créateck Paysage, accueil"><i>C</i>Créateck Paysage</a>
-    <a class="btn solid" href="#contact">Prendre rendez-vous</a>
-    <button class="menu-btn" id="open" aria-expanded="false" aria-controls="overlay">Menu</button>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Créateck Paysage, accueil"><img src="img/logo.png" alt="Créateck Paysage" width="377" height="96"></a>
+    <ul>
+      <li><a href="#metiers">Services</a></li>
+      <li><a href="#methode">Méthode</a></li>
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#avis">Avis</a></li>
+    </ul>
+    <div class="right">
+      <a class="tel arrow" href="tel:+33556434366">05 56 43 43 66</a>
+      <a class="btn fill" href="#contact">Devis</a>
+    </div>
   </div>
 </header>
-<div class="overlay" id="overlay" aria-hidden="true">
-  <button class="x" id="close">Fermer</button>
-  <a class="big" href="#metiers">Métiers</a><a class="big" href="#signature">Projet</a><a class="big" href="#methode">Méthode</a><a class="big" href="#avis">Avis</a><a class="big" href="#contact">Contact</a>
-  <a class="btn solid" href="tel:0556434366">Appeler le 05 56 43 43 66</a>
+
+<main id="top">
+<section class="hero" style="padding-bottom:0">
+  <div class="wrap">
+    <span class="label"><i></i>Paysagiste · Bordeaux &amp; Gironde · depuis 20 ans</span>
+    <h1>Votre jardin, dessiné en 3D <em>et suivi chaque soir.</em></h1>
+    <p class="sub">Architecte paysagiste, paysagistes et jardiniers : Créateck conçoit, aménage et entretient les jardins de Bordeaux et de la Gironde.</p>
+    <div class="actions">
+      <a class="btn fill" href="#contact">Demander un devis</a>
+      <a class="btn ghost" href="tel:+33556434366">05 56 43 43 66</a>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="photo">
+      <img src="img/c-allee-pierre.webp" alt="Allée en pierre entre des massifs verdoyants" fetchpriority="high">
+      <canvas id="leaves" aria-hidden="true"></canvas>
+    </div>
+
+    <div class="card fl report" aria-hidden="true">
+      <div class="rep-head"><b>Rapport du soir</b><span>Jour 6 sur 9 · 18:42</span></div>
+      <div class="rep-pics"><img src="img/c-deck-bois.webp" alt=""><img src="img/c-terrasse.webp" alt=""></div>
+      <ul class="rep-list"><li>Terrasse bois posée côté piscine</li><li>Arrosage goutte-à-goutte réglé</li><li class="next">Demain : plantations le long de l'allée</li></ul>
+      <div class="bar"><span></span></div>
+    </div>
+
+    <a class="card fl rating" href="#avis">
+      <div class="top"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>Avis Google</div>
+      <div class="big">4,9 <small>134 avis</small></div>
+      <div class="stars" aria-label="5 étoiles">★★★★★</div>
+    </a>
+
+    <div class="card fl plan" aria-hidden="true">
+      <div class="tag"><b>Visite virtuelle 3D</b><span>avant travaux</span></div>
+      <svg viewBox="0 0 240 132" fill="none" stroke="#3d5016" stroke-width="1.1" stroke-linejoin="round">
+        <path d="M20 84 120 34 220 84 120 134Z" opacity=".35"/>
+        <path d="M58 80 108 55 150 76 100 101Z" fill="#fff" fill-opacity=".7"/>
+        <path d="M58 80v5l42 21v-5M100 106l50-25v-5"/>
+        <path d="M122 92 160 73 196 91 158 110Z" fill="#cfe0e8" fill-opacity=".9"/>
+        <path d="M30 86 64 69" stroke-dasharray="2 3"/>
+        <circle cx="72" cy="56" r="11" fill="#6f8f2a" fill-opacity=".35"/><path d="M72 67v12"/>
+        <circle cx="170" cy="52" r="14" fill="#6f8f2a" fill-opacity=".35"/><path d="M170 66v14"/>
+        <circle cx="196" cy="70" r="8" fill="#6f8f2a" fill-opacity=".35"/><path d="M196 78v8"/>
+        <circle cx="44" cy="92" r="6" fill="#6f8f2a" fill-opacity=".35"/>
+        <path d="M80 70 100 60M88 74l20-10M96 78l20-10M104 82l20-10" opacity=".4"/>
+      </svg>
+    </div>
+
+    <a class="card fl composer" href="#contact">
+      <span class="ph"><b>Votre projet :</b> terrasse, piscine, entretien…</span>
+      <span class="send" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<div class="clients wrap reveal">
+  <span class="label">Ils nous confient leurs extérieurs</span>
+  <ul><li>Particuliers</li><li>Châteaux et domaines</li><li>Entreprises</li><li>Restaurants et bars</li><li>Hôtels et chambres d'hôtes</li><li>Copropriétés</li></ul>
 </div>
 
-<main>
-  <section class="hero">
-    <canvas id="leaves" aria-hidden="true"></canvas>
-    <div class="wrap">
-      <p class="eyebrow">Paysagiste · Bordeaux et Gironde · depuis 20 ans</p>
-      <h1 class="serif"><span class="l"><span>Des jardins</span></span><span class="l"><span>qu'on a envie</span></span><span class="l"><span><em>de vivre.</em></span></span></h1>
-      <div class="trip" id="trip">
-        <div class="arch side" data-depth="-10"><img class="on" src="img/c-pergola.webp" alt="Pergola couverte de végétation"></div>
-        <div class="arch" id="mainarch"><img class="on" src="img/c-maison.webp" alt="Jardin en pente avec terrasse bois et allée"><img src="img/c-allee-pierre.webp" alt="Allée de pierres dans un jardin luxuriant" loading="lazy"><img src="img/c-deck-bois.webp" alt="Terrasse en bois au milieu des arbres" loading="lazy"></div>
-        <div class="arch side" data-depth="10"><img class="on" src="img/c-rose.webp" alt="Rose blanche"></div>
-        <div class="seal" aria-label="4,9 sur 5"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="ring" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><text font-size="9.5" letter-spacing="3" fill="#faf8f2" font-family="Inter"><textPath href="#ring">20 ANS · JARDINS · GIRONDE · 20 ANS · JARDINS ·</textPath></text></svg><div><b>4,9</b><small>sur 5</small></div></div>
+<section class="metiers" id="metiers" style="margin-top:96px">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="sec-head reveal">
+        <span class="label">Nos services</span>
+        <h2>Concevoir, aménager, <em>entretenir.</em></h2>
+        <p>Une vision globale de votre extérieur : la même équipe dessine votre jardin, le construit, puis en prend soin.</p>
       </div>
-      <p class="lead">Conception en 3D, création et entretien : nous dessinons, construisons et soignons les jardins de Bordeaux et de la Gironde.</p>
-      <div class="actions"><a class="btn solid" href="#contact">Demander un devis gratuit</a><a class="btn line" href="tel:0556434366">05 56 43 43 66</a></div>
-      <p class="rating"><span class="stars">★★★★★</span> 4,9/5 sur 134 avis Google</p>
+      <div class="rail-nav" data-for="r-metiers"><button aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button><button aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button></div>
     </div>
-  </section>
-
-  <section id="metiers" class="center">
-    <div class="wrap">
-      <p class="eyebrow reveal">Nos métiers</p>
-      <h2 class="serif sec-title reveal" style="margin-top:16px">Concevoir, créer, <em>entretenir.</em></h2>
-      <div class="trades">
-        <article class="trade reveal"><div class="arch"><img src="img/c-patio.webp" alt="Patio dessiné autour d'un arbre" loading="lazy"></div><span class="n">I.</span><h3 class="serif">Le dessin</h3><p>Un architecte paysagiste conçoit votre jardin, avec une visite virtuelle en 3D avant les travaux.</p></article>
-        <article class="trade reveal"><div class="arch"><img src="img/c-terrasse.webp" alt="Terrasse en bois" loading="lazy"></div><span class="n">II.</span><h3 class="serif">La création</h3><p>Terrasses, allées, gazon, plantations, arrosage et éclairage.</p></article>
-        <article class="trade reveal"><div class="arch"><img src="img/c-jardinier.webp" alt="Jardinier au travail" loading="lazy"></div><span class="n">III.</span><h3 class="serif">L'entretien</h3><p>Taille, tonte, désherbage : un contrat à l'année, sans y penser.</p></article>
-      </div>
+    <div class="rail" id="r-metiers">
+      <article class="m-card reveal">
+        <div class="pic"><img src="img/c-pergola.webp" alt="Pergola couverte de végétation" loading="lazy"></div>
+        <span class="label">01 · Architecte paysagiste</span>
+        <h3>La conception</h3>
+        <p>Un jardin fonctionnel, esthétique et durable, pensé pour vos besoins et votre personnalité, et présenté en immersion virtuelle.</p>
+        <a class="arrow" href="#contact">Parler de mon projet →</a>
+      </article>
+      <article class="m-card reveal">
+        <div class="pic"><img src="img/c-terrasse.webp" alt="Terrasse en bois" loading="lazy"></div>
+        <span class="label">02 · Paysagiste</span>
+        <h3>L'aménagement</h3>
+        <p>Terrasses bois et travertin, allées, clôtures et brise-vue, engazonnement, massifs, arrosage et éclairage.</p>
+        <a class="arrow" href="#realisations">Voir des réalisations →</a>
+      </article>
+      <article class="m-card reveal">
+        <div class="pic"><img src="img/c-taille.webp" alt="Taille d'un arbuste au sécateur" loading="lazy"></div>
+        <span class="label">03 · Jardinier paysagiste</span>
+        <h3>L'entretien</h3>
+        <p>Taille, tonte, désherbage, scarification : un contrat d'entretien à l'année, avec un bon d'intervention et des photos après chaque passage.</p>
+        <a class="arrow" href="#contact">Demander un contrat →</a>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="feature" id="signature" aria-label="Projet signature">
-    <img src="img/c-piscine.webp" alt="Piscine, terrasse bois et grand arbre devant une maison" loading="lazy" id="par">
-    <div class="wrap reveal">
-      <span class="tag">Dernier projet · Saint-Médard-en-Jalles</span>
-      <h2 class="serif">Piscine, bois <em>et grands arbres.</em></h2>
-      <p>Un jardin repensé de A à Z, où la maison, la piscine et les plantations ne font plus qu'un.</p>
-      <div class="facts"><div><b>90 m²</b><span>de bois exotique</span></div><div><b>1</b><span>piscine intégrée</span></div><div><b>A à Z</b><span>jardin repensé</span></div></div>
+<section class="methode" id="methode">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="label">Pourquoi Créateck</span>
+      <h2>Vous savez où en est votre chantier, <em>chaque jour.</em></h2>
+      <ol class="steps">
+        <li><span class="n">i.</span><h3>L'immersion virtuelle</h3><p>Vous visualisez le résultat final de votre jardin avant le premier coup de pelle.</p></li>
+        <li><span class="n">ii.</span><h3>Un devis transparent</h3><p>Poste par poste, pour budgéter vos travaux sans surprise.</p></li>
+        <li><span class="n">iii.</span><h3>Le rapport du soir</h3><p>Un rapport d'intervention envoyé chaque jour, et votre architecte paysagiste reste disponible pour vos questions.</p></li>
+      </ol>
+      <p class="quote-s">« … chaque jour, j’ai reçu un compte rendu clair de l’avancée des travaux, ce qui est vraiment rassurant et appréciable. »<cite>Romane L., avis Google, juillet 2025</cite></p>
     </div>
-  </section>
-
-  <section class="method" id="methode">
-    <div class="wrap grid">
-      <div class="reveal">
-        <p class="eyebrow" style="color:var(--sand)">Notre méthode</p>
-        <h2 class="serif sec-title" style="margin-top:16px">Vous savez <em>où vous allez,</em> chaque jour.</h2>
-        <ol class="mlist">
-          <li><b>3D</b><div><h3>La visite virtuelle</h3><p>Votre futur jardin en 3D, avant le premier coup de pelle.</p></div></li>
-          <li><b>1</b><div><h3>Un devis détaillé</h3><p>Clair, poste par poste, pour budgéter sans surprise.</p></div></li>
-          <li><b>18 h</b><div><h3>Le rapport du soir</h3><p>Chaque soir de chantier, un point avec photos, sans vous déplacer.</p></div></li>
-        </ol>
-      </div>
-      <div class="phone reveal" id="phone">
-        <span class="ex">Exemple de rapport</span>
-        <div class="screen">
-          <div class="bar"><i>C</i><div><b>Créateck · Chantier</b><small>Rapport du soir</small></div></div>
-          <div class="msgs">
-            <div class="msg">Bonsoir ! Journée 6 sur 9 : la terrasse bois est posée côté piscine.<time>18:42</time></div>
-            <div class="msg"><img src="img/c-terrasse.webp" alt="" loading="lazy">Demain : plantations le long de l'allée et réglage de l'arrosage.<time>18:43</time></div>
-            <div class="msg">Avancement du chantier<div class="bar2"><span></span></div><time>18:43</time></div>
-          </div>
+    <div class="panel reveal">
+      <span class="label ex">Exemple de rapport</span>
+      <div class="card phone">
+        <div class="rep-head"><b>Créateck · Votre chantier</b><span>18:42</span></div>
+        <div class="msg">
+          <p>Bonsoir ! Journée 6 sur 9 : la terrasse bois est posée côté piscine, les lames sont fixées et poncées.</p>
+          <p>Demain : plantations le long de l'allée et réglage de l'arrosage.</p>
         </div>
+        <div class="rep-pics"><img src="img/c-deck-bois.webp" alt="" loading="lazy"><img src="img/c-terrasse.webp" alt="" loading="lazy"><img src="img/c-allee-pierre.webp" alt="" loading="lazy"></div>
+        <div class="rep-head"><span>Avancement</span><span>66 %</span></div>
+        <div class="bar"><span></span></div>
+        <div class="chips"><span>Terrassement ✓</span><span>Terrasse bois ✓</span><span>Plantations</span><span>Arrosage</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="center" id="avis">
-    <div class="wrap">
-      <p class="score reveal">4,9</p>
-      <p class="muted reveal" style="margin-top:12px"><span style="color:var(--clay);letter-spacing:2px">★★★★★</span> sur 134 avis Google</p>
-      <div class="quotes" id="quotes">
-        <blockquote class="on">« Ils ont transformé mon petit jardin de ville, à l'écoute de mes envies tout en guidant mes choix. »<cite>Catherine B.</cite></blockquote>
-        <blockquote>« Très sérieux et compétents. Les travaux sont bien réalisés, en temps et en heure. C'est un succès. »<cite>Hubert R.</cite></blockquote>
-        <blockquote>« Nous sommes à chaque fois ravis du travail. L'amabilité et la discrétion des équipes sont très appréciées. »<cite>Valhen</cite></blockquote>
-      </div>
-      <div class="qdots" id="qdots"><button class="on" aria-label="Avis 1"></button><button aria-label="Avis 2"></button><button aria-label="Avis 3"></button></div>
-    </div>
-  </section>
-
-  <section style="padding-top:0">
-    <div class="wrap">
-      <h2 class="serif sec-title center reveal">Quelques jardins <em>récents</em></h2>
-      <div class="masonry">
-        <figure class="reveal"><img src="img/c-cour.webp" alt="Cour plantée" loading="lazy"><figcaption>Bordeaux</figcaption></figure>
-        <figure class="reveal"><img src="img/c-maison.webp" alt="Jardin en pente et terrasse" loading="lazy"><figcaption>Saint-Médard-en-Jalles</figcaption></figure>
-        <figure class="reveal"><img src="img/c-banc.webp" alt="Banc en bois dans un massif" loading="lazy"><figcaption>Le Haillan</figcaption></figure>
-        <figure class="reveal"><img src="img/c-pergola.webp" alt="Pergola végétale" loading="lazy"><figcaption>Bordeaux Caudéran</figcaption></figure>
-        <figure class="reveal"><img src="img/c-allee-pierre.webp" alt="Allée de pierres" loading="lazy"><figcaption>Eysines</figcaption></figure>
-        <figure class="reveal"><img src="img/c-parc.webp" alt="Jardin à la française" loading="lazy"><figcaption>Mérignac</figcaption></figure>
+<section class="projet" style="padding-top:0">
+  <div class="wrap">
+    <div class="frame reveal">
+      <img src="img/c-deck-bois.webp" alt="Terrasse en bois au milieu des arbres" loading="lazy" id="parallax">
+      <div class="card cap">
+        <span class="label">Dernier projet</span>
+        <h3>Une piscine, une terrasse en bois exotique et une végétation généreuse.</h3>
+        <p>Un extérieur harmonieux, vivant et agréable à vivre, où chaque élément s'intègre naturellement à l'ensemble.</p>
+        <a class="arrow" href="#realisations">Découvrir le projet →</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="contact center" id="contact" style="padding-top:0">
-    <div class="wrap reveal">
-      <p class="eyebrow">Visite et devis gratuits</p>
-      <h2 class="serif sec-title" style="margin-top:16px">Parlons de <em>votre jardin.</em></h2>
-      <a class="tel" href="tel:0556434366">05 56 43 43 66</a><br>
-      <a class="mail" href="mailto:contact@createck-paysage.com">contact@createck-paysage.com</a>
-      <div class="actions"><a class="btn solid" href="tel:0556434366">Appeler</a><a class="btn line" href="mailto:contact@createck-paysage.com">Écrire un e-mail</a></div>
-      <p class="zones">Bordeaux, Mérignac, Pessac, Le Bouscat, Eysines, Le Haillan, Saint-Médard, Talence, Arcachon, Cap Ferret. 13 rue Edmond Rostand, 33185 Le Haillan.</p>
+<section style="padding-top:0">
+  <div class="wrap">
+    <figure class="accent reveal">
+      <span class="mark" aria-hidden="true">“</span>
+      <div>
+        <blockquote>Le résultat nous comble après une saison. … Nous y sommes bien, parce que nous avons chaque jour sous les yeux une harmonie apaisante, avec un entretien minimum et des floraisons échelonnées. Une sorte de paradis visuel</blockquote>
+        <cite>Bernard S. · avis Google · septembre 2025</cite>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="avis" id="avis" style="padding-top:0">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="sec-head reveal">
+        <span class="label">Ce que disent nos clients</span>
+        <h2>« Je recommande <em>les yeux fermés.</em> »</h2>
+        <div class="score"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><b>4,9</b><span class="stars">★★★★★</span><span>134 avis Google</span></div>
+      </div>
+      <div class="rail-nav" data-for="r-avis"><button aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button><button aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button></div>
     </div>
-  </section>
+    <div class="rail" id="r-avis">
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Je suis absolument ravie du travail réalisé par Créateck Paysage pour ma terrasse, composée d’une partie en travertins et d’une autre en bois. … Le chantier s’est déroulé de manière exemplaire : chaque jour, j’ai reçu un compte rendu clair de l’avancée des travaux, ce qui est vraiment rassurant et appréciable. L’équipe est sérieuse, ponctuelle et très respectueuse. Le résultat final est magnifique. … »</p><div class="who"><span class="av">R</span><div>Romane L.<small>juillet 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« C'est avec plaisir et bonheur que nous avons mené un projet de rénovation de notre jardin avec Créatech Paysage. Entreprise trés sérieuse et compétente : Alain est à l'écoute, prodigue de bons conseils et les travaux sont bien réalisés en temps et en heure. "Cerise sur le gâteau" la communication est au top : bonne réactivité, recherche de bonnes solutions et compte-rendus journaliers des travaux réalisés. Merci. C'est un succès. »</p><div class="who"><span class="av">H</span><div>Hubert R.<small>avril 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous sommes ravis de l’aménagement réalisé : un vrai coup de cœur ! L’équipe a été aussi professionnelle que sympathique, toujours respectueuse et à l’écoute. Le résultat est à la fois esthétique et fonctionnel, avec une terrasse en bois parfaitement intégrée au milieu des plantations. … »</p><div class="who"><span class="av">D</span><div>Didier B.<small>octobre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Une équipe très efficace, de grande compétence est intervenue chez moi, à Mérignac, pour éradiquer des bambous devenus trop envahissants. … Les paysagistes Créateck ont vraiment été au niveau ! très prévenants, professionnels, une écoute de qualité, les bonnes solutions ont été trouvées pour arriver à un résultat original et de très bon gout, en respectant mon budget. … »</p><div class="who"><span class="av">J</span><div>Jean-Phi V.<small>octobre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Les équipes de création et d'entretien ont transformé mon petit jardin de ville en restant à l'écoute de mes envies tout en guidant mes choix. Depuis 3 ans maintenant, j'ai un contrat d'entretien dont je suis pleinement satisfaite. »</p><div class="who"><span class="av">C</span><div>Catherine B.<small>septembre 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« … Nous sommes très satisfait du travail et du résultat final. L'équipe est très agréable, professionnelle et force de proposition. Nous avions même un compte rendu photo journalier, très pratique pour les propriétaires qui ne seraient pas sur place. Le chantier s'est déroulé dans les temps et proprement jusque dans les plus petites finitions. … »</p><div class="who"><span class="av">L</span><div>Lorenzo<small>octobre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« La société rêvée quand l’on souhaite faire des travaux. … Professionnalisme, conseils pertinents, qualité du chantier et compétences. Si il y avait 10 étoiles, ils les mériteraient largement. Je recommande les yeux fermés … »</p><div class="who"><span class="av">C</span><div>Chris<small>décembre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Je suis très satisfaite de l'équipe Createk Paysage ! La remise en état de mon jardin est parfaite, taille des végétaux, désherbage manuel minutieux d'une allée de stationnement envahie par les herbes, scarification du gazon, massifs redéfinis. Un travail très professionnel et dans la bonne humeur ! … »</p><div class="who"><span class="av">M</span><div>Marie T.<small>mars 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous faisons entretenir et nettoyer notre jardin par Créateck et nous sommes à chaque fois ravis du travail effectué. L’amabilité et la discrétion des intervenants sont également très appréciées. … »</p><div class="who"><span class="av">V</span><div>Valhen<small>septembre 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Reprise de terrasse bois : travaux parfaitement réalisés, équipe très professionnelle (rigueur, efficacité, propreté). Nous avons été conseillés pour l'entretien. … »</p><div class="who"><span class="av">C</span><div>Céline F.<small>mai 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Mes travaux d'aménagement du jardin avec installation d'une nouvelle terrasse ont été très bien menés. Le résultat est impeccable et les aménagements très réussis. L'équipe est très professionnelle, ponctuelle et d'une rare amabilité. Je vous recommande cette société. »</p><div class="who"><span class="av">J</span><div>Julia M.<small>avril 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="r-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Un vrai succès ! De la conception avec M. Benoit à la réalisation avec les équipes techniques, tout s'est parfaitement déroulé. Une écoute attentive, des conseils judicieux, une capacité à s'adapter. Je recommande vivement ! »</p><div class="who"><span class="av">E</span><div>Emmanuel L.<small>mars 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+    </div>
+    <div class="more">
+      <a class="btn ghost" href="https://www.google.com/maps/place/?q=place_id:ChIJqRhuN0_XVA0RciDfb8N280s" target="_blank" rel="noopener">Voir les 134 avis sur Google</a>
+    </div>
+  </div>
+</section>
+
+<section class="reals" id="realisations">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="sec-head reveal">
+        <span class="label">Réalisations</span>
+        <h2>Quelques jardins <em>de Gironde.</em></h2>
+      </div>
+      <div class="rail-nav" data-for="r-reals"><button aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button><button aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="rail" id="r-reals">
+      <article class="real"><div class="pic"><img src="img/c-patio.webp" alt="" loading="lazy"></div><h3>Pose d'une terrasse travertin et aménagement du jardin</h3><span class="label">Bordeaux</span></article>
+      <article class="real"><div class="pic"><img src="img/c-piscine.webp" alt="" loading="lazy" style="object-position:70% 50%"></div><h3>Petit jardin avec piscine et terrasse bois</h3><span class="label">Bordeaux</span></article>
+      <article class="real"><div class="pic"><img src="img/c-cour.webp" alt="" loading="lazy"></div><h3>Jardin d'échoppe, terrasse exotique et plantations</h3><span class="label">Bordeaux</span></article>
+      <article class="real"><div class="pic"><img src="img/c-maison.webp" alt="" loading="lazy"></div><h3>Jardin en pente avec piscine et terrasse bois</h3><span class="label">Gironde</span></article>
+      <article class="real"><div class="pic"><img src="img/c-banc.webp" alt="" loading="lazy"></div><h3>Terrasse bois à fixation invisible</h3><span class="label">Le Bouscat</span></article>
+      <article class="real"><div class="pic"><img src="img/c-parc.webp" alt="" loading="lazy"></div><h3>Rénovation des espaces verts d'une entreprise</h3><span class="label">Bordeaux</span></article>
+      <article class="real"><div class="pic"><img src="img/c-allee-pierre.webp" alt="" loading="lazy"></div><h3>Allée bordée de massifs de jardin</h3><span class="label">Bordeaux</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="label">Contact</span>
+      <h2>Parlons de <em>votre jardin.</em></h2>
+      <p style="color:var(--muted);font-size:18px;margin-top:16px;max-width:44ch">Racontez-nous votre projet en quelques mots : un architecte paysagiste vous rappelle pour fixer une visite.</p>
+      <div class="coord">
+        <a href="tel:+33556434366"><span>Téléphone</span><b>05 56 43 43 66</b></a>
+        <a href="mailto:contact@createck-paysage.com"><span>E-mail</span><b>contact@createck-paysage.com</b></a>
+        <div><span>Adresse</span><b>13 rue Edmond Rostand<br>33185 Le Haillan</b></div>
+      </div>
+      <div class="zone">
+        <ul><li>Bordeaux</li><li>Mérignac</li><li>Pessac</li><li>Talence</li><li>Bègles</li><li>Gradignan</li><li>Le Bouscat</li><li>Bruges</li><li>Eysines</li><li>Le Haillan</li><li>Saint-Médard</li><li>Le Taillan-Médoc</li><li>Arcachon</li><li>Lège-Cap-Ferret</li></ul>
+      </div>
+    </div>
+    <form class="card reveal" id="devis">
+      <span class="label" style="display:block;margin-bottom:10px">Votre projet</span>
+      <div class="types">
+        <label><input type="checkbox" name="t" value="Conception"><span>Conception 3D</span></label>
+        <label><input type="checkbox" name="t" value="Terrasse"><span>Terrasse</span></label>
+        <label><input type="checkbox" name="t" value="Jardin complet"><span>Jardin complet</span></label>
+        <label><input type="checkbox" name="t" value="Clôture"><span>Clôture</span></label>
+        <label><input type="checkbox" name="t" value="Entretien"><span>Entretien</span></label>
+      </div>
+      <label class="f"><span>En quelques mots</span><textarea name="m" placeholder="Ex. : refaire la terrasse autour de la piscine, environ 40 m²…"></textarea></label>
+      <div class="two">
+        <label class="f"><span>Nom</span><input name="n" autocomplete="name"></label>
+        <label class="f"><span>Téléphone</span><input name="p" type="tel" autocomplete="tel"></label>
+      </div>
+      <label class="f"><span>Ville</span><input name="v" autocomplete="address-level2" placeholder="Mérignac, Pessac, Bordeaux…"></label>
+      <button class="btn fill" type="submit">Envoyer ma demande</button>
+      <p class="note">Votre demande part par e-mail à contact@createck-paysage.com</p>
+    </form>
+  </div>
+</section>
 </main>
 
 <footer>
-  <div class="wrap"><a class="logo" href="#"><i>C</i>Créateck Paysage</a><span>Paysagiste à Bordeaux et en Gironde depuis 20 ans<br>Photos d'illustration (Unsplash) · Mentions légales</span></div>
+  <div class="wrap">
+    <div class="grid">
+      <div><img src="img/logo.png" alt="Créateck Paysage" width="377" height="96"><div>Paysagiste à Bordeaux et en Gironde depuis 20 ans.</div></div>
+      <nav><a href="#metiers">Services</a><a href="#methode">Méthode</a><a href="#realisations">Réalisations</a><a href="#avis">Avis</a><a href="#contact">Contact</a></nav>
+    </div>
+    <p class="small">Photos d'illustration (Unsplash), remplacées par vos réalisations · Maquette proposée par Alexandre, ce n'est pas le site officiel.</p>
+  </div>
 </footer>
 
-<div class="callbar" id="callbar"><a class="btn line" href="tel:0556434366">Appeler</a><a class="btn solid" href="#contact">Devis gratuit</a></div>
+<div class="dock">
+  <a class="btn ghost" href="tel:+33556434366">Appeler</a>
+  <a class="btn fill" href="#contact">Demander un devis</a>
+</div>
 
 <script>
-const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-requestAnimationFrame(() => document.body.classList.add('ready'));
-const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
-document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-// Menu plein écran
-const ov = document.getElementById('overlay'), openBtn = document.getElementById('open');
-const menu = (o) => { ov.classList.toggle('open', o); ov.setAttribute('aria-hidden', !o); openBtn.setAttribute('aria-expanded', o); };
-openBtn.onclick = () => menu(true); document.getElementById('close').onclick = () => menu(false);
-ov.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu(false)));
-
-// Arche centrale : diaporama ; arches latérales : léger relief à la souris
-const mi = [...document.querySelectorAll('#mainarch img')]; let k = 0;
-if (!calm) setInterval(() => { mi[k].classList.remove('on'); k = (k + 1) % mi.length; mi[k].classList.add('on'); }, 4200);
-if (!calm && matchMedia('(hover: hover)').matches) addEventListener('pointermove', (e) => {
-  const y = e.clientY / innerHeight - .5;
-  document.querySelectorAll('.trip [data-depth]').forEach((el) => el.style.transform = `translateY(${y * +el.dataset.depth}px)`);
-});
-
-// Avis un par un
-const qb = [...document.querySelectorAll('#quotes blockquote')], qd = [...document.querySelectorAll('#qdots button')]; let qi = 0, qt;
-const showQ = (i) => { qb[qi].classList.remove('on'); qd[qi].classList.remove('on'); qi = i; qb[qi].classList.add('on'); qd[qi].classList.add('on'); };
-const loop = () => { clearInterval(qt); if (!calm) qt = setInterval(() => showQ((qi + 1) % qb.length), 6000); };
-qd.forEach((d, i) => d.onclick = () => { showQ(i); loop(); }); loop();
-
-// Projet signature : parallaxe ; barre d'appel (téléphone)
-const par = document.getElementById('par'), callbar = document.getElementById('callbar');
-addEventListener('scroll', () => {
-  callbar.classList.toggle('on', scrollY > innerHeight * .6);
-  if (calm) return; const r = par.parentElement.getBoundingClientRect();
-  if (r.bottom > 0 && r.top < innerHeight) par.style.transform = `translateY(${(r.top / innerHeight) * -6}%)`;
-}, { passive: true });
-
-// Lumière à travers les feuilles : ombres de feuillage qui bougent lentement sur l'ivoire
 (() => {
-  const c = document.getElementById('leaves'), gl = c.getContext('webgl');
+  const hdr = document.getElementById('hdr');
+  addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), { passive: true });
+  requestAnimationFrame(() => setTimeout(() => document.documentElement.classList.add('ready'), 60));
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.rail-nav').forEach(nav => {
+    const rail = document.getElementById(nav.dataset.for);
+    const [prev, next] = nav.querySelectorAll('button');
+    const step = () => (rail.firstElementChild?.getBoundingClientRect().width || 300) + 16;
+    prev.onclick = () => rail.scrollBy({ left: -step(), behavior: 'smooth' });
+    next.onclick = () => rail.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+
+  const par = document.getElementById('parallax');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (par && !reduce) {
+    const tick = () => { const r = par.parentElement.getBoundingClientRect(); const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; par.style.transform = `translateY(${Math.max(-8, Math.min(8, p * -8)).toFixed(2)}%)`; };
+    addEventListener('scroll', tick, { passive: true }); tick();
+  }
+
+  document.getElementById('devis').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, t = [...f.querySelectorAll('[name=t]:checked')].map(i => i.value).join(', ');
+    const body = `Projet : ${t || '-'}\n\n${f.m.value}\n\nNom : ${f.n.value}\nTéléphone : ${f.p.value}\nVille : ${f.v.value}`;
+    location.href = 'mailto:contact@createck-paysage.com?subject=' + encodeURIComponent('Demande de devis') + '&body=' + encodeURIComponent(body);
+  });
+
+  // Ombre des feuilles qui bouge lentement sur la photo (WebGL)
+  const cv = document.getElementById('leaves');
+  if (!cv || reduce) return;
+  const gl = cv.getContext('webgl', { premultipliedAlpha: false, antialias: false });
   if (!gl) return;
-  const fs = `precision highp float; uniform vec2 r; uniform float t; uniform vec2 m;
+  const vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  const fs = `precision mediump float;uniform vec2 r;uniform float t;
   float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
-  float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p=p*2.07+vec2(1.7,9.2);a*=.5;}return v;}
-  void main(){
-    vec2 uv=gl_FragCoord.xy/r.y; float s=t*.035;
-    vec2 sway=vec2(sin(t*.25+uv.y*2.),cos(t*.2+uv.x*1.5))*.025;
-    float d=length(uv-m); sway+=normalize(uv-m+1e-4)*.03*exp(-d*d*6.);
-    vec2 p=uv*2.6+sway+vec2(s,-s*.6);
-    float leaf=fbm(p+.8*fbm(p*1.7-s));
-    float shade=smoothstep(.42,.62,leaf);
-    vec3 ivory=vec3(.949,.933,.898), sun=vec3(.985,.965,.91), green=vec3(.73,.76,.66);
-    vec3 col=mix(sun,green,shade*.5); col=mix(col,ivory,.4);
-    gl_FragColor=vec4(col,1.);}`;
-  const sh = (kd, src) => { const o = gl.createShader(kd); gl.shaderSource(o, src); gl.compileShader(o); return o; };
-  const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0,1);}')); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); gl.useProgram(p);
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  const a = gl.getAttribLocation(p, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-  const ur = gl.getUniformLocation(p, 'r'), ut = gl.getUniformLocation(p, 't'), um = gl.getUniformLocation(p, 'm');
-  const size = () => { const kk = Math.min(devicePixelRatio, 1.5) * .6; c.width = c.clientWidth * kk; c.height = c.clientHeight * kk; gl.viewport(0, 0, c.width, c.height); };
-  addEventListener('resize', size); size();
-  const mouse = [-9, -9], tgt = [-9, -9];
-  c.parentElement.addEventListener('pointermove', (e) => { const b = c.getBoundingClientRect(); tgt[0] = (e.clientX - b.left) / b.height; tgt[1] = (b.bottom - e.clientY) / b.height; if (mouse[0] < -5) { mouse[0] = tgt[0]; mouse[1] = tgt[1]; } });
-  let on = true; new IntersectionObserver(([en]) => on = en.isIntersecting).observe(c);
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
+  float fb(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+  void main(){vec2 uv=gl_FragCoord.xy/r.y;
+    vec2 w=vec2(fb(uv*1.6+vec2(t*.03,t*.02)),fb(uv*1.6-vec2(t*.025,-t*.018)+4.));
+    float sway=sin(t*.35+uv.y*2.)*.04;
+    float l=fb(uv*3.2+w*1.8+vec2(sway,0.)+t*.012);
+    float sh=smoothstep(.46,.62,l);
+    float edge=smoothstep(1.2,.2,uv.y/(r.x/r.y)*0.+gl_FragCoord.y/r.y);
+    vec3 c=mix(vec3(1.),vec3(.70,.74,.66),sh*.85*(.55+.45*edge));
+    gl_FragColor=vec4(c,1.);}`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+  if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+  gl.useProgram(pr);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uR = gl.getUniformLocation(pr, 'r'), uT = gl.getUniformLocation(pr, 't');
+  const size = () => { const d = Math.min(devicePixelRatio, 1.5) * .6; cv.width = cv.clientWidth * d | 0; cv.height = cv.clientHeight * d | 0; gl.viewport(0, 0, cv.width, cv.height); };
+  size(); addEventListener('resize', size);
+  let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
   const t0 = performance.now();
-  const draw = () => { if (on) { mouse[0] += (tgt[0] - mouse[0]) * .04; mouse[1] += (tgt[1] - mouse[1]) * .04;
-    gl.uniform2f(ur, c.width, c.height); gl.uniform1f(ut, calm ? 6 : (performance.now() - t0) / 1000); gl.uniform2f(um, mouse[0], mouse[1]);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); } if (!calm) requestAnimationFrame(draw); };
-  draw();
+  const loop = now => { if (vis) { gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, (now - t0) / 1000); gl.drawArrays(gl.TRIANGLES, 0, 3); } requestAnimationFrame(loop); };
+  requestAnimationFrame(loop); cv.classList.add('on');
 })();
 </script>
 </body>

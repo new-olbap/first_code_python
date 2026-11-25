@@ -12,316 +12,472 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <title>Jardin d'Échoppe — Paysagiste urbain à Bordeaux</title>
-<meta name="description" content="Jardin d'Échoppe, paysagiste urbain à Bordeaux depuis 2018 : conception, création et entretien de jardins de ville, cours et balcons. 4,9/5 sur 71 avis Google.">
-<meta name="theme-color" content="#f1ede2">
+<meta name="description" content="Jardin d'Échoppe, paysagiste urbain à Bordeaux depuis 2018 : conception, réalisation et entretien de cours, balcons, jardins d'échoppe et toits-terrasses. 4,9/5 sur 71 avis Google.">
+<meta name="theme-color" content="#fbfaf6">
+<link rel="icon" href="img/logo-dessin.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..600&family=Spectral:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
 <style>
-/* Structure propre à Jardin d'Échoppe : un « carnet de jardin ».
-   Mosaïque de photos, onglets par type d'espace, cartes qui s'empilent, avis en notes épinglées, devis en 3 questions. */
-:root { --bg: #f1ede2; --paper: #faf8f1; --card: #e7e1d1; --ink: #1d2618; --olive: #5d6a26; --leaf: #a9b75c; --muted: #5d6152; --line: #d4cdb9; --gold: #b0822a; }
+/* Jardin d'Échoppe : pierre blonde de Bordeaux, trait fin du logo, gris-bleu d'origine (#4f6466 / #75939a).
+   Structure propre : accueil en deux colonnes avec un sélecteur d'espace, index des métiers en lignes,
+   le dessin du logo en grand, devis en 3 questions. */
+:root {
+  --canvas: #fbfaf6; --stone: #f3f0e8; --line: #e3ded2;
+  --ink: #1f2a2b; --muted: #687173; --ash: #949a99;
+  --slate: #4f6466; --tree: #75939a; --wash: #e4ebea;
+  --serif: 'Spectral', Georgia, serif; --sans: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --float: 0 0 0 1px rgba(31,42,43,.06), 0 20px 25px -5px rgba(31,42,43,.10), 0 8px 10px -6px rgba(31,42,43,.08);
+}
 * { box-sizing: border-box; margin: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--ink); font: 400 16px/1.5 'Schibsted Grotesk', system-ui, sans-serif; overflow-x: hidden; }
+body { background: var(--canvas); color: var(--ink); font: 400 17px/1.5 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-.wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
-.cond { font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; text-transform: uppercase; line-height: .88; letter-spacing: -.01em; }
-.olive { color: var(--olive); }
-.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--olive); }
-.muted { color: var(--muted); }
-.stars { color: var(--gold); letter-spacing: 2px; }
-:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 3px; font: 700 14px 'Schibsted Grotesk', sans-serif; letter-spacing: .04em; text-transform: uppercase; border: 1.5px solid var(--ink); transition: background .2s, color .2s, border-color .2s; white-space: nowrap; cursor: pointer; background: none; color: var(--ink); }
-.btn.solid { background: var(--olive); border-color: var(--olive); color: #fff; }
-.btn.solid:hover { background: var(--ink); border-color: var(--ink); }
-.btn.line:hover { background: var(--ink); color: var(--bg); }
-
-/* En-tête : menu à gauche, logo au centre, téléphone à droite */
-header { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 66px; }
-.menu-btn { justify-self: start; display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; font: 700 13px 'Schibsted Grotesk', sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; color: var(--ink); padding: 10px 0; }
-.menu-btn i { width: 22px; height: 10px; border-top: 2px solid; border-bottom: 2px solid; }
-.logo { display: flex; align-items: center; gap: 10px; font: 900 26px 'Big Shoulders Display', sans-serif; text-transform: uppercase; letter-spacing: .01em; }
-.logo svg { width: 28px; color: var(--olive); }
-.right { justify-self: end; display: flex; gap: 8px; align-items: center; }
-.right .phone { font-weight: 700; font-size: 15px; margin-right: 10px; }
-.right .btn { min-height: 42px; }
-.icon { width: 44px; height: 44px; display: none; place-items: center; border: 1.5px solid var(--ink); border-radius: 3px; }
-.icon svg { width: 20px; }
-.drawer { position: fixed; inset: 0 auto 0 0; width: min(420px, 100%); z-index: 40; background: var(--ink); color: var(--bg); padding: 84px 28px 32px; display: flex; flex-direction: column; gap: 4px; transform: translateX(-102%); transition: transform .5s cubic-bezier(.7,0,.2,1); }
-.drawer.open { transform: none; }
-.drawer a.big { font: 900 46px/1.05 'Big Shoulders Display', sans-serif; text-transform: uppercase; padding: 4px 0; }
-.drawer a.big:hover { color: var(--leaf); }
-.drawer .x { position: absolute; top: 16px; left: 22px; background: none; border: 0; color: var(--bg); font: 700 13px 'Schibsted Grotesk', sans-serif; letter-spacing: .12em; cursor: pointer; padding: 12px 0; }
-.drawer .btn { margin-top: auto; background: var(--leaf); border-color: var(--leaf); color: var(--ink); }
-.scrim { position: fixed; inset: 0; z-index: 35; background: rgba(29,38,24,.4); opacity: 0; pointer-events: none; transition: opacity .4s; }
-.scrim.on { opacity: 1; pointer-events: auto; }
-
-/* Accueil : titre + mosaïque de photos, courbes de niveau qui se dessinent */
-.hero { position: relative; isolation: isolate; overflow: hidden; padding: clamp(32px, 5vw, 72px) 0 clamp(48px, 6vw, 88px); }
-.topo { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--olive); opacity: .16; z-index: -1; pointer-events: none; }
-.topo path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 5s cubic-bezier(.4,0,.2,1) forwards; }
-.topo path:nth-child(3n) { animation-delay: .4s; } .topo path:nth-child(3n+1) { animation-delay: .8s; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-.hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
-.hero h1 { font-size: clamp(64px, 9.4vw, 150px); margin-top: 18px; }
-.hero .lead { font-size: 18px; max-width: 40ch; margin-top: 24px; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-.mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; grid-column: 2; grid-row: 1 / span 2; }
-.hero-grid > .t1 { align-self: end; } .hero-grid > .t2 { align-self: start; }
-.mosaic > * { aspect-ratio: 1; overflow: hidden; position: relative; opacity: 0; transform: scale(.94); transition: opacity .8s, transform .9s cubic-bezier(.2,.7,.2,1); }
-.ready .mosaic > * { opacity: 1; transform: none; }
-.ready .mosaic > :nth-child(2) { transition-delay: .12s; } .ready .mosaic > :nth-child(3) { transition-delay: .24s; } .ready .mosaic > :nth-child(4) { transition-delay: .36s; }
-.mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2,.7,.2,1); }
-.mosaic figure { margin: 0; }
-.mosaic figure:hover img { transform: scale(1.07); }
-.mosaic figcaption { position: absolute; left: 8px; bottom: 8px; background: var(--paper); font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 3px; }
-.mosaic .note { background: var(--olive); color: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(14px, 2vw, 24px); }
-.mosaic .note b { font: 900 clamp(64px, 8vw, 120px)/.8 'Big Shoulders Display', sans-serif; }
-.mosaic .note span { font-weight: 600; font-size: 15px; }
-.mosaic .note .stars { color: #f1d9a0; }
-
-section { padding: clamp(64px, 9vw, 120px) 0; }
-.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; margin-bottom: clamp(26px, 4vw, 44px); }
-.sec-head h2 { font-size: clamp(52px, 8vw, 128px); }
-.sec-head p { max-width: 36ch; font-size: 17px; }
-
-/* Onglets par espace */
-.tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-bottom: 18px; padding-bottom: 2px; }
-.tabs::-webkit-scrollbar { display: none; }
-.tabs button { flex: none; min-height: 46px; padding: 0 18px; border: 1.5px solid var(--ink); border-radius: 3px; background: none; font: 700 14px 'Schibsted Grotesk', sans-serif; letter-spacing: .03em; cursor: pointer; color: var(--ink); }
-.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
-.panel { display: grid; grid-template-columns: 1.3fr 1fr; background: var(--paper); border: 1px solid var(--line); }
-.panel .ph { position: relative; min-height: 420px; overflow: hidden; }
-.panel .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: fade .7s ease; }
-@keyframes fade { from { opacity: 0; transform: scale(1.04); } }
-.panel .tx { padding: clamp(22px, 3.4vw, 48px); display: flex; flex-direction: column; gap: 16px; animation: fade .7s ease; }
-.panel h3 { font: 900 clamp(44px, 5vw, 76px)/.9 'Big Shoulders Display', sans-serif; text-transform: uppercase; }
-.panel ul { list-style: none; padding: 0; display: grid; gap: 8px; }
-.panel li { display: flex; gap: 10px; align-items: baseline; }
-.panel li::before { content: ""; width: 8px; height: 8px; background: var(--olive); transform: rotate(45deg); flex: none; }
-.panel .btn { align-self: flex-start; margin-top: auto; }
-
-/* Trois métiers : cartes qui s'empilent au défilement */
-.stack { display: grid; gap: 18px; }
-.sc { position: sticky; top: calc(84px + var(--i) * 16px); display: grid; grid-template-columns: 1fr 1fr; min-height: 440px; border: 1px solid var(--line); overflow: hidden; }
-.sc:nth-child(1) { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.sc:nth-child(2) { background: var(--leaf); }
-.sc:nth-child(3) { background: var(--paper); }
-.sc .tx { padding: clamp(24px, 3.4vw, 48px); display: flex; flex-direction: column; gap: 14px; }
-.sc .num { font: 900 clamp(80px, 10vw, 150px)/.8 'Big Shoulders Display', sans-serif; opacity: .9; }
-.sc h3 { font: 900 clamp(40px, 4.6vw, 72px)/.9 'Big Shoulders Display', sans-serif; text-transform: uppercase; margin-top: auto; }
-.sc p { max-width: 40ch; font-size: 17px; }
-.sc img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Avis : notes épinglées */
-.reviews-grid { display: grid; grid-template-columns: .9fr 2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
-.big-score b { display: block; font: 900 clamp(120px, 16vw, 240px)/.8 'Big Shoulders Display', sans-serif; color: var(--olive); }
-.big-score p { margin-top: 12px; font-weight: 600; }
-.notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.pin { background: var(--paper); padding: 26px 20px 20px; box-shadow: 0 10px 30px -18px rgba(29,38,24,.5); position: relative; transform: rotate(var(--r)); transition: transform .4s cubic-bezier(.2,.7,.2,1); }
-.pin:hover { transform: rotate(0) translateY(-4px); }
-.pin::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; margin-left: -9px; background: var(--olive); transform: rotate(45deg); }
-.pin p { font-size: 17px; line-height: 1.45; }
-.pin b { display: block; margin-top: 16px; font-size: 13px; color: var(--muted); }
-
-/* Devis en 3 questions */
-.quiz { background: var(--ink); color: var(--bg); padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(28px, 5vw, 64px); }
-.quiz h2 { font-size: clamp(52px, 7vw, 112px); }
-.quiz h2 .olive { color: var(--leaf); }
-.quiz .q { border-top: 1px solid rgba(241,237,226,.18); padding: 18px 0; }
-.quiz .q > span { display: block; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--leaf); margin-bottom: 12px; }
-.quiz .opts { display: flex; flex-wrap: wrap; gap: 8px; }
-.quiz .opts button { min-height: 44px; padding: 0 16px; border-radius: 3px; border: 1.5px solid rgba(241,237,226,.4); background: none; color: var(--bg); font: 600 15px 'Schibsted Grotesk', sans-serif; cursor: pointer; }
-.quiz .opts button[aria-pressed="true"] { background: var(--leaf); border-color: var(--leaf); color: var(--ink); }
-.quiz .send { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-.quiz .send .btn { border-color: var(--leaf); }
-.quiz .send .solid { background: var(--leaf); color: var(--ink); }
-.quiz .send .line { color: var(--bg); }
-.quiz .send .line:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
-
-footer { padding: 48px 0 40px; }
-footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 28px; font-size: 14px; color: var(--muted); }
-footer .logo { color: var(--ink); margin-bottom: 10px; }
-footer h4 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--olive); margin-bottom: 10px; }
-
-.callbar { display: none; }
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal, .mosaic > * { opacity: 1; transform: none; transition: none; } .topo path { animation: none; stroke-dashoffset: 0; } }
-
-@media (max-width: 900px) {
-  .top { height: 58px; }
-  .right .phone, .right .btn { display: none; }
-  .icon { display: grid; }
-  .logo { font-size: 22px; }
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero h1 { font-size: clamp(56px, 17vw, 96px); }
-  .mosaic { grid-column: auto; grid-row: auto; }
-  .hero-grid > .t1 { order: 1; } .mosaic { order: 2; } .hero-grid > .t2 { order: 3; }
-  .hero .lead { margin-top: 0; font-size: 16px; }
-  .actions .btn { flex: 1; }
-  .panel { grid-template-columns: 1fr; }
-  .panel .ph { min-height: 0; aspect-ratio: 4/3; }
-  .sc { grid-template-columns: 1fr; min-height: 0; top: calc(70px + var(--i) * 12px); }
-  .sc img { aspect-ratio: 16/10; height: auto; order: -1; }
-  .reviews-grid { grid-template-columns: 1fr; }
-  .notes { grid-template-columns: 1fr; gap: 26px; }
-  .pin { --r: 0deg !important; }
-  .quiz { grid-template-columns: 1fr; margin: 0 -18px; }
-  footer .wrap { grid-template-columns: 1fr 1fr; }
-  footer .wrap > :first-child { grid-column: 1 / -1; }
-  .callbar { display: grid; grid-template-columns: 1fr 56px; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .35s; }
-  .callbar.on { transform: none; }
-  .callbar .btn { min-height: 50px; padding: 0; }
-  .callbar svg { width: 20px; }
-  footer { padding-bottom: 100px; }
-}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+h1, h2 { font-family: var(--serif); font-weight: 300; color: var(--ink); }
+h1 em, h2 em { font-style: italic; font-weight: 200; color: var(--slate); }
+.label { font-size: 13px; color: var(--ash); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 6px; font: 500 16px var(--sans); border: 1px solid var(--ink); white-space: nowrap; cursor: pointer; transition: background .25s, color .25s, border-color .25s; background: none; }
+.btn.fill { background: var(--slate); border-color: var(--slate); color: #fff; }
+.btn.fill:hover { background: var(--ink); border-color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: #fff; }
+.arrow { font-weight: 500; }
+.arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+.stars { color: #e0a613; letter-spacing: 1px; }
+svg.g { width: 18px; height: 18px; flex: none; }
 
 .mq-bar { background: #111; color: #fff; font: 500 12px/1.4 system-ui, sans-serif; text-align: center; padding: 8px 16px; }
-.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .75; pointer-events: none; }
+.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
+
+header { position: sticky; top: 0; z-index: 50; background: rgba(251,250,246,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+header.scrolled { border-color: var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 24px; }
+.nav .logo { display: flex; align-items: flex-end; gap: 10px; }
+.nav .logo img.d { height: 46px; width: auto; }
+.nav .logo img.m { height: 22px; filter: brightness(.7); width: auto; margin-bottom: 3px; }
+.nav ul { display: flex; gap: 30px; list-style: none; padding: 0; font-size: 16px; }
+.nav ul a:hover { color: var(--slate); }
+.nav .btn { min-height: 42px; padding: 0 18px; }
+
+/* Accueil en deux colonnes */
+.hero { position: relative; isolation: isolate; padding: clamp(28px, 5vw, 64px) 0 clamp(56px, 7vw, 96px); }
+#light { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: 0; transition: opacity 2.5s; }
+#light.on { opacity: 1; }
+.hero .grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero h1 { font-size: clamp(42px, 5.6vw, 80px); line-height: 1.04; letter-spacing: -0.02em; margin-top: 18px; }
+.hero .sub { color: var(--muted); font-size: 19px; max-width: 44ch; margin-top: 22px; }
+.hero .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
+.hero .note { display: flex; align-items: center; gap: 10px; margin-top: 26px; font-size: 15px; color: var(--muted); }
+.hero .note b { color: var(--ink); font-weight: 600; }
+.visual { position: relative; }
+.visual .photo { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 4.5; background: var(--stone); }
+.visual .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 1.2s, transform 2.4s cubic-bezier(.2,.7,.2,1); }
+.visual .photo img.on { opacity: 1; transform: none; }
+.picker { position: absolute; left: -36px; bottom: 32px; width: 300px; background: #fff; border-radius: 16px; box-shadow: var(--float); padding: 16px; }
+.picker .label { display: block; margin-bottom: 10px; }
+.picker .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.picker button { text-align: left; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--canvas); cursor: pointer; font-size: 15px; transition: all .25s; }
+.picker button small { display: block; font-size: 12px; color: var(--ash); }
+.picker button[aria-pressed="true"] { background: var(--wash); border-color: var(--tree); color: var(--slate); }
+.picker p { font-size: 14px; color: var(--muted); margin-top: 12px; min-height: 42px; }
+.chip { position: absolute; right: 16px; top: 16px; background: rgba(255,255,255,.94); border-radius: 10px; box-shadow: var(--float); padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.chip b { font-weight: 600; font-size: 16px; }
+
+section { padding: clamp(72px, 9vw, 112px) 0; }
+h2 { font-size: clamp(36px, 4.8vw, 62px); line-height: 1.1; letter-spacing: -0.015em; }
+.sec-head p { color: var(--muted); font-size: 18px; margin-top: 16px; max-width: 54ch; }
+
+/* Index des métiers en lignes */
+.index { border-top: 1px solid var(--line); margin-top: 48px; }
+.row { display: grid; grid-template-columns: 70px 1.1fr 1.3fr 200px; gap: 28px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.row .n { font: italic 200 34px/1 var(--serif); color: var(--tree); }
+.row h3 { font: 300 clamp(28px, 3vw, 40px)/1.1 var(--serif); letter-spacing: -.01em; }
+.row p { color: var(--muted); font-size: 16px; }
+.row p b { color: var(--ink); font-weight: 500; }
+.row .pic { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; }
+.row .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.row:hover .pic img { transform: scale(1.05); }
+
+/* Créations : carrousel */
+.creations { background: var(--stone); }
+.row-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.rail { display: grid; grid-auto-flow: column; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin-top: 40px; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; }
+.rail-nav { display: flex; gap: 8px; }
+.rail-nav button { width: 44px; height: 44px; border-radius: 6px; border: 1px solid var(--line); background: #fff; cursor: pointer; display: grid; place-items: center; }
+.rail-nav button:hover { border-color: var(--ink); }
+.rail-nav svg { width: 18px; height: 18px; }
+.creations .rail { grid-auto-columns: calc((100% - 48px) / 4); }
+.crea .pic { border-radius: 10px; overflow: hidden; aspect-ratio: 3 / 4; }
+.crea .pic img { width: 100%; height: 100%; object-fit: cover; }
+.crea h3 { font: 500 17px/1.35 var(--sans); margin-top: 14px; }
+.crea p { font-size: 15px; color: var(--muted); margin-top: 4px; }
+
+/* Le dessin du logo, en grand */
+.trait { text-align: center; }
+.trait .draw { width: min(560px, 90%); margin: 0 auto; position: relative; }
+.trait .draw img { width: 100%; height: auto; clip-path: inset(0 100% 0 0); transition: clip-path 2.6s cubic-bezier(.45,.05,.2,1); }
+.trait .draw.in img { clip-path: inset(0 0 0 0); }
+.trait h2 { margin-top: 40px; max-width: 20ch; margin-left: auto; margin-right: auto; }
+.trait p { color: var(--muted); font-size: 18px; max-width: 54ch; margin: 18px auto 0; }
+.trait ul { list-style: none; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.trait li { padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 15px; background: #fff; }
+
+/* Carte d'accent */
+.accent { background: var(--wash); color: var(--slate); border-radius: 20px; padding: clamp(32px, 6vw, 80px); text-align: center; }
+.accent blockquote { font: italic 200 clamp(26px, 3.4vw, 44px)/1.3 var(--serif); letter-spacing: -.01em; max-width: 30ch; margin: 0 auto; }
+.accent cite { display: block; font: 400 15px var(--sans); font-style: normal; margin-top: 24px; }
+
+/* Avis */
+.avis .score { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; font-size: 16px; color: var(--muted); }
+.avis .score b { font-size: 22px; font-weight: 600; color: var(--ink); }
+.avis .rail { grid-auto-columns: calc((100% - 32px) / 3); }
+.a-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; }
+.a-card p { font: 300 19px/1.45 var(--serif); margin-top: 12px; flex: 1; color: #263334; }
+.a-card .who { display: flex; align-items: center; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; }
+.a-card .who .av { width: 34px; height: 34px; border-radius: 50%; background: var(--wash); color: var(--slate); display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+.a-card .who small { display: block; color: var(--ash); font-size: 13px; }
+.a-card .who svg.g { margin-left: auto; }
+.avis .more { margin-top: 32px; }
+
+/* Devis en 3 questions */
+.devis { background: var(--stone); }
+.devis .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.coord { margin-top: 32px; border-top: 1px solid var(--line); }
+.coord > * { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.coord span { color: var(--ash); }
+.coord b { font-weight: 500; text-align: right; }
+form { background: #fff; border-radius: 16px; box-shadow: var(--float); padding: clamp(20px, 3vw, 32px); }
+fieldset { border: 0; padding: 0; margin: 0 0 22px; }
+legend { font: 300 24px/1.2 var(--serif); margin-bottom: 12px; padding: 0; }
+legend i { font-style: normal; font: 500 13px var(--sans); color: var(--tree); display: block; margin-bottom: 4px; letter-spacing: .08em; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { cursor: pointer; }
+.opts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opts span { display: block; padding: 11px 16px; border-radius: 6px; border: 1px solid var(--line); font-size: 15px; transition: all .2s; background: var(--canvas); }
+.opts input:checked + span { background: var(--slate); border-color: var(--slate); color: #fff; }
+.opts input:focus-visible + span { outline: 2px solid var(--slate); outline-offset: 2px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f span { display: block; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+.f input { width: 100%; font: 400 16px var(--sans); padding: 13px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--canvas); outline: none; }
+.f input:focus { border-color: var(--slate); background: #fff; }
+form .btn { width: 100%; margin-top: 16px; }
+form .hint { text-align: center; font-size: 13px; color: var(--ash); margin-top: 10px; }
+
+footer { padding: 56px 0 40px; font-size: 15px; color: var(--muted); }
+footer .grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 32px; }
+footer img { width: 190px; height: auto; margin-bottom: 14px; }
+footer h4 { font: 500 13px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ash); margin-bottom: 10px; }
+footer a:hover { color: var(--ink); }
+footer .small { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ash); }
+
+.dock { display: none; }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 1s, transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .nav ul { display: none; }
+  .hero .grid, .devis .grid { grid-template-columns: 1fr; }
+  .picker { left: 16px; }
+  .row { grid-template-columns: 50px 1fr 160px; }
+  .row p { grid-column: 2 / 4; grid-row: 2; }
+  .creations .rail { grid-auto-columns: 40%; }
+  .avis .rail { grid-auto-columns: 70%; }
+  footer .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; padding-bottom: 76px; }
+  .nav { height: 60px; }
+  .nav .logo img.d { height: 32px; }
+  .nav .logo img.m { height: 15px; }
+  .nav .btn { min-height: 40px; padding: 0 14px; font-size: 15px; }
+  .hero { padding-top: 14px; }
+  .hero .grid { gap: 22px; }
+  .visual { order: -1; margin: 0 -4px; }
+  .visual .photo { aspect-ratio: 4 / 3.5; }
+  .picker { position: relative; left: auto; bottom: auto; width: auto; margin: -36px 12px 0; padding: 12px; }
+  .picker .opts { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .picker button { padding: 8px 6px; font-size: 13px; text-align: center; }
+  .picker button small { display: none; }
+  .picker p { font-size: 13px; min-height: 0; margin-top: 8px; }
+  .chip { right: 10px; top: 10px; padding: 8px 10px; }
+  .hero h1 { font-size: 40px; margin-top: 12px; }
+  .hero .sub { font-size: 16px; margin-top: 14px; }
+  .hero .actions { display: none; }
+  .hero .note { margin-top: 16px; font-size: 14px; }
+  .sec-head p, .trait p { font-size: 16px; }
+  .row { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+  .row .n { font-size: 24px; }
+  .row p { grid-column: auto; grid-row: auto; }
+  .row .pic { order: -1; aspect-ratio: 16/10; }
+  .row-head .rail-nav { display: none; }
+  .rail { margin-right: -16px; padding-right: 16px; margin-top: 28px; }
+  .creations .rail { grid-auto-columns: 70%; }
+  .avis .rail { grid-auto-columns: 86%; }
+  .two { grid-template-columns: 1fr; gap: 0; }
+  .f { display: block; margin-bottom: 10px; }
+  footer .grid { grid-template-columns: 1fr; }
+  .dock { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(251,250,246,.93); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
+  .dock .btn { min-height: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .trait .draw img { clip-path: none; }
+}
 </style>
 </head>
 <body>
 <div class="mq-bar">Maquette proposée par <b>Alexandre</b> à Jardin d'Échoppe · ce n'est pas le site officiel · photos d'illustration</div>
 <div class="mq-tag" aria-hidden="true">Maquette</div>
 
-<header>
-  <div class="wrap top">
-    <button class="menu-btn" id="open" aria-expanded="false" aria-controls="drawer"><i></i>Menu</button>
-    <a class="logo" href="#" aria-label="Jardin d'Échoppe, accueil"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2C26 10 26 22 16 30 6 22 6 10 16 2z"/><path d="M16 7v21" stroke="#f1ede2" stroke-width="1.6"/></svg>Jardin d'Échoppe</a>
-    <div class="right">
-      <a class="phone" href="tel:0564375958">05 64 37 59 58</a>
-      <a class="btn solid" href="#devis">Devis gratuit</a>
-      <a class="icon" href="tel:0564375958" aria-label="Appeler le 05 64 37 59 58"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg></a>
-    </div>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Jardin d'Échoppe, accueil"><img class="d" src="img/logo-dessin.png" alt="" width="744" height="427"><img class="m" src="img/logo-mot.png" alt="Jardin d'Échoppe" width="729" height="118"></a>
+    <ul>
+      <li><a href="#metiers">Nos métiers</a></li>
+      <li><a href="#creations">Créations</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#devis">Contact</a></li>
+    </ul>
+    <a class="btn fill" href="#devis">Devis</a>
   </div>
 </header>
-<div class="scrim" id="scrim"></div>
-<nav class="drawer" id="drawer" aria-label="Menu" aria-hidden="true">
-  <button class="x" id="close">✕ Fermer</button>
-  <a class="big" href="#espaces">Votre espace</a><a class="big" href="#metiers">Nos métiers</a><a class="big" href="#avis">Avis</a><a class="big" href="#devis">Devis</a>
-  <a class="btn" href="tel:0564375958">Appeler le 05 64 37 59 58</a>
-</nav>
 
-<main>
-  <section class="hero">
-    <svg class="topo" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.2"><path pathLength="1" d="M1186.3 260.0 L1187.8 262.6 L1188.4 265.3 L1188.0 267.9 L1186.5 270.4 L1184.1 272.4 L1181.2 274.1 L1178.2 275.4 L1175.3 276.5 L1172.7 277.7 L1170.5 279.1 L1168.5 280.6 L1166.4 282.1 L1164.0 283.5 L1161.4 284.5 L1158.6 285.1 L1155.7 285.2 L1152.8 285.0 L1150.0 284.6 L1147.3 284.3 L1144.6 284.1 L1141.7 284.1 L1138.8 284.1 L1135.7 284.0 L1132.5 283.6 L1129.5 282.9 L1126.6 281.8 L1123.9 280.3 L1121.5 278.6 L1119.4 276.7 L1117.6 274.6 L1116.1 272.3 L1115.2 269.9 L1115.0 267.3 L1115.5 264.7 L1116.7 262.3 L1118.3 260.0 L1120.0 258.0 L1121.4 256.1 L1122.3 254.2 L1122.6 252.2 L1122.5 250.0 L1122.3 247.5 L1122.5 245.0 L1123.2 242.4 L1124.6 240.2 L1126.8 238.4 L1129.5 237.1 L1132.4 236.2 L1135.3 235.4 L1138.2 234.7 L1141.0 233.9 L1143.9 233.0 L1146.9 232.1 L1150.0 231.6 L1153.2 231.4 L1156.4 231.9 L1159.3 232.8 L1162.0 234.2 L1164.4 235.9 L1166.5 237.7 L1168.5 239.4 L1170.3 241.1 L1172.0 242.8 L1173.6 244.5 L1175.1 246.3 L1176.5 248.1 L1177.8 249.9 L1179.1 251.7 L1180.7 253.6 L1182.5 255.5 L1184.5 257.6 L1186.3 260.0Z"/><path pathLength="1" d="M1223.4 260.0 L1225.8 265.2 L1226.7 270.5 L1225.6 275.8 L1222.4 280.6 L1217.6 284.6 L1211.8 287.8 L1205.7 290.4 L1200.0 292.7 L1195.0 295.1 L1190.7 297.8 L1186.7 300.9 L1182.6 304.1 L1178.1 307.0 L1173.0 309.2 L1167.3 310.4 L1161.4 310.6 L1155.6 310.0 L1150.0 309.2 L1144.6 308.4 L1139.1 308.1 L1133.5 308.1 L1127.4 308.3 L1121.1 308.4 L1114.6 307.8 L1108.3 306.5 L1102.4 304.3 L1097.1 301.2 L1092.6 297.6 L1088.7 293.5 L1085.5 289.0 L1083.2 284.3 L1081.8 279.4 L1081.5 274.3 L1082.5 269.3 L1084.6 264.5 L1087.4 260.0 L1090.4 255.9 L1092.8 252.1 L1094.2 248.3 L1094.6 244.3 L1094.4 239.8 L1094.0 234.8 L1094.3 229.6 L1095.8 224.5 L1098.8 220.1 L1103.3 216.6 L1108.7 214.0 L1114.6 212.2 L1120.6 210.9 L1126.4 209.5 L1132.1 207.9 L1137.8 206.1 L1143.8 204.3 L1150.0 203.1 L1156.4 202.8 L1162.7 203.6 L1168.7 205.6 L1174.0 208.6 L1178.6 212.2 L1182.6 216.0 L1186.3 219.6 L1189.8 223.0 L1193.3 226.2 L1196.8 229.4 L1200.1 232.6 L1203.3 236.0 L1206.4 239.5 L1209.6 243.1 L1212.9 246.9 L1216.5 250.9 L1220.1 255.2 L1223.4 260.0Z"/><path pathLength="1" d="M1261.1 260.0 L1264.0 267.8 L1264.6 275.8 L1262.5 283.5 L1257.6 290.5 L1250.3 296.5 L1241.6 301.3 L1232.7 305.1 L1224.3 308.6 L1217.0 312.2 L1210.7 316.4 L1204.9 321.1 L1198.9 326.0 L1192.2 330.5 L1184.5 333.9 L1176.0 335.7 L1167.2 336.0 L1158.4 335.1 L1150.0 333.7 L1141.9 332.6 L1133.7 332.1 L1125.2 332.3 L1116.0 332.9 L1106.2 333.2 L1096.2 332.7 L1086.4 330.8 L1077.5 327.4 L1069.7 322.6 L1063.3 316.8 L1058.1 310.2 L1054.2 303.2 L1051.4 295.9 L1049.8 288.5 L1049.6 281.0 L1050.9 273.6 L1053.6 266.6 L1057.1 260.0 L1060.8 253.9 L1063.7 248.1 L1065.5 242.3 L1065.9 236.1 L1065.4 229.2 L1065.0 221.7 L1065.6 213.9 L1068.0 206.3 L1072.7 199.7 L1079.5 194.5 L1087.9 190.8 L1096.9 188.2 L1106.0 186.3 L1114.7 184.4 L1123.2 182.0 L1131.8 179.3 L1140.6 176.6 L1150.0 174.6 L1159.6 174.0 L1169.1 175.4 L1178.0 178.6 L1185.8 183.3 L1192.4 189.0 L1198.2 194.9 L1203.4 200.5 L1208.6 205.5 L1213.9 210.1 L1219.5 214.5 L1225.2 218.9 L1230.8 223.6 L1236.2 228.6 L1241.5 234.0 L1246.7 239.8 L1251.9 246.0 L1256.8 252.7 L1261.1 260.0Z"/><path pathLength="1" d="M1299.1 260.0 L1301.8 270.4 L1301.8 280.9 L1298.5 291.0 L1291.8 300.2 L1282.2 308.1 L1270.9 314.4 L1259.2 319.7 L1248.3 324.4 L1238.8 329.3 L1230.6 334.9 L1223.0 341.3 L1215.1 347.9 L1206.2 354.0 L1196.0 358.6 L1184.7 361.1 L1172.9 361.5 L1161.2 360.3 L1150.0 358.4 L1139.1 356.8 L1128.3 356.2 L1116.8 356.7 L1104.3 357.8 L1091.0 358.7 L1077.3 358.2 L1064.0 355.8 L1051.9 351.2 L1041.8 344.4 L1033.8 336.0 L1027.9 326.7 L1023.6 316.9 L1020.9 307.0 L1019.4 297.1 L1019.3 287.3 L1020.7 277.8 L1023.4 268.6 L1027.1 260.0 L1030.9 251.9 L1034.0 244.0 L1035.8 236.1 L1036.2 227.7 L1035.7 218.4 L1035.3 208.4 L1036.4 198.0 L1040.0 188.0 L1046.5 179.3 L1055.8 172.4 L1067.0 167.5 L1079.1 164.2 L1091.3 161.7 L1103.0 159.2 L1114.3 156.2 L1125.7 152.5 L1137.5 148.9 L1150.0 146.2 L1162.8 145.4 L1175.5 147.3 L1187.2 151.8 L1197.4 158.5 L1206.0 166.4 L1213.3 174.5 L1220.0 182.0 L1226.8 188.6 L1234.1 194.4 L1242.2 199.7 L1250.7 205.0 L1259.2 210.8 L1267.4 217.3 L1275.0 224.5 L1282.1 232.4 L1288.6 240.9 L1294.4 250.1 L1299.1 260.0Z"/><path pathLength="1" d="M1337.0 260.0 L1339.1 272.9 L1338.1 285.9 L1333.4 298.3 L1324.9 309.7 L1313.2 319.4 L1299.6 327.4 L1285.6 334.0 L1272.4 340.1 L1260.7 346.4 L1250.5 353.5 L1241.1 361.5 L1231.3 369.8 L1220.2 377.4 L1207.5 383.2 L1193.4 386.4 L1178.7 386.9 L1164.1 385.5 L1150.0 383.1 L1136.4 381.3 L1122.7 380.7 L1108.2 381.6 L1092.5 383.3 L1075.5 384.7 L1057.9 384.4 L1041.0 381.4 L1026.0 375.3 L1013.7 366.3 L1004.5 355.2 L998.2 342.9 L994.2 330.2 L991.8 317.5 L990.6 305.2 L990.6 293.3 L991.7 281.8 L993.9 270.7 L997.0 260.0 L1000.4 249.8 L1003.2 239.8 L1005.0 229.7 L1005.4 218.9 L1005.1 207.3 L1005.2 194.8 L1007.0 181.9 L1011.9 169.6 L1020.3 158.8 L1032.0 150.3 L1046.1 144.2 L1061.3 140.1 L1076.5 137.1 L1091.2 134.0 L1105.4 130.2 L1119.7 125.8 L1134.4 121.3 L1150.0 117.9 L1166.0 117.1 L1181.8 119.5 L1196.2 125.4 L1208.7 134.1 L1219.1 144.3 L1227.9 154.7 L1236.0 164.2 L1244.5 172.1 L1254.1 178.8 L1265.0 184.8 L1276.7 190.8 L1288.6 197.6 L1299.9 205.5 L1310.1 214.5 L1319.0 224.7 L1326.5 235.7 L1332.6 247.5 L1337.0 260.0Z"/><path pathLength="1" d="M1374.7 260.0 L1375.5 275.4 L1373.1 290.7 L1367.0 305.3 L1356.9 318.7 L1343.5 330.4 L1327.9 340.1 L1311.8 348.3 L1296.4 355.8 L1282.7 363.5 L1270.6 372.1 L1259.2 381.7 L1247.4 391.5 L1234.1 400.6 L1218.9 407.6 L1202.1 411.5 L1184.4 412.3 L1166.9 410.8 L1150.0 408.2 L1133.6 406.2 L1117.1 405.7 L1099.5 407.1 L1080.3 409.5 L1059.5 411.3 L1038.2 411.1 L1017.7 407.4 L999.8 399.6 L985.6 388.2 L975.6 374.2 L969.3 358.7 L965.9 342.9 L964.2 327.6 L963.4 313.0 L963.2 299.0 L963.6 285.6 L964.7 272.6 L966.7 260.0 L969.1 247.7 L971.3 235.4 L972.9 223.0 L973.5 209.9 L973.7 195.9 L974.6 181.0 L977.5 165.8 L983.9 151.3 L994.2 138.5 L1008.4 128.3 L1025.2 121.0 L1043.4 115.9 L1061.6 112.2 L1079.3 108.5 L1096.5 104.1 L1113.6 98.9 L1131.4 93.7 L1150.0 90.0 L1169.2 89.1 L1187.9 92.3 L1205.1 99.7 L1219.8 110.4 L1232.0 122.9 L1242.2 135.5 L1251.7 146.7 L1262.0 155.9 L1274.1 163.2 L1288.1 169.6 L1303.5 176.1 L1319.2 183.8 L1334.0 193.1 L1346.8 204.1 L1357.3 216.7 L1365.4 230.4 L1371.2 244.9 L1374.7 260.0Z"/><path pathLength="1" d="M1411.7 260.0 L1410.9 277.8 L1406.8 295.3 L1399.2 312.1 L1387.8 327.5 L1373.0 341.1 L1355.9 352.7 L1338.0 362.7 L1320.8 371.8 L1305.0 380.9 L1290.8 390.9 L1277.4 401.9 L1263.4 413.2 L1247.8 423.6 L1230.1 431.7 L1210.6 436.4 L1190.2 437.7 L1169.8 436.2 L1150.0 433.7 L1130.7 431.7 L1111.2 431.5 L1090.5 433.3 L1067.7 436.3 L1043.2 438.6 L1018.1 438.2 L994.2 433.6 L973.6 424.0 L957.7 410.0 L947.2 392.7 L941.4 373.9 L938.9 355.1 L938.1 337.1 L937.6 320.3 L937.0 304.5 L936.1 289.4 L935.6 274.6 L935.7 260.0 L936.7 245.4 L938.1 230.9 L939.4 216.0 L940.5 200.5 L941.6 184.2 L943.7 167.1 L948.1 149.7 L956.1 133.1 L968.5 118.4 L984.9 106.5 L1004.3 97.7 L1025.4 91.6 L1046.6 87.1 L1067.3 82.8 L1087.4 77.8 L1107.5 72.0 L1128.3 66.4 L1150.0 62.4 L1172.2 61.8 L1193.9 65.8 L1213.7 74.7 L1230.5 87.4 L1244.4 102.1 L1256.1 116.7 L1267.2 129.4 L1279.5 139.6 L1294.3 147.4 L1311.8 154.1 L1331.3 161.0 L1351.1 169.4 L1369.5 180.2 L1384.9 193.3 L1396.7 208.4 L1404.9 224.9 L1409.8 242.3 L1411.7 260.0Z"/><path pathLength="1" d="M1448.0 260.0 L1445.0 280.1 L1439.1 299.8 L1430.1 318.5 L1417.7 336.0 L1401.9 351.6 L1383.7 365.3 L1364.4 377.1 L1345.4 387.9 L1327.7 398.6 L1311.3 409.9 L1295.5 422.1 L1279.3 434.6 L1261.3 446.2 L1241.2 455.4 L1219.1 461.1 L1195.9 463.0 L1172.7 462.0 L1150.0 459.7 L1127.8 457.9 L1105.2 458.1 L1081.2 460.4 L1054.9 463.8 L1026.7 466.3 L997.8 465.6 L970.7 459.8 L947.6 448.2 L930.4 431.3 L919.7 410.8 L914.6 388.6 L913.2 366.6 L913.3 346.1 L913.1 327.3 L911.6 309.8 L909.0 293.1 L906.2 276.6 L904.0 260.0 L903.0 243.1 L903.4 226.1 L904.6 208.7 L906.5 190.9 L908.9 172.3 L912.6 153.1 L918.8 133.7 L928.7 115.2 L943.0 98.5 L961.6 84.9 L983.5 74.5 L1007.3 67.2 L1031.4 61.7 L1055.1 56.7 L1078.3 51.2 L1101.4 45.1 L1125.2 39.3 L1150.0 35.4 L1175.2 35.2 L1199.7 40.2 L1222.0 50.5 L1241.0 65.1 L1256.6 81.8 L1269.8 98.1 L1282.7 112.2 L1297.3 123.1 L1315.1 131.3 L1336.4 138.0 L1360.2 145.2 L1384.3 154.5 L1406.3 166.8 L1424.2 182.1 L1437.1 200.0 L1444.8 219.5 L1448.1 239.7 L1448.0 260.0Z"/><path pathLength="1" d="M1483.2 260.0 L1477.8 282.4 L1470.0 304.0 L1459.7 324.7 L1446.6 344.2 L1430.4 362.0 L1411.6 377.8 L1391.2 391.7 L1370.5 404.3 L1350.6 416.5 L1331.9 429.1 L1313.7 442.3 L1295.0 455.9 L1274.6 468.5 L1252.1 478.8 L1227.5 485.5 L1201.6 488.4 L1175.6 488.1 L1150.0 486.4 L1124.7 485.1 L1099.0 485.7 L1071.5 488.4 L1041.7 492.1 L1009.8 494.5 L977.5 493.0 L947.3 485.8 L922.1 471.9 L903.8 452.0 L893.1 428.1 L888.9 402.6 L888.7 377.7 L889.7 354.7 L889.4 334.0 L886.8 315.0 L882.0 296.9 L876.3 278.7 L871.2 260.0 L868.1 240.8 L867.3 221.1 L868.6 201.2 L871.5 180.9 L875.7 160.2 L881.6 139.1 L889.9 117.9 L901.7 97.5 L917.9 79.0 L938.5 63.4 L962.6 51.3 L989.0 42.5 L1016.0 35.9 L1042.8 30.2 L1069.1 24.4 L1095.4 18.3 L1122.2 12.6 L1150.0 9.0 L1178.1 9.6 L1205.2 15.6 L1229.9 27.3 L1251.0 43.5 L1268.5 61.8 L1283.5 79.6 L1298.4 94.7 L1315.5 106.2 L1336.6 114.5 L1362.0 121.3 L1390.2 128.8 L1418.7 139.0 L1444.3 153.0 L1464.5 170.7 L1477.9 191.5 L1484.7 214.0 L1486.0 237.1 L1483.2 260.0Z"/><path pathLength="1" d="M1517.3 260.0 L1509.2 284.5 L1499.5 308.1 L1488.2 330.7 L1474.8 352.2 L1458.6 372.2 L1439.5 390.4 L1418.3 406.5 L1396.1 421.1 L1374.0 434.7 L1352.7 448.4 L1331.8 462.5 L1310.5 476.8 L1287.7 490.4 L1262.8 501.8 L1235.8 509.7 L1207.4 513.9 L1178.6 514.8 L1150.0 514.0 L1121.6 513.5 L1092.5 514.5 L1061.6 517.4 L1028.2 520.9 L992.9 522.8 L957.3 520.3 L924.4 511.3 L897.3 494.9 L878.3 472.0 L867.8 444.7 L864.4 416.0 L865.3 388.2 L866.9 363.0 L866.3 340.5 L862.1 320.2 L854.6 300.6 L845.6 280.8 L837.3 260.0 L831.8 238.3 L829.8 216.0 L831.4 193.4 L835.8 170.8 L842.3 148.1 L850.6 125.2 L861.3 102.3 L875.2 80.1 L893.2 59.7 L915.6 42.1 L941.7 28.0 L970.5 17.5 L1000.3 9.7 L1030.2 3.3 L1059.8 -2.6 L1089.3 -8.5 L1119.3 -13.6 L1150.0 -16.4 L1180.8 -14.9 L1210.6 -7.9 L1237.6 5.0 L1260.8 22.5 L1280.3 42.1 L1297.3 61.0 L1314.5 76.8 L1334.4 88.6 L1359.1 96.9 L1388.7 103.8 L1421.5 111.7 L1454.2 123.0 L1483.2 138.8 L1505.3 159.1 L1519.0 182.9 L1524.3 208.5 L1523.0 234.5 L1517.3 260.0Z"/><path pathLength="1" d="M1550.2 260.0 L1539.3 286.6 L1527.7 312.0 L1515.8 336.4 L1502.4 360.1 L1486.6 382.4 L1467.7 403.1 L1445.8 421.6 L1422.1 438.1 L1397.7 453.2 L1373.6 467.8 L1349.8 482.6 L1325.8 497.5 L1300.5 511.8 L1273.4 524.4 L1244.1 533.8 L1213.2 539.6 L1181.6 542.1 L1150.0 542.7 L1118.3 543.0 L1085.7 544.4 L1051.3 547.3 L1014.5 550.3 L975.9 551.2 L937.4 547.2 L902.2 536.1 L873.6 517.0 L853.9 491.0 L843.6 460.5 L841.2 428.7 L842.9 398.3 L844.8 371.0 L843.5 347.0 L837.3 325.4 L826.7 304.5 L814.0 282.9 L802.2 260.0 L794.1 235.7 L791.1 210.6 L793.3 185.4 L799.5 160.5 L808.7 135.9 L819.9 111.3 L833.1 86.9 L849.1 63.1 L868.8 40.7 L892.8 20.9 L920.8 4.6 L951.8 -7.8 L984.4 -17.0 L1017.5 -23.9 L1050.5 -29.7 L1083.3 -34.9 L1116.5 -39.1 L1150.0 -40.8 L1183.5 -38.2 L1215.6 -30.1 L1244.9 -16.3 L1270.4 2.1 L1292.0 22.5 L1311.4 41.9 L1331.2 58.1 L1354.4 70.0 L1382.8 78.4 L1416.6 85.5 L1453.9 94.0 L1490.7 106.6 L1522.8 124.4 L1546.4 147.5 L1559.8 174.4 L1563.3 203.2 L1559.1 232.1 L1550.2 260.0Z"/><path pathLength="1" d="M294.6 620.0 L293.2 622.3 L292.1 624.4 L291.3 626.6 L290.7 628.7 L290.0 630.9 L288.9 633.0 L287.3 634.9 L285.3 636.6 L283.0 637.9 L280.5 639.1 L278.0 640.1 L275.7 641.1 L273.3 642.3 L271.0 643.5 L268.5 644.8 L265.9 645.9 L263.0 646.8 L260.0 647.4 L256.9 647.7 L253.7 647.8 L250.5 647.7 L247.3 647.3 L244.0 646.7 L241.0 645.7 L238.3 644.2 L236.2 642.1 L234.8 639.7 L234.0 637.0 L233.8 634.3 L233.8 631.8 L233.7 629.6 L233.1 627.6 L231.9 625.9 L230.2 624.1 L228.3 622.2 L226.6 620.0 L225.5 617.6 L225.2 615.2 L225.7 612.8 L226.8 610.6 L228.3 608.5 L230.0 606.5 L231.6 604.5 L233.2 602.5 L234.9 600.4 L236.8 598.4 L239.0 596.6 L241.7 595.2 L244.6 594.2 L247.7 593.7 L250.9 593.5 L254.0 593.7 L257.1 593.9 L260.0 594.3 L262.8 594.9 L265.5 595.5 L268.1 596.4 L270.5 597.5 L272.8 598.6 L275.0 599.7 L277.3 600.7 L279.9 601.5 L282.9 602.2 L286.1 602.9 L289.5 603.9 L292.7 605.3 L295.3 607.2 L297.0 609.5 L297.6 612.1 L297.2 614.9 L296.1 617.5 L294.6 620.0Z"/><path pathLength="1" d="M328.4 620.0 L325.6 624.5 L323.5 628.7 L322.1 633.0 L321.0 637.3 L319.8 641.7 L317.8 646.0 L314.9 650.0 L310.9 653.3 L306.1 656.0 L301.1 658.2 L296.0 660.1 L291.2 662.1 L286.5 664.4 L281.9 667.0 L277.1 669.7 L271.8 672.2 L266.1 674.3 L260.0 675.7 L253.7 676.4 L247.2 676.4 L240.8 675.9 L234.4 674.8 L228.2 673.1 L222.4 670.8 L217.3 667.5 L213.3 663.4 L210.5 658.6 L209.0 653.4 L208.4 648.2 L208.2 643.3 L207.6 639.1 L206.1 635.3 L203.4 631.8 L199.8 628.3 L195.9 624.4 L192.4 620.0 L190.1 615.2 L189.6 610.3 L190.7 605.5 L193.2 601.0 L196.5 596.9 L200.0 593.0 L203.5 589.1 L206.7 585.1 L210.0 581.0 L213.6 576.9 L218.0 573.2 L223.2 570.3 L229.1 568.3 L235.4 567.3 L241.9 567.2 L248.2 567.7 L254.2 568.6 L260.0 569.6 L265.5 570.7 L270.9 572.0 L276.0 573.4 L280.9 575.1 L285.7 577.0 L290.4 578.9 L295.4 580.6 L300.7 582.1 L306.7 583.6 L313.2 585.2 L319.8 587.3 L325.9 590.3 L330.8 594.2 L333.9 599.0 L334.8 604.4 L333.8 609.9 L331.4 615.1 L328.4 620.0Z"/><path pathLength="1" d="M361.5 620.0 L357.3 626.6 L354.3 633.0 L352.4 639.3 L351.0 645.8 L349.5 652.5 L346.8 659.1 L342.5 665.1 L336.6 670.1 L329.4 674.1 L321.6 677.3 L313.9 680.1 L306.6 683.0 L299.7 686.4 L292.9 690.4 L285.7 694.8 L277.9 699.0 L269.3 702.6 L260.0 705.0 L250.3 706.1 L240.6 705.9 L231.0 704.6 L221.6 702.3 L212.7 699.2 L204.4 695.1 L197.2 689.9 L191.4 683.7 L187.3 676.7 L184.8 669.2 L183.5 661.8 L182.7 654.8 L181.3 648.6 L178.6 643.1 L174.3 637.9 L168.7 632.6 L162.7 626.6 L157.5 620.0 L154.1 612.8 L153.4 605.3 L155.3 598.1 L159.4 591.4 L164.6 585.3 L170.1 579.5 L175.4 573.8 L180.3 567.8 L185.1 561.6 L190.5 555.4 L196.9 549.7 L204.6 545.2 L213.5 542.2 L223.1 540.9 L232.9 541.1 L242.4 542.3 L251.5 544.0 L260.0 545.8 L268.1 547.5 L276.0 549.2 L283.8 550.9 L291.4 552.8 L298.9 554.9 L306.4 557.3 L314.2 559.6 L322.6 561.8 L331.6 564.2 L341.1 566.9 L350.6 570.5 L359.3 575.3 L366.2 581.4 L370.3 588.7 L371.4 596.7 L369.6 604.9 L365.9 612.8 L361.5 620.0Z"/><path pathLength="1" d="M393.9 620.0 L388.6 628.8 L384.7 637.2 L382.4 645.6 L380.9 654.3 L379.1 663.3 L375.8 672.2 L370.2 680.2 L362.3 687.0 L352.7 692.3 L342.2 696.4 L331.8 700.0 L322.0 703.8 L312.9 708.4 L303.9 714.1 L294.5 720.3 L284.1 726.5 L272.5 731.7 L260.0 735.2 L246.9 736.6 L233.8 735.9 L221.0 733.5 L208.9 729.6 L197.5 724.5 L187.1 718.4 L178.1 711.3 L170.6 703.1 L165.1 694.0 L161.4 684.6 L159.0 675.2 L157.1 666.3 L154.5 658.4 L150.4 651.1 L144.4 644.2 L136.8 637.0 L128.8 629.0 L121.9 620.0 L117.6 610.3 L116.9 600.3 L119.7 590.7 L125.3 581.8 L132.6 573.7 L140.3 566.1 L147.4 558.5 L154.0 550.6 L160.3 542.3 L167.4 533.9 L175.8 526.2 L186.0 520.1 L197.9 516.2 L210.9 514.7 L224.1 515.4 L236.8 517.5 L248.8 520.3 L260.0 523.0 L270.6 525.2 L281.0 527.0 L291.4 528.5 L301.9 530.2 L312.5 532.3 L323.1 534.7 L334.1 537.5 L345.5 540.6 L357.4 544.0 L369.7 548.2 L381.8 553.5 L392.7 560.3 L401.1 568.7 L406.0 578.5 L407.1 589.3 L404.6 600.1 L399.7 610.5 L393.9 620.0Z"/><path pathLength="1" d="M425.9 620.0 L419.6 630.9 L415.1 641.3 L412.4 651.8 L410.8 662.8 L408.7 674.1 L404.8 685.2 L397.9 695.3 L388.1 703.8 L376.0 710.5 L362.8 715.6 L349.8 720.0 L337.5 724.7 L326.2 730.7 L315.1 738.0 L303.4 746.3 L290.4 754.6 L275.9 761.6 L260.0 766.2 L243.4 767.8 L226.9 766.4 L211.1 762.4 L196.3 756.4 L182.8 749.1 L170.6 740.7 L159.9 731.5 L150.9 721.4 L143.7 710.7 L138.5 699.5 L134.6 688.5 L131.2 678.0 L127.1 668.4 L121.3 659.4 L113.4 650.6 L103.9 641.5 L94.2 631.3 L85.9 620.0 L80.9 607.8 L80.2 595.3 L84.0 583.2 L91.3 572.1 L100.6 562.0 L110.3 552.6 L119.4 543.2 L127.6 533.4 L135.6 522.9 L144.3 512.4 L154.7 502.7 L167.5 495.1 L182.5 490.3 L198.8 488.8 L215.4 490.1 L231.4 493.4 L246.2 497.4 L260.0 501.0 L273.1 503.6 L285.9 505.2 L299.1 506.2 L312.6 507.2 L326.5 508.7 L340.6 511.1 L354.9 514.3 L369.4 518.3 L384.2 523.2 L398.9 529.1 L413.1 536.4 L425.6 545.4 L435.2 556.3 L440.8 568.7 L441.8 582.0 L438.8 595.4 L432.9 608.2 L425.9 620.0Z"/><path pathLength="1" d="M457.7 620.0 L450.6 633.0 L445.4 645.5 L442.4 658.1 L440.6 671.3 L438.2 684.8 L433.5 698.1 L425.4 710.4 L413.7 720.6 L399.2 728.6 L383.5 734.8 L367.8 740.1 L353.2 745.9 L339.7 753.2 L326.5 762.4 L312.5 772.9 L296.9 783.4 L279.3 792.2 L260.0 797.9 L239.9 799.5 L220.0 797.0 L201.2 791.1 L184.1 782.7 L168.7 772.7 L154.9 761.9 L142.7 750.6 L132.1 738.9 L123.2 726.7 L116.0 714.3 L110.0 701.9 L104.6 690.0 L98.6 678.7 L91.0 668.0 L81.4 657.3 L70.3 646.1 L59.1 633.7 L49.7 620.0 L44.1 605.3 L43.6 590.2 L48.3 575.8 L57.2 562.4 L68.4 550.3 L80.2 539.0 L91.2 527.8 L101.2 516.0 L110.7 503.6 L121.2 491.0 L133.8 479.4 L149.2 470.3 L167.2 464.8 L186.9 463.4 L206.9 465.5 L226.1 470.0 L243.8 475.2 L260.0 479.6 L275.4 482.5 L290.8 483.6 L306.8 483.7 L323.6 483.6 L341.1 484.3 L358.9 486.3 L376.7 489.9 L394.4 495.1 L411.7 501.7 L428.5 509.7 L444.3 519.4 L458.0 530.9 L468.4 544.2 L474.4 559.1 L475.5 575.0 L472.1 590.8 L465.5 606.0 L457.7 620.0Z"/><path pathLength="1" d="M489.4 620.0 L481.7 635.1 L476.1 649.7 L472.6 664.4 L470.4 679.7 L467.5 695.5 L462.1 711.0 L452.7 725.2 L439.2 737.3 L422.5 746.7 L404.2 754.1 L386.1 760.5 L369.2 767.5 L353.5 776.3 L338.2 787.5 L321.9 800.2 L303.6 812.9 L282.8 823.5 L260.0 830.1 L236.3 831.5 L213.1 827.6 L191.5 819.3 L172.2 808.1 L155.2 795.3 L140.1 782.0 L126.5 768.7 L114.2 755.5 L103.2 742.3 L93.6 728.9 L85.1 715.5 L77.2 702.3 L69.0 689.5 L59.5 676.9 L48.3 664.3 L35.8 650.8 L23.6 636.1 L13.4 620.0 L7.6 602.8 L7.3 585.2 L12.8 568.3 L23.1 552.7 L36.1 538.6 L49.8 525.4 L62.8 512.3 L74.5 498.6 L85.9 484.2 L98.2 469.6 L113.1 456.3 L131.2 445.9 L152.3 439.9 L175.4 438.6 L198.7 441.6 L221.0 447.3 L241.3 453.7 L260.0 458.8 L277.8 461.6 L295.7 462.0 L314.7 460.7 L335.0 459.2 L356.4 458.8 L378.1 460.4 L399.5 464.5 L420.2 471.1 L439.8 479.7 L458.2 490.3 L475.0 502.6 L489.4 516.7 L500.4 532.6 L506.8 549.9 L508.1 568.2 L504.6 586.4 L497.7 603.8 L489.4 620.0Z"/><path pathLength="1" d="M521.3 620.0 L513.3 637.3 L507.0 654.0 L503.0 670.8 L500.1 688.2 L496.6 706.0 L490.2 723.7 L479.6 739.9 L464.4 753.8 L445.7 764.8 L425.1 773.5 L404.7 781.2 L385.5 789.6 L367.7 800.2 L350.2 813.3 L331.5 828.3 L310.4 843.1 L286.4 855.3 L260.0 862.5 L232.7 863.4 L206.2 857.8 L182.1 846.9 L160.8 832.5 L142.4 816.7 L126.1 800.9 L111.2 785.8 L97.1 771.5 L83.7 757.5 L71.1 743.6 L59.6 729.4 L48.8 715.1 L38.0 700.7 L26.6 686.3 L14.1 671.4 L0.7 655.7 L-12.2 638.6 L-22.7 620.0 L-28.7 600.3 L-28.7 580.3 L-22.5 561.0 L-11.1 543.0 L3.5 526.7 L19.1 511.5 L34.0 496.6 L47.7 481.0 L61.0 464.8 L75.5 448.5 L92.7 433.6 L113.5 422.1 L137.8 415.6 L164.1 414.6 L190.8 418.4 L216.0 425.2 L239.0 432.6 L260.0 438.2 L280.1 440.7 L300.7 439.9 L322.9 437.0 L346.9 433.8 L372.3 432.1 L398.1 433.4 L423.2 438.2 L446.7 446.4 L468.3 457.5 L487.9 470.9 L505.2 486.1 L519.9 503.0 L531.1 521.4 L537.8 541.1 L539.5 561.6 L536.5 582.0 L529.8 601.6 L521.3 620.0Z"/><path pathLength="1" d="M553.5 620.0 L545.3 639.5 L538.5 658.3 L533.6 677.2 L529.8 696.6 L525.3 716.5 L517.9 736.2 L506.1 754.4 L489.4 770.2 L468.9 782.9 L446.4 793.2 L423.8 802.5 L402.5 812.5 L382.4 824.8 L362.7 840.0 L341.4 857.1 L317.4 873.8 L290.0 887.3 L260.0 894.9 L229.2 895.0 L199.6 887.4 L172.9 873.6 L149.9 856.0 L130.2 837.0 L112.9 818.8 L96.6 802.1 L80.4 786.9 L64.3 772.7 L48.4 758.5 L33.3 743.8 L19.2 728.4 L5.8 712.5 L-7.5 695.9 L-21.1 678.7 L-34.9 660.6 L-48.0 641.0 L-58.5 620.0 L-64.4 597.9 L-64.2 575.4 L-57.6 553.6 L-45.3 533.3 L-29.3 514.8 L-12.1 497.5 L4.8 480.6 L20.6 463.3 L36.1 445.4 L53.0 427.6 L72.8 411.4 L96.5 399.1 L123.8 392.2 L153.3 391.4 L183.0 396.0 L211.1 403.7 L236.6 411.8 L260.0 417.6 L282.5 419.4 L305.8 417.3 L331.3 412.5 L359.2 407.4 L388.9 404.4 L418.9 405.3 L447.6 411.0 L473.8 421.2 L497.0 435.1 L517.2 451.6 L534.6 470.0 L549.2 489.8 L560.4 510.7 L567.6 532.7 L570.1 555.2 L567.8 577.7 L561.7 599.4 L553.5 620.0Z"/><path pathLength="1" d="M853.4 780.0 L852.9 782.2 L851.9 784.4 L850.7 786.4 L849.4 788.3 L848.3 790.3 L847.3 792.3 L846.3 794.4 L845.3 796.5 L844.0 798.7 L842.3 800.7 L840.3 802.6 L838.0 804.3 L835.4 805.8 L832.6 807.1 L829.7 808.2 L826.6 809.1 L823.3 809.5 L820.0 809.3 L816.8 808.5 L813.9 807.0 L811.4 805.1 L809.2 803.0 L807.4 801.1 L805.6 799.5 L803.5 798.4 L801.1 797.6 L798.3 796.9 L795.3 796.2 L792.3 795.1 L789.8 793.6 L787.8 791.7 L786.6 789.5 L786.0 787.1 L785.8 784.7 L785.6 782.3 L785.4 780.0 L785.2 777.6 L784.9 775.2 L785.0 772.7 L785.5 770.2 L786.7 767.9 L788.4 765.8 L790.6 764.0 L793.2 762.5 L795.9 761.2 L798.6 760.1 L801.3 759.1 L804.0 758.3 L806.7 757.7 L809.4 757.2 L812.1 757.0 L814.8 756.8 L817.4 756.6 L820.0 756.3 L822.7 755.6 L825.7 754.8 L829.0 753.9 L832.5 753.2 L836.1 753.0 L839.6 753.6 L842.5 754.9 L844.8 756.9 L846.4 759.4 L847.4 762.1 L848.0 764.7 L848.6 767.1 L849.5 769.3 L850.5 771.3 L851.7 773.4 L852.7 775.5 L853.4 777.7 L853.4 780.0Z"/><path pathLength="1" d="M887.1 780.0 L886.0 784.5 L884.0 788.8 L881.3 792.8 L878.7 796.7 L876.3 800.5 L874.4 804.5 L872.6 808.8 L870.8 813.2 L868.4 817.8 L865.3 822.1 L861.3 826.0 L856.6 829.4 L851.3 832.3 L845.5 834.6 L839.4 836.5 L833.0 837.7 L826.5 838.1 L820.0 837.5 L813.7 835.8 L808.0 833.0 L803.0 829.4 L798.8 825.5 L794.9 821.9 L791.1 819.0 L786.9 816.9 L781.9 815.4 L776.1 814.2 L770.0 812.7 L764.0 810.6 L758.8 807.5 L755.0 803.6 L752.7 799.1 L751.7 794.3 L751.4 789.4 L751.3 784.7 L751.1 780.0 L750.6 775.3 L750.0 770.4 L750.0 765.4 L750.9 760.4 L753.0 755.6 L756.6 751.4 L761.2 747.9 L766.6 745.1 L772.2 742.7 L777.8 740.8 L783.3 739.1 L788.6 737.5 L793.8 736.1 L799.0 735.0 L804.2 734.0 L809.4 733.3 L814.7 732.5 L820.0 731.5 L825.6 730.1 L831.6 728.5 L838.2 726.9 L845.3 725.8 L852.4 725.8 L859.1 727.1 L864.9 730.0 L869.3 734.1 L872.3 739.2 L874.1 744.6 L875.4 749.8 L876.6 754.5 L878.3 758.8 L880.5 762.8 L883.0 766.8 L885.3 771.0 L886.8 775.4 L887.1 780.0Z"/><path pathLength="1" d="M920.9 780.0 L919.3 786.8 L916.1 793.2 L912.0 799.2 L907.8 804.9 L904.2 810.6 L901.4 816.6 L899.1 823.2 L896.6 830.1 L893.4 837.3 L888.9 844.1 L883.0 850.2 L875.8 855.4 L867.5 859.4 L858.5 862.5 L849.1 864.6 L839.4 865.8 L829.6 865.8 L820.0 864.6 L810.8 861.9 L802.4 857.9 L795.0 852.9 L788.5 847.6 L782.5 842.7 L776.6 838.7 L770.0 835.7 L762.3 833.7 L753.5 831.9 L744.1 829.7 L735.1 826.4 L727.4 821.7 L721.8 815.7 L718.5 808.8 L717.1 801.5 L717.0 794.2 L717.1 787.0 L716.9 780.0 L716.1 772.9 L715.2 765.6 L714.9 758.0 L716.1 750.5 L719.3 743.4 L724.7 737.1 L731.9 731.9 L740.4 727.9 L749.2 724.8 L757.8 722.2 L766.0 719.9 L773.8 717.6 L781.3 715.2 L788.7 713.0 L796.3 710.9 L804.0 709.1 L811.8 707.3 L820.0 705.4 L828.6 703.4 L837.8 701.2 L847.8 699.2 L858.2 698.1 L868.7 698.5 L878.6 700.9 L887.0 705.4 L893.4 711.8 L897.7 719.4 L900.4 727.4 L902.2 735.1 L904.1 742.1 L906.7 748.5 L910.2 754.4 L914.2 760.3 L917.9 766.5 L920.3 773.2 L920.9 780.0Z"/><path pathLength="1" d="M954.7 780.0 L952.6 789.1 L948.2 797.6 L942.6 805.6 L936.9 813.2 L932.1 820.8 L928.5 828.9 L925.7 837.8 L922.9 847.4 L919.1 857.3 L913.3 866.8 L905.4 875.2 L895.5 882.0 L884.0 887.1 L871.5 890.4 L858.6 892.4 L845.5 893.0 L832.6 892.3 L820.0 890.3 L808.0 886.7 L797.0 881.8 L787.1 875.8 L778.2 869.5 L770.0 863.6 L761.7 858.8 L752.5 855.1 L742.0 852.5 L730.2 850.0 L717.7 846.9 L705.8 842.4 L695.6 836.0 L688.3 827.9 L684.0 818.6 L682.5 808.7 L682.5 798.9 L682.9 789.4 L682.7 780.0 L681.7 770.6 L680.4 760.8 L679.9 750.7 L681.3 740.6 L685.6 731.1 L692.9 722.8 L702.9 716.1 L714.6 711.0 L726.7 707.2 L738.5 704.2 L749.4 701.4 L759.5 698.3 L769.1 694.8 L778.5 691.1 L788.2 687.4 L798.3 684.0 L808.9 681.0 L820.0 678.1 L831.7 675.4 L844.2 672.8 L857.5 670.9 L871.3 670.2 L885.0 671.3 L897.7 675.0 L908.6 681.3 L916.9 689.9 L922.5 700.0 L926.1 710.6 L928.6 720.7 L931.2 729.9 L934.8 738.2 L939.6 746.0 L945.2 753.8 L950.3 762.1 L953.8 770.9 L954.7 780.0Z"/><path pathLength="1" d="M988.4 780.0 L985.9 791.3 L980.4 802.1 L973.2 812.0 L966.1 821.5 L960.2 831.0 L955.9 841.2 L952.9 852.6 L949.8 865.0 L945.4 877.8 L938.4 890.1 L928.4 900.8 L915.6 909.2 L900.7 915.0 L884.5 918.3 L867.9 919.5 L851.5 919.2 L835.4 917.5 L820.0 914.6 L805.4 910.4 L791.8 904.8 L779.3 898.3 L768.0 891.5 L757.2 885.0 L746.4 879.5 L734.5 875.2 L721.2 871.8 L706.4 868.6 L690.9 864.5 L676.2 858.5 L663.7 850.4 L654.7 840.1 L649.5 828.4 L647.7 816.0 L647.9 803.7 L648.5 791.7 L648.4 780.0 L647.2 768.2 L645.5 756.0 L644.8 743.4 L646.6 730.8 L652.0 718.9 L661.5 708.6 L674.4 700.5 L689.4 694.5 L705.0 690.3 L719.9 686.9 L733.4 683.5 L745.6 679.5 L757.0 674.6 L768.2 669.1 L779.9 663.4 L792.4 658.0 L805.8 653.3 L820.0 649.4 L835.0 646.2 L850.8 643.7 L867.3 642.2 L884.3 642.3 L900.9 644.6 L916.4 649.8 L929.5 658.0 L939.7 668.7 L946.8 681.1 L951.4 694.0 L954.7 706.4 L958.2 717.8 L962.8 728.0 L969.0 737.7 L976.1 747.4 L982.7 757.6 L987.2 768.6 L988.4 780.0Z"/><path pathLength="1" d="M1021.8 780.0 L1019.0 793.6 L1012.5 806.5 L1004.0 818.5 L995.6 829.8 L988.7 841.4 L983.9 853.8 L980.6 867.7 L977.4 883.0 L972.4 898.9 L964.1 913.9 L951.9 926.9 L936.0 936.7 L917.4 942.9 L897.3 945.7 L877.0 945.9 L857.1 944.3 L838.1 941.4 L820.0 937.6 L802.9 932.9 L786.7 927.2 L771.7 920.7 L757.6 913.7 L744.1 906.9 L730.5 901.0 L715.8 896.0 L699.7 891.9 L682.1 887.6 L663.8 882.2 L646.5 874.8 L631.8 864.7 L621.2 852.3 L615.1 838.2 L612.9 823.3 L613.1 808.5 L613.8 794.1 L613.8 780.0 L612.5 765.8 L610.7 751.2 L609.9 736.1 L612.2 721.0 L618.9 706.9 L630.6 694.7 L646.4 685.2 L664.8 678.5 L683.9 673.8 L701.8 670.2 L717.9 666.2 L732.0 661.1 L745.0 654.5 L757.8 646.7 L771.4 638.5 L786.3 630.9 L802.5 624.4 L820.0 619.4 L838.4 615.9 L857.6 613.8 L877.3 613.3 L897.2 614.6 L916.5 618.5 L934.5 625.4 L949.8 635.4 L961.9 648.1 L970.6 662.6 L976.4 677.7 L980.7 692.2 L985.2 705.6 L991.0 717.8 L998.5 729.3 L1007.0 740.9 L1014.9 753.2 L1020.3 766.3 L1021.8 780.0Z"/></svg>
-    <div class="wrap hero-grid">
-      <div class="t1">
-        <p class="eyebrow">Paysagiste urbain · Bordeaux · depuis 2018</p>
-        <h1 class="cond">Des jardins<br>en pleine<br><span class="olive">ville.</span></h1>
+<main id="top">
+<section class="hero">
+  <canvas id="light" aria-hidden="true"></canvas>
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="label">Paysagiste urbain · Bordeaux · depuis 2018</span>
+      <h1>Les jardins de ville, <em>pensés au mètre carré près.</em></h1>
+      <p class="sub">Cours, balcons, jardins d'échoppe et toits-terrasses : nous concevons, réalisons et entretenons les jardins urbains de Bordeaux.</p>
+      <div class="actions">
+        <a class="btn fill" href="#devis">Devis en 3 questions</a>
+        <a class="btn ghost" href="tel:+33564375958">05 64 37 59 58</a>
       </div>
-      <div class="mosaic" aria-label="Quelques jardins">
-        <figure><img src="img/s-cour.webp" alt="Cour plantée au pied d'un immeuble"><figcaption>Cour</figcaption></figure>
-        <div class="note"><b>4,9</b><span><span class="stars">★★★★★</span><br>sur 71 avis Google</span></div>
-        <figure><img src="img/s-laniere.webp" alt="Jardin d'échoppe en lanière"><figcaption>Jardin d'échoppe</figcaption></figure>
-        <figure><img src="img/s-terrasse.webp" alt="Terrasse aménagée vue du dessus"><figcaption>Terrasse</figcaption></figure>
-      </div>
-      <div class="t2">
-        <p class="lead">Cours, balcons, jardins d'échoppe, toits-terrasses : nous dessinons, créons et entretenons les jardins de ville de Bordeaux.</p>
-        <div class="actions"><a class="btn solid" href="#devis">Devis en 3 questions</a><a class="btn line" href="tel:0564375958">Appeler</a></div>
-      </div>
+      <a class="note" href="#avis"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><b>4,9</b><span class="stars">★★★★★</span>71 avis Google</a>
     </div>
-  </section>
-
-  <section id="espaces" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head reveal"><h2 class="cond">Votre <span class="olive">espace</span></h2><p class="muted">Chaque mètre carré compte. Choisissez le vôtre.</p></div>
-      <div class="tabs reveal" role="tablist" aria-label="Type d'espace" id="tabs">
-        <button role="tab" aria-selected="true" data-k="0">Cour</button><button role="tab" aria-selected="false" data-k="1">Balcon</button><button role="tab" aria-selected="false" data-k="2">Jardin d'échoppe</button><button role="tab" aria-selected="false" data-k="3">Toit-terrasse</button>
+    <div class="visual">
+      <div class="photo">
+        <img class="on" data-k="echoppe" src="img/s-laniere.webp" alt="Jardin d'échoppe étroit avec terrasse en pierre et massifs" fetchpriority="high">
+        <img data-k="cour" src="img/s-cour.webp" alt="Cour pavée plantée de buis et de grimpantes" loading="lazy">
+        <img data-k="balcon" src="img/s-patio.webp" alt="Petit espace extérieur garni de pots et de plantes" loading="lazy">
+        <img data-k="toit" src="img/s-terrasse.webp" alt="Toit-terrasse en bois vu du dessus" loading="lazy">
       </div>
-      <div class="panel reveal" id="panel" role="tabpanel"></div>
-    </div>
-  </section>
-
-  <section id="metiers" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head reveal"><h2 class="cond">Trois <span class="olive">métiers</span></h2><p class="muted">Du premier croquis à la taille d'hiver, une seule équipe.</p></div>
-      <div class="stack">
-        <article class="sc" style="--i:0"><div class="tx"><span class="num">01</span><h3>Concevoir</h3><p>Plans, esquisses et choix des plantes adaptés à la lumière et à l'exposition de votre cour.</p></div><img src="img/s-arches.webp" alt="Cour à arcades végétalisée" loading="lazy"></article>
-        <article class="sc" style="--i:1"><div class="tx"><span class="num">02</span><h3>Créer</h3><p>Terrasses bois, massifs, grimpantes, brise-vue végétal et arrosage automatique.</p></div><img src="img/s-deck.webp" alt="Terrasse bois et escalier dans un jardin" loading="lazy"></article>
-        <article class="sc" style="--i:2"><div class="tx"><span class="num">03</span><h3>Entretenir</h3><p>Taille, tonte, haies et arbres, ponctuellement ou à l'année. Particuliers, entreprises et copropriétés.</p></div><img src="img/s-cisaille.webp" alt="Taille d'un arbuste au sécateur" loading="lazy"></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="avis" style="padding-top:0">
-    <div class="wrap reviews-grid">
-      <div class="big-score reveal"><b>4,9</b><p><span class="stars">★★★★★</span><br>71 avis Google</p></div>
-      <div class="notes">
-        <div class="pin reveal" style="--r:-2deg"><p>« Le jardin est transformé, il semble avoir doublé de volume. Nous allons clairement faire appel à eux pour la conception. »</p><b>Laura J.</b></div>
-        <div class="pin reveal" style="--r:1.5deg"><p>« Une superbe structure en aluminium recouverte de jasmin pour cacher le vis-à-vis. Élégant, pratique et soigné. »</p><b>Mathieu L.</b></div>
-        <div class="pin reveal" style="--r:-1deg"><p>« Le résultat dépasse mes attentes et apporte une vraie valeur ajoutée à la maison. »</p><b>Caroline Z.</b></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="devis" style="padding-top:0">
-    <div class="wrap">
-      <div class="quiz reveal">
-        <div><p class="eyebrow" style="color:var(--leaf)">Visite et devis gratuits</p><h2 class="cond" style="margin-top:16px">Votre projet <span class="olive">en 3 questions.</span></h2><p style="margin-top:18px;color:#cfd3c2;max-width:34ch">Répondez, puis envoyez : on vous rappelle pour fixer une visite.</p></div>
-        <div>
-          <div class="q" data-q="Espace"><span>1 · Votre espace</span><div class="opts"><button>Cour</button><button>Balcon</button><button>Jardin d'échoppe</button><button>Toit-terrasse</button></div></div>
-          <div class="q" data-q="Besoin"><span>2 · Votre besoin</span><div class="opts"><button>Créer</button><button>Entretenir</button><button>Les deux</button></div></div>
-          <div class="q" data-q="Surface"><span>3 · La surface</span><div class="opts"><button>Moins de 20 m²</button><button>20 à 50 m²</button><button>Plus de 50 m²</button></div></div>
-          <div class="send"><a class="btn solid" id="mail" href="mailto:contact@jardindechoppe.fr">Envoyer ma demande</a><a class="btn line" href="tel:0564375958">05 64 37 59 58</a></div>
+      <div class="picker" role="group" aria-label="Choisissez votre espace">
+        <span class="label">Votre espace</span>
+        <div class="opts">
+          <button type="button" data-k="echoppe" aria-pressed="true">Jardin d'échoppe<small>tout en longueur</small></button>
+          <button type="button" data-k="cour" aria-pressed="false">Cour<small>entre quatre murs</small></button>
+          <button type="button" data-k="balcon" aria-pressed="false">Balcon<small>quelques m²</small></button>
+          <button type="button" data-k="toit" aria-pressed="false">Toit-terrasse<small>en plein ciel</small></button>
         </div>
+        <p id="pick-txt">Plusieurs ambiances dans une bande étroite : le jardin paraît plus grand.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<section id="metiers" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Nos métiers</span>
+      <h2>Du premier croquis <em>à la taille d'hiver.</em></h2>
+      <p>Une seule équipe, pour les particuliers, les entreprises et les syndics de copropriété.</p>
+    </div>
+    <div class="index">
+      <div class="row reveal"><span class="n">01</span><h3>Conception</h3><p><b>Plans, dessins et dossier d'étude.</b> Nous écoutons vos envies et l'usage que vous ferez du lieu, puis nous proposons un aménagement adapté à la lumière et à l'exposition.</p><div class="pic"><img src="img/s-arches.webp" alt="" loading="lazy"></div></div>
+      <div class="row reveal"><span class="n">02</span><h3>Réalisation</h3><p><b>Création et transformation d'espaces verts.</b> Terrasses bois, murets, clôtures, brise-vue, pergolas, massifs, potager, éclairage et arrosage intégré.</p><div class="pic"><img src="img/s-deck.webp" alt="" loading="lazy"></div></div>
+      <div class="row reveal"><span class="n">03</span><h3>Entretien</h3><p><b>Ponctuel ou sous contrat.</b> Taille des haies et des arbres, tonte, désherbage, remise en état avant l'hiver : vous profitez, nous entretenons.</p><div class="pic"><img src="img/s-taille.webp" alt="" loading="lazy"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="creations" id="creations">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="sec-head reveal">
+        <span class="label">Ce que nous créons</span>
+        <h2>Chaque mètre carré <em>compte.</em></h2>
+      </div>
+      <div class="rail-nav" data-for="r-crea"><button aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button><button aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="rail" id="r-crea">
+      <article class="crea"><div class="pic"><img src="img/s-terrasse.webp" alt="" loading="lazy"></div><h3>Terrasses bois</h3><p>Création ou extension, au ras du jardin ou sur le toit.</p></article>
+      <article class="crea"><div class="pic"><img src="img/s-brique.webp" alt="" loading="lazy"></div><h3>Brise-vue végétal</h3><p>Une structure couverte de jasmin pour cacher le vis-à-vis.</p></article>
+      <article class="crea"><div class="pic"><img src="img/s-allee.webp" alt="" loading="lazy"></div><h3>Clôtures et palissades</h3><p>Bois, béton teinté, végétalisées.</p></article>
+      <article class="crea"><div class="pic"><img src="img/s-cour.webp" alt="" loading="lazy"></div><h3>Massifs et plantations</h3><p>Des végétaux choisis pour votre exposition.</p></article>
+      <article class="crea"><div class="pic"><img src="img/s-patio.webp" alt="" loading="lazy"></div><h3>Pergolas et cabanons</h3><p>Un coin d'ombre, un rangement sur mesure.</p></article>
+      <article class="crea"><div class="pic"><img src="img/s-cisaille.webp" alt="" loading="lazy"></div><h3>Arrosage intégré</h3><p>Automatique, pour passer l'été sans y penser.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="trait">
+  <div class="wrap">
+    <div class="draw" id="draw"><img src="img/logo-dessin.png" alt="Le dessin du logo Jardin d'Échoppe : une échoppe, un arbre et un immeuble" width="744" height="427" loading="lazy"></div>
+    <h2 class="reveal">Un paysagiste bordelais <em>spécialisé dans les jardins urbains.</em></h2>
+    <p class="reveal">Entre l'échoppe et l'immeuble, il reste souvent un petit bout de terre. Notre métier : en faire un vrai jardin, facile à vivre et facile à entretenir.</p>
+    <ul class="reveal"><li>Particuliers</li><li>Entreprises</li><li>Syndics de copropriété</li></ul>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <figure class="accent reveal">
+      <blockquote>« … Nous avons aujourd'hui un petit jardin magnifique que tout le monde trouve plus grand de part la création de plusieurs espaces. »</blockquote>
+      <cite>Marie-Pierre G. · avis Google · juin 2021</cite>
+    </figure>
+  </div>
+</section>
+
+<section class="avis" id="avis" style="padding-top:0">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="sec-head reveal">
+        <span class="label">Avis Google</span>
+        <h2>« … le jardin est transformé, <em>il semble avoir doublé de volume.</em> »</h2>
+        <div class="score"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><b>4,9</b><span class="stars">★★★★★</span><span>71 avis Google</span></div>
+      </div>
+      <div class="rail-nav" data-for="r-avis"><button aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button><button aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="rail" id="r-avis">
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Incroyable, nous avons fait appel à Jardin d'échoppe pour un simple entretien post rénovation de notre maison, le jardin est transformé, il semble avoir doublé de volume. Outre que l'équipe est super sympa, ils nous ont aussi mis en déchetterie beaucoup de matériels de jardin abimé. … »</p><div class="who"><span class="av">L</span><div>Laura J.<small>octobre 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« … Valentin s’est occupé des devis et de la mise en place du projet, puis Pierre, Marin et Alexis ont réalisé une superbe structure en aluminium recouverte de jasmin pour dissimuler un vis-à-vis. Le rendu est élégant, pratique et soigné. Une équipe professionnelle, créative et à l’écoute : merci à eux ! »</p><div class="who"><span class="av">M</span><div>Mathieu L.<small>septembre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Très heureuse d'avoir fait aménager mon jardin par Jardin d'Echoppes. Le résultat dépasse mes attentes, et apporte une réelle valeur ajoutée à la maison. Que ce soit au moment de la conception ou de la mise en oeuvre, les équipes ont été très professionnelles, réactives, et on réalisé les travaux dans un délai très raisonnable. … »</p><div class="who"><span class="av">C</span><div>Caroline Z.<small>mars 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« De la conception à la réalisation, Jardin d'échoppe nous a livré un jardin avec plusieurs ambiances dans lequel toute la famille se sent très bien et pour lequel nous avons beaucoup de compliments. Le résultat est plus qu'à la hauteur de nos attentes. … »</p><div class="who"><span class="av">C</span><div>Claire D.<small>avril 2023</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous avons fait appel à Jardin d'Echoppe pour des travaux d'entretien des arbres et d'aménagement du jardin, avec notamment l'extension d'une terrasse bois. Nous sommes très contents du résultat et du professionalisme de l'équipe. Je vous les recommande vivement »</p><div class="who"><span class="av">M</span><div>Mathieu B.<small>mars 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« … Nous avons fait refaire un jardin et 2 petites terrasses : l'équipe a toujours été sympathique et professionnelle, notre besoin bien compris et bien accompagné, le chantier propre et bien géré, le rendu très réussi. … »</p><div class="who"><span class="av">G</span><div>Guillemette S.<small>juin 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Une très bonne surprise. Non seulement Le concept était alléchant et incroyablement adapté à notre petit jardin de ville, mais en plus, le système de pack est très ingénieux rendant la prestation accessible à beaucoup. Le dossier d'étude est de très grande qualité. Je conseille vivement ! »</p><div class="who"><span class="av">B</span><div>Benoît F.<small>octobre 2019</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Très belle réalisation d'une palissade en bois avec vegetalisation par une équipe dynamique et sympathique qui n'hésite pas à revenir si qq retouches sont nécessaires. À recommander sans hésiter. »</p><div class="who"><span class="av">F</span><div>Franck T.<small>juin 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous avons donné carte blanche sur notre jardin de 80m2. Le résultat est à la hauteur de nos espérances. De la réflexion à la conception, Jardin d'Echoppes a fait preuve de professionalisme. On se laisse guider tout en tenant compte de nos goûts et attentes en terme d'usage. … »</p><div class="who"><span class="av">L</span><div>Lucie N.<small>avril 2023</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« J'ai fait appel à Jardin D'Echoppe pour entretenir mon petit jardin composé d'une haie de pyrancathas et d'arbustes divers . Je suis très contente de la prestation qui est soignée. … »</p><div class="who"><span class="av">J</span><div>Janine V.<small>octobre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« comment exprimer notre joie ? notre jardin n'a jamais été aussi beau. les plans proposés ne représentent pas assez bien le résultat obtenu. en plus une équipe hyper compétente et sympa. nous sommes tellement content que nous prenons un contrat annuel pour maintenir ce jardin »</p><div class="who"><span class="av">C</span><div>Carlos S.<small>novembre 2019</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« On va pas se mentir, la note de 5 étoiles ressemblant à une élection en Corée du nord peut surprendre, mais elle est amplement mérité !! … »</p><div class="who"><span class="av">F</span><div>Frédéric<small>mars 2022</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+    </div>
+    <div class="more"><a class="btn ghost" href="https://www.google.com/maps/place/?q=place_id:ChIJc62d_rgnVQ0RPBUVDRGOFfk" target="_blank" rel="noopener">Voir les 71 avis sur Google</a></div>
+  </div>
+</section>
+
+<section class="devis" id="devis">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="label">Visite et devis</span>
+      <h2>Votre projet <em>en 3 questions.</em></h2>
+      <p style="color:var(--muted);font-size:18px;margin-top:16px;max-width:42ch">Répondez, envoyez : nous vous rappelons pour fixer une visite.</p>
+      <div class="coord">
+        <a href="tel:+33564375958"><span>Téléphone</span><b>05 64 37 59 58</b></a>
+        <a href="mailto:contact@jardindechoppe.fr"><span>E-mail</span><b>contact@jardindechoppe.fr</b></a>
+        <div><span>Adresse</span><b>19 av. Rudolf Diesel<br>33700 Mérignac</b></div>
+      </div>
+    </div>
+    <form id="form" class="reveal">
+      <fieldset><legend><i>1 / 3</i>Votre espace</legend><div class="opts">
+        <label><input type="radio" name="e" value="Jardin d'échoppe" checked><span>Jardin d'échoppe</span></label>
+        <label><input type="radio" name="e" value="Cour"><span>Cour</span></label>
+        <label><input type="radio" name="e" value="Balcon"><span>Balcon</span></label>
+        <label><input type="radio" name="e" value="Toit-terrasse"><span>Toit-terrasse</span></label>
+      </div></fieldset>
+      <fieldset><legend><i>2 / 3</i>Votre besoin</legend><div class="opts">
+        <label><input type="radio" name="b" value="Créer ou transformer" checked><span>Créer ou transformer</span></label>
+        <label><input type="radio" name="b" value="Entretenir"><span>Entretenir</span></label>
+        <label><input type="radio" name="b" value="Les deux"><span>Les deux</span></label>
+      </div></fieldset>
+      <fieldset><legend><i>3 / 3</i>La surface</legend><div class="opts">
+        <label><input type="radio" name="s" value="Moins de 20 m²"><span>Moins de 20 m²</span></label>
+        <label><input type="radio" name="s" value="20 à 80 m²" checked><span>20 à 80 m²</span></label>
+        <label><input type="radio" name="s" value="Plus de 80 m²"><span>Plus de 80 m²</span></label>
+      </div></fieldset>
+      <div class="two">
+        <label class="f"><span>Nom</span><input name="n" autocomplete="name"></label>
+        <label class="f"><span>Téléphone</span><input name="p" type="tel" autocomplete="tel"></label>
+      </div>
+      <button class="btn fill" type="submit">Envoyer ma demande</button>
+      <p class="hint">La demande part par e-mail à contact@jardindechoppe.fr</p>
+    </form>
+  </div>
+</section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div><a class="logo" href="#"><svg viewBox="0 0 32 32" fill="currentColor" style="width:24px;color:var(--olive)"><path d="M16 2C26 10 26 22 16 30 6 22 6 10 16 2z"/></svg>Jardin d'Échoppe</a><p>Paysagiste urbain à Bordeaux depuis 2018.<br>Photos d'illustration (Unsplash), remplacées par vos réalisations.</p></div>
-    <div><h4>Nous joindre</h4><p><a href="tel:0564375958">05 64 37 59 58</a><br><a href="mailto:contact@jardindechoppe.fr">contact@jardindechoppe.fr</a><br>19 av. Rudolf Diesel, 33700 Mérignac</p></div>
-    <div><h4>Horaires</h4><p>Lundi, mardi, jeudi, vendredi<br>9 h - 12 h · 14 h - 18 h</p></div>
+    <div class="grid">
+      <div><img src="img/logo.png" alt="Jardin d'Échoppe" width="746" height="550"><div>Paysagiste urbain à Bordeaux depuis 2018.</div></div>
+      <div><h4>Nous joindre</h4><a href="tel:+33564375958">05 64 37 59 58</a><br><a href="mailto:contact@jardindechoppe.fr">contact@jardindechoppe.fr</a><br>19 av. Rudolf Diesel, 33700 Mérignac</div>
+      <div><h4>Horaires</h4>Lundi, mardi, jeudi, vendredi<br>9 h - 12 h · 14 h - 18 h</div>
+    </div>
+    <p class="small">Photos d'illustration (Unsplash), remplacées par vos réalisations · Maquette proposée par Alexandre, ce n'est pas le site officiel.</p>
   </div>
 </footer>
 
-<div class="callbar" id="callbar"><a class="btn solid" href="#devis">Devis en 3 questions</a><a class="btn line" href="tel:0564375958" aria-label="Appeler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg></a></div>
+<div class="dock">
+  <a class="btn ghost" href="tel:+33564375958">Appeler</a>
+  <a class="btn fill" href="#devis">Devis en 3 questions</a>
+</div>
 
 <script>
-requestAnimationFrame(() => document.body.classList.add('ready'));
-const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .1 });
-document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+(() => {
+  const hdr = document.getElementById('hdr');
+  addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), { passive: true });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal, #draw').forEach(el => io.observe(el));
 
-// Menu latéral
-const drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim'), openBtn = document.getElementById('open');
-const menu = (o) => { drawer.classList.toggle('open', o); scrim.classList.toggle('on', o); drawer.setAttribute('aria-hidden', !o); openBtn.setAttribute('aria-expanded', o); };
-openBtn.onclick = () => menu(true); document.getElementById('close').onclick = scrim.onclick = () => menu(false);
-drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu(false)));
+  document.querySelectorAll('.rail-nav').forEach(nav => {
+    const rail = document.getElementById(nav.dataset.for), [prev, next] = nav.querySelectorAll('button');
+    const step = () => rail.firstElementChild.getBoundingClientRect().width + 16;
+    prev.onclick = () => rail.scrollBy({ left: -step(), behavior: 'smooth' });
+    next.onclick = () => rail.scrollBy({ left: step(), behavior: 'smooth' });
+  });
 
-// Onglets par espace
-const spaces = [
-  ['Cour', 'img/s-cour.webp', 'Une cour minérale devient un coin de verdure à vivre : pots, grimpantes, petit arbre et un sol qui respire.', ['Plantes adaptées à l\'ombre', 'Grimpantes sur les murs', 'Arrosage goutte-à-goutte']],
-  ['Balcon', 'img/s-patio.webp', 'Même quelques mètres carrés suffisent : jardinières sur mesure, brise-vue végétal et plantes qui supportent le vent.', ['Jardinières et bacs sur mesure', 'Brise-vue végétal', 'Plantes résistantes au soleil']],
-  ['Jardin d\'échoppe', 'img/s-laniere.webp', 'Le jardin en lanière typique de Bordeaux : on le découpe en petites pièces pour qu\'il paraisse plus grand.', ['Allées et pas japonais', 'Terrasse au fond du jardin', 'Massifs en plusieurs niveaux']],
-  ['Toit-terrasse', 'img/s-terrasse.webp', 'Un salon dehors, au-dessus des toits : platelage bois, bacs plantés et ombrage.', ['Platelage bois', 'Grands bacs plantés', 'Pergola et ombrage']],
-];
-const panel = document.getElementById('panel'), tabs = [...document.querySelectorAll('#tabs button')];
-const show = (k) => {
-  const [t, img, txt, list] = spaces[k];
-  tabs.forEach((b, i) => b.setAttribute('aria-selected', i === k));
-  panel.innerHTML = `<div class="ph"><img src="${img}" alt="${t}"></div><div class="tx"><span class="eyebrow">Votre espace</span><h3>${t}</h3><p>${txt}</p><ul>${list.map((l) => `<li>${l}</li>`).join('')}</ul><a class="btn solid" href="#devis">Un projet de ${t.toLowerCase()} ?</a></div>`;
-};
-tabs.forEach((b, i) => b.onclick = () => show(i)); show(0);
+  const txt = { echoppe: "Plusieurs ambiances dans une bande étroite : le jardin paraît plus grand.", cour: "Grimpantes, pavés et massifs : une cour qui respire entre quatre murs.", balcon: "Des pots bien choisis et un arrosage automatique pour l'été.", toit: "Terrasse bois, bacs plantés et brise-vue face au vent." };
+  const imgs = document.querySelectorAll('.visual .photo img'), btns = document.querySelectorAll('.picker button'), p = document.getElementById('pick-txt');
+  btns.forEach(b => b.onclick = () => {
+    btns.forEach(x => x.setAttribute('aria-pressed', x === b));
+    imgs.forEach(i => i.classList.toggle('on', i.dataset.k === b.dataset.k));
+    p.textContent = txt[b.dataset.k];
+    const r = document.querySelector(`#form input[name=e][value="${b.textContent.replace(/(tout en|entre|quelques|en plein).*/, '').trim()}"]`); if (r) r.checked = true;
+  });
 
-// Devis en 3 questions : on prépare l'e-mail avec les réponses
-const qs = [...document.querySelectorAll('.quiz .q')], mail = document.getElementById('mail');
-const update = () => {
-  const lines = qs.map((q) => `${q.dataset.q} : ${(q.querySelector('[aria-pressed="true"]') || {}).textContent || '-'}`);
-  mail.href = 'mailto:contact@jardindechoppe.fr?subject=' + encodeURIComponent('Demande de devis') + '&body=' + encodeURIComponent('Bonjour,\n\n' + lines.join('\n') + '\n\nMon nom :\nMon téléphone :\nMon adresse :\n');
-};
-qs.forEach((q) => q.querySelectorAll('button').forEach((b) => { b.setAttribute('aria-pressed', 'false'); b.onclick = () => { q.querySelectorAll('button').forEach((o) => o.setAttribute('aria-pressed', o === b)); update(); }; }));
-update();
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault(); const f = e.target;
+    const body = `Espace : ${f.e.value}\nBesoin : ${f.b.value}\nSurface : ${f.s.value}\n\nNom : ${f.n.value}\nTéléphone : ${f.p.value}`;
+    location.href = 'mailto:contact@jardindechoppe.fr?subject=' + encodeURIComponent('Demande de devis') + '&body=' + encodeURIComponent(body);
+  });
 
-// Barre du bas (téléphone)
-const callbar = document.getElementById('callbar');
-addEventListener('scroll', () => callbar.classList.toggle('on', scrollY > innerHeight * .6), { passive: true });
+  // Lumière d'après-midi qui glisse lentement sur la pierre (WebGL)
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = document.getElementById('light'), gl = cv.getContext('webgl', { premultipliedAlpha: false });
+  if (!gl) return;
+  const fs = `precision mediump float;uniform vec2 r;uniform float t;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
+  float fb(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p=p*2.1+3.1;a*=.5;}return v;}
+  void main(){vec2 uv=gl_FragCoord.xy/r;vec2 q=uv*vec2(r.x/r.y,1.);
+    float beam=smoothstep(.0,.9,sin((q.x*1.1+q.y*.7)*3.-t*.08)*.5+.5);
+    float leaf=smoothstep(.45,.65,fb(q*4.+vec2(t*.02,-t*.015)+fb(q*2.+t*.01)));
+    float lit=beam*(1.-leaf*.55);
+    vec3 base=vec3(.984,.980,.965);
+    vec3 warm=vec3(.99,.955,.88);vec3 shade=vec3(.93,.94,.93);
+    vec3 c=mix(shade,warm,lit);c=mix(base,c,.55*smoothstep(1.1,.2,uv.y*.6+(1.-uv.x)*.5)*smoothstep(0.,.3,uv.y));
+    gl_FragColor=vec4(c,1.);}`;
+  const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; };
+  const pr = gl.createProgram(); gl.attachShader(pr, mk(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}')); gl.attachShader(pr, mk(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+  if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+  gl.useProgram(pr); gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  const uR = gl.getUniformLocation(pr, 'r'), uT = gl.getUniformLocation(pr, 't');
+  const size = () => { const d = .5; cv.width = cv.clientWidth * d | 0; cv.height = cv.clientHeight * d | 0; gl.viewport(0, 0, cv.width, cv.height); };
+  size(); addEventListener('resize', size);
+  let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
+  const t0 = performance.now();
+  const loop = now => { if (vis) { gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, (now - t0) / 1000); gl.drawArrays(gl.TRIANGLES, 0, 3); } requestAnimationFrame(loop); };
+  requestAnimationFrame(loop); cv.classList.add('on');
+})();
 </script>
 </body>
 </html>
