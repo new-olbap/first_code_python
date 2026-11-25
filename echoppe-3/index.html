@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jardin d'Échoppe · maquette de site">
+<meta property="og:description" content="Proposition de nouveau site pour Jardin d'Échoppe, paysagiste urbain à Bordeaux.">
+<meta property="og:url" content="https://maquette-alexandre.netlify.app/echoppe-3/">
+<meta property="og:image" content="https://maquette-alexandre.netlify.app/echoppe-3/apercu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Jardin d'Échoppe — Paysagiste urbain à Bordeaux</title>
+<meta name="description" content="Jardin d'Échoppe, paysagiste urbain à Bordeaux depuis 2018 : plans, réalisation et entretien de cours, balcons et jardins d'échoppe. 4,9/5 sur 71 avis Google.">
+<meta name="theme-color" content="#f3f1ed">
+<link rel="icon" href="../echoppe/img/logo-dessin.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Jardin d'Échoppe, version « dossier de paysagiste » :
+   fond pierre de Bordeaux, une seule police, étiquettes en capitales comme sur un plan,
+   dessins au trait d'un pixel (vue isométrique d'un jardin d'échoppe), photo rendue en points
+   qui respirent lentement avec une loupe qui révèle la vraie photo, et une seule bande sombre
+   couleur ardoise (tirée du gris-bleu de leur logo).
+   Pas de couleur vive. Arrondis : 4 px partout (boutons, cartes, étiquettes), 8 px pour les fiches
+   en verre, photos à angle droit. */
+:root {
+  --stone: #f3f1ed; --white: #ffffff; --ink: #161a1a; --char: #232828; --slate-dk: #243231;
+  --ash: #a4a9a8; --dim: #646a6a; --bone: #d9d5cf; --tree: #75939a;
+  --sans: 'Host Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { background: var(--stone); color: var(--ink); font: 400 17px/1.5 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+.tag { display: inline-block; background: var(--white); color: var(--ink); font: 400 12px/1.4 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+.tag.line { background: none; border: 1px solid var(--bone); }
+h1, h2, h3 { font-weight: 400; letter-spacing: -0.02em; }
+h2 { font-size: clamp(30px, 3.6vw, 40px); line-height: 1.2; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 4px; font: 400 15px var(--sans); border: 1px solid var(--ink); white-space: nowrap; cursor: pointer; background: none; transition: background .2s, color .2s; }
+.btn:hover, .btn.fill { background: var(--ink); color: var(--stone); }
+.btn.fill:hover { background: var(--char); }
+.stars { color: #c99a1b; letter-spacing: 1px; }
+svg.g { width: 16px; height: 16px; flex: none; }
+.dia { display: inline-grid; grid-template-columns: repeat(3, 7px); gap: 3px; }
+.dia i { width: 7px; height: 7px; transform: rotate(45deg) scale(.72); border: 1px solid currentColor; display: block; }
+.dia i.f { background: currentColor; }
+
+.mq-bar { background: #111; color: #fff; font: 500 12px/1.4 system-ui, sans-serif; text-align: center; padding: 8px 16px; }
+.mq-tag { position: fixed; left: 0; top: 50%; z-index: 200; background: #111; color: #fff; font: 600 10px system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 8px 4px; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); opacity: .7; pointer-events: none; border-radius: 0 4px 4px 0; }
+
+header { border-bottom: 1px solid var(--bone); background: var(--stone); position: sticky; top: 0; z-index: 50; }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+.nav .logo { display: flex; align-items: flex-end; gap: 10px; }
+.nav .logo .d { height: 38px; width: auto; filter: grayscale(1) brightness(.45); }
+.nav .logo .m { height: 18px; width: auto; margin-bottom: 3px; filter: grayscale(1) brightness(.3); }
+.nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: 15px; }
+.nav ul a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.nav .btn { min-height: 36px; padding: 0 16px; font-size: 14px; }
+
+/* Accueil : texte à gauche, photo en points à droite */
+.hero { display: grid; grid-template-columns: 45fr 55fr; min-height: calc(100vh - 100px); max-height: 820px; border-bottom: 1px solid var(--bone); }
+.hero .txt { padding: clamp(40px, 6vw, 88px) clamp(16px, 4vw, 56px) 48px max(clamp(16px, 4vw, 40px), calc((100vw - 1200px) / 2 + 40px)); display: flex; flex-direction: column; justify-content: center; }
+.hero .txt > .tag { align-self: flex-start; }
+.hero .lead { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3; color: var(--ash); margin-top: 22px; letter-spacing: -0.02em; }
+.hero h1 { font-size: clamp(36px, 3.8vw, 50px); line-height: 1.1; margin-top: 6px; }
+.hero p.sub { font-size: 17px; color: var(--dim); margin-top: 22px; max-width: 42ch; }
+.hero .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.hero .note { display: flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; color: var(--dim); }
+.scan { position: relative; background: var(--slate-dk); overflow: hidden; min-height: 420px; }
+.scan canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.glass { position: absolute; background: rgba(255,255,255,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,.15); padding: 12px 14px; font-size: 14px; max-width: 250px; color: var(--ink); }
+.glass b { display: block; font-weight: 700; font-size: 14px; }
+.glass .tag { background: var(--ink); color: var(--stone); font-size: 10px; padding: 2px 6px; margin-bottom: 8px; }
+.glass small { display: block; color: var(--dim); font-size: 13px; margin-top: 2px; }
+.glass.g1 { left: 28px; top: 28px; }
+.glass.g2 { right: 28px; bottom: 28px; }
+.scan .legend { position: absolute; left: 28px; bottom: 28px; color: #c9d2d1; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+
+section { padding: clamp(72px, 9vw, 112px) 0; }
+.sec-top { display: flex; align-items: center; gap: 12px; }
+
+/* Bande d'infos rapide */
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--bone); }
+.facts div { padding: 26px clamp(16px, 2vw, 28px); border-right: 1px solid var(--bone); }
+.facts div:last-child { border-right: 0; }
+.facts b { display: block; font-size: 28px; font-weight: 400; letter-spacing: -0.02em; }
+.facts span { display: block; font-size: 13px; color: var(--dim); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+
+/* Méthode : dessin isométrique + texte */
+.method { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.panel { position: relative; background: var(--white); border: 1px solid var(--bone); border-radius: 4px; aspect-ratio: 1 / .92; }
+.panel svg { width: 100%; height: 100%; display: block; }
+.panel svg .draw { stroke-dasharray: 1400; stroke-dashoffset: 1400; transition: stroke-dashoffset 3.2s cubic-bezier(.45,.05,.2,1); }
+.panel.in svg .draw { stroke-dashoffset: 0; }
+.alert { position: absolute; background: var(--white); border: 1px solid var(--bone); border-radius: 4px; padding: 12px 14px; max-width: 240px; font-size: 13px; color: var(--dim); opacity: 0; transform: translateY(8px); transition: opacity .8s, transform .8s; }
+.panel.in .alert { opacity: 1; transform: none; }
+.alert b { display: block; color: var(--ink); font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.alert.a1 { right: 16px; top: 18px; transition-delay: 2.2s; }
+.alert.a2 { left: 16px; bottom: 18px; transition-delay: 2.8s; }
+.method h2 { margin-top: 16px; }
+.method p { color: var(--char); margin-top: 16px; font-size: 17px; }
+.steps { list-style: none; padding: 0; margin-top: 28px; border-top: 1px solid var(--bone); }
+.steps li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--bone); font-size: 16px; }
+.steps li span { font-size: 12px; letter-spacing: .1em; color: var(--dim); padding-top: 3px; }
+.steps li b { font-weight: 700; }
+
+/* La seule bande sombre */
+.dark { background: var(--slate-dk); color: #fff; }
+.dark .tag { background: var(--white); }
+.dark h2 { color: #fff; margin-top: 16px; max-width: 22ch; }
+.dark .intro { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.dark .intro p { color: var(--ash); font-size: 17px; }
+.items { display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; margin-top: 56px; }
+.item { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.12); }
+.item .dia { color: var(--ash); margin-top: 6px; }
+.item h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+.item p { color: var(--ash); font-size: 15px; margin-top: 6px; }
+.item p em { font-style: normal; color: #dfe7e6; }
+
+/* Réalisations */
+.reals-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+.reals-head h2 { margin-top: 16px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--bone); border: 1px solid var(--bone); margin-top: 40px; }
+.cell { background: var(--stone); padding: 12px 12px 16px; }
+.cell .pic { aspect-ratio: 1; overflow: hidden; }
+.cell .pic img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .6s; }
+.cell:hover .pic img { transform: scale(1.04); filter: none; }
+.cell .tag { margin-top: 12px; }
+.cell h3 { font-size: 17px; margin-top: 8px; letter-spacing: -0.01em; }
+
+/* Avis */
+.avis .grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.avis .side { position: sticky; top: 100px; }
+.avis .side h2 { margin-top: 16px; }
+.avis .big { display: flex; align-items: baseline; gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--bone); }
+.avis .big b { font-size: 64px; font-weight: 400; letter-spacing: -0.03em; line-height: 1; }
+.avis .big span { color: var(--dim); font-size: 14px; }
+.avis .side .btn { margin-top: 24px; }
+.list { border-top: 1px solid var(--ink); }
+.a-card { padding: 22px 0; border-bottom: 1px solid var(--bone); display: grid; grid-template-columns: 1fr; }
+.a-card .stars { font-size: 13px; }
+.a-card p { font-size: 17px; line-height: 1.5; margin-top: 8px; color: var(--char); }
+.a-card .who { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; }
+.a-card .who .av { width: 26px; height: 26px; border-radius: 4px; background: var(--white); border: 1px solid var(--bone); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.a-card .who > div { display: flex; gap: 10px; align-items: baseline; }
+.a-card .who small { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.a-card .who svg.g { margin-left: auto; }
+
+/* Devis */
+.devis { border-top: 1px solid var(--bone); }
+.devis .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.devis h2 { margin-top: 16px; }
+.coord { margin-top: 28px; border-top: 1px solid var(--ink); }
+.coord > * { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--bone); font-size: 16px; }
+.coord span { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding-top: 3px; }
+.coord b { font-weight: 400; text-align: right; }
+form { background: var(--white); border: 1px solid var(--bone); border-radius: 4px; padding: clamp(20px, 3vw, 32px); }
+fieldset { border: 0; padding: 0; margin: 0 0 22px; }
+legend { font-size: 20px; letter-spacing: -0.01em; padding: 0; margin-bottom: 12px; }
+legend .tag { display: block; width: max-content; margin-bottom: 8px; background: var(--stone); }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { cursor: pointer; }
+.opts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opts span { display: block; padding: 9px 14px; border-radius: 4px; border: 1px solid var(--bone); font-size: 15px; transition: all .2s; }
+.opts input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--stone); }
+.opts input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f span { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.f input { width: 100%; font: 400 16px var(--sans); padding: 12px 14px; border: 1px solid var(--bone); border-radius: 4px; background: var(--stone); outline: none; }
+.f input:focus { border-color: var(--ink); background: #fff; }
+form .btn { width: 100%; margin-top: 14px; }
+form .hint { margin-top: 10px; font-size: 13px; color: var(--dim); text-align: center; }
+
+footer { border-top: 1px solid var(--bone); padding: 56px 0 36px; font-size: 15px; color: var(--dim); }
+footer .grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+footer img { width: 150px; height: auto; margin-bottom: 12px; filter: grayscale(1) brightness(.5); }
+footer .tag { margin-bottom: 12px; background: var(--white); }
+footer a { display: block; padding: 2px 0; }
+footer a:hover { color: var(--ink); }
+footer .small { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--bone); font-size: 13px; }
+
+.dock { display: none; }
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .9s, transform 1s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .nav ul { display: none; }
+  .hero { grid-template-columns: 1fr; max-height: none; min-height: 0; }
+  .hero .txt { padding: 40px clamp(16px, 4vw, 40px); }
+  .scan { aspect-ratio: 4 / 3.4; min-height: 0; }
+  .method, .avis .grid, .devis .grid, .dark .intro { grid-template-columns: 1fr; }
+  .avis .side { position: static; }
+  .items { grid-template-columns: 1fr; }
+  .grid4 { grid-template-columns: repeat(2, 1fr); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .facts div:nth-child(2) { border-right: 0; }
+  .facts div:nth-child(-n+2) { border-bottom: 1px solid var(--bone); }
+  footer .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; padding-bottom: 76px; }
+  .nav { height: 56px; }
+  .nav .logo .d { height: 30px; }
+  .nav .logo .m { height: 14px; }
+  .hero { display: flex; flex-direction: column; }
+  .hero .txt { display: contents; }
+  .hero .txt > * { margin-left: 16px; margin-right: 16px; }
+  .hero .txt > .tag { margin-top: 20px; align-self: flex-start; }
+  .hero .lead { font-size: 21px; margin-top: 14px; }
+  .hero h1 { font-size: 32px; }
+  .scan { order: 5; margin-top: 20px; aspect-ratio: 4 / 3.3; }
+  .hero p.sub { order: 6; margin-top: 18px; font-size: 16px; }
+  .hero .note { order: 7; margin-bottom: 28px; margin-top: 14px; }
+  .hero .actions { display: none; }
+  .glass { max-width: 200px; padding: 10px 12px; font-size: 13px; }
+  .glass.g1 { display: none; }
+  .glass.g2 { right: 12px; bottom: 12px; }
+  .scan .legend { display: none; }
+  .facts b { font-size: 24px; }
+  .facts span { font-size: 11px; }
+  .panel { aspect-ratio: 1 / 1.05; }
+  .alert { max-width: 190px; padding: 10px 12px; font-size: 12px; }
+  .grid4 { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 74%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: -16px; }
+  .grid4::-webkit-scrollbar { display: none; }
+  .cell { scroll-snap-align: start; }
+  .list { display: grid; grid-auto-flow: column; grid-auto-columns: 86%; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: -16px; padding-right: 16px; border-top: 0; }
+  .list::-webkit-scrollbar { display: none; }
+  .a-card { scroll-snap-align: start; background: var(--white); border: 1px solid var(--bone); border-radius: 4px; padding: 18px; align-content: start; }
+  .two { grid-template-columns: 1fr; gap: 0; }
+  .f { display: block; margin-bottom: 10px; }
+  footer .grid { grid-template-columns: 1fr; }
+  .dock { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(243,241,237,.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--bone); }
+  .dock .btn { min-height: 50px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .reveal, .alert { opacity: 1; transform: none; }
+  .panel svg .draw { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="mq-bar">Maquette proposée par <b>Alexandre</b> à Jardin d'Échoppe · ce n'est pas le site officiel · photos d'illustration</div>
+<div class="mq-tag" aria-hidden="true">Maquette</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Jardin d'Échoppe, accueil"><img class="d" src="../echoppe/img/logo-dessin.png" alt="" width="744" height="427"><img class="m" src="../echoppe/img/logo-mot.png" alt="Jardin d'Échoppe" width="729" height="118"></a>
+    <ul>
+      <li><a href="#methode">Méthode</a></li>
+      <li><a href="#contraintes">Petits espaces</a></li>
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#avis">Avis</a></li>
+    </ul>
+    <a class="btn" href="#devis">Demander un devis</a>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="txt">
+    <span class="tag">Paysagiste urbain · Bordeaux · depuis 2018</span>
+    <p class="lead">Entre l'échoppe et le mur du voisin.</p>
+    <h1>Nous faisons de chaque petit bout de terre un vrai jardin.</h1>
+    <p class="sub">Cours, balcons et jardins d'échoppe : nous les dessinons, les réalisons et les entretenons, avec une seule équipe.</p>
+    <div class="actions">
+      <a class="btn fill" href="#devis">Demander un devis</a>
+      <a class="btn" href="tel:+33564375958">05 64 37 59 58</a>
+    </div>
+    <a class="note" href="#avis"><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>4,9 <span class="stars">★★★★★</span> · 71 avis Google</a>
+  </div>
+  <div class="scan" id="scan" role="img" aria-label="Photo d'un jardin d'échoppe rendue en points, avec une loupe qui montre la vraie photo">
+    <canvas id="dots"></canvas>
+    <div class="glass g1"><span class="tag">Exemple</span><b>Brise-vue en jasmin</b><small>Vis-à-vis masqué côté voisin</small></div>
+    <div class="glass g2"><span class="tag">Entretien</span><b>Taille d'hiver</b><small>Prochain passage planifié</small></div>
+  </div>
+</div>
+
+<div class="wrap facts reveal" style="padding:0">
+  <div><b>4,9 / 5</b><span>Note Google</span></div>
+  <div><b>71</b><span>Avis clients</span></div>
+  <div><b>2018</b><span>Création à Bordeaux</span></div>
+  <div><b>3 métiers</b><span>Concevoir · réaliser · entretenir</span></div>
+</div>
+
+<section id="methode">
+  <div class="wrap method">
+    <div class="panel reveal" id="panel">
+      <svg viewBox="0 0 500 460" fill="none" stroke="#161a1a" stroke-width="1" stroke-linejoin="round" aria-label="Dessin au trait d'un jardin d'échoppe en perspective">
+        <g class="draw">
+          <path d="M60 250 L250 140 L440 250 L250 360 Z"/>
+          <path d="M60 250 V270 L250 380 L440 270 V250"/>
+          <path d="M250 360 V380"/>
+        </g>
+        <g class="draw" stroke-width="1">
+          <path d="M60 250 L60 150 L110 121 L110 221"/>
+          <path d="M60 150 L85 108 L135 79 L110 121"/>
+          <path d="M110 121 L135 79 L135 192"/>
+          <path d="M135 192 L110 221"/>
+          <path d="M75 180 L75 214 L95 202 L95 168 Z"/>
+        </g>
+        <g class="draw" stroke="#646a6a">
+          <path d="M110 221 L190 268 L230 245 L150 198 Z"/>
+          <path d="M122 214 L202 261 M134 207 L214 254 M146 200 L226 247"/>
+        </g>
+        <g class="draw">
+          <path d="M250 140 L440 250"/>
+          <path d="M250 140 V90 M290 163 V113 M330 186 V136 M370 209 V159 M410 232 V182 M440 250 V200"/>
+          <path d="M250 90 L440 200"/>
+        </g>
+        <g class="draw" stroke="#75939a">
+          <path d="M255 100 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0" transform="rotate(30 255 100)"/>
+        </g>
+        <g class="draw">
+          <path d="M330 290 V230"/>
+          <circle cx="330" cy="205" r="34" stroke="#75939a"/>
+          <circle cx="312" cy="196" r="14" stroke="#75939a"/>
+          <ellipse cx="330" cy="292" rx="26" ry="12" stroke-dasharray="3 3"/>
+        </g>
+        <g class="draw" stroke="#646a6a">
+          <path d="M230 270 l16 -9 l12 7 l-16 9 z M262 290 l16 -9 l12 7 l-16 9 z M294 310 l16 -9 l12 7 l-16 9 z M196 252 l16 -9 l12 7 l-16 9 z"/>
+        </g>
+        <g class="draw">
+          <path d="M380 290 L410 273 L410 300 L380 317 Z M380 290 L360 278 L390 261 L410 273"/>
+          <path d="M382 300 l26 -15"/>
+        </g>
+        <g fill="#161a1a" stroke="none" font-family="Host Grotesk" font-size="10" letter-spacing="1">
+          <text x="66" y="300">ÉCHOPPE</text>
+          <text x="150" y="300">TERRASSE BOIS</text>
+          <text x="352" y="345">POTAGER</text>
+        </g>
+      </svg>
+      <div class="alert a1"><b>Vis-à-vis côté voisin</b>Structure aluminium couverte de jasmin, 1,8 m.</div>
+      <div class="alert a2"><b>Ombre de l'arbre</b>Massif de plantes de mi-ombre au pied.</div>
+    </div>
+    <div class="reveal">
+      <span class="tag">Méthode</span>
+      <h2>Tout commence par un plan.</h2>
+      <p>Avant le moindre coup de pelle, nous dessinons votre jardin : plans, dessins et dossier d'étude. Chaque contrainte du lieu y trouve sa réponse.</p>
+      <ol class="steps">
+        <li><span>01</span><div><b>Écouter</b> — vos envies et l'usage que vous ferez du jardin.</div></li>
+        <li><span>02</span><div><b>Dessiner</b> — un plan adapté à la lumière et à l'exposition.</div></li>
+        <li><span>03</span><div><b>Réaliser</b> — terrasse, murets, clôture, plantations, arrosage intégré.</div></li>
+        <li><span>04</span><div><b>Entretenir</b> — ponctuellement ou avec un contrat à l'année.</div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="contraintes">
+  <div class="wrap">
+    <div class="intro reveal">
+      <div><span class="tag">Petits espaces</span><h2>Un jardin de ville cumule les contraintes.</h2></div>
+      <p>Peu de place, des murs partout, des voisins proches : c'est justement notre spécialité depuis 2018.</p>
+    </div>
+    <div class="items">
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i><i class="f"></i></span><div><h3>Le vis-à-vis</h3><p>Fenêtres voisines, murets bas. <em>Brise-vue végétal, palissade bois ou structure couverte de jasmin.</em></p></div></div>
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i></i><i class="f"></i><i></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i class="f"></i><i></i></span><div><h3>Le manque de place</h3><p>Quelques mètres carrés seulement. <em>Plusieurs ambiances pour que le jardin paraisse plus grand.</em></p></div></div>
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i></span><div><h3>La lumière</h3><p>Cours à l'ombre des murs. <em>Des plantes choisies pour l'exposition réelle du lieu.</em></p></div></div>
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i></i><i></i><i class="f"></i><i></i><i class="f"></i><i></i><i class="f"></i><i></i><i></i></span><div><h3>Le terrain abîmé</h3><p>Après des travaux, pente, niveaux, pas de bordures. <em>Remise en état, engazonnement, bordures.</em></p></div></div>
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i class="f"></i><i></i><i class="f"></i><i></i><i></i><i></i><i class="f"></i><i></i><i class="f"></i></span><div><h3>L'arrosage</h3><p>Étés chauds, absences. <em>Arrosage automatique intégré aux massifs.</em></p></div></div>
+      <div class="item reveal"><span class="dia" aria-hidden="true"><i></i><i class="f"></i><i></i><i></i><i class="f"></i><i></i><i></i><i class="f"></i><i></i></span><div><h3>Le temps</h3><p>Pas le temps d'entretenir. <em>Contrat d'entretien avec plusieurs passages par an.</em></p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="realisations">
+  <div class="wrap">
+    <div class="reals-head reveal"><div><span class="tag">Réalisations</span><h2>Chaque mètre carré compte.</h2></div></div>
+    <div class="grid4">
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-laniere.webp" alt="" loading="lazy"></div><span class="tag">Jardin d'échoppe</span><h3>Plusieurs ambiances</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-terrasse.webp" alt="" loading="lazy"></div><span class="tag">Terrasse</span><h3>Terrasse bois</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-brique.webp" alt="" loading="lazy"></div><span class="tag">Brise-vue</span><h3>Contre le vis-à-vis</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-cour.webp" alt="" loading="lazy"></div><span class="tag">Cour</span><h3>Entre quatre murs</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-allee.webp" alt="" loading="lazy"></div><span class="tag">Clôture</span><h3>Bois et béton teinté</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-patio.webp" alt="" loading="lazy"></div><span class="tag">Patio</span><h3>Pots et grimpantes</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-deck.webp" alt="" loading="lazy"></div><span class="tag">Jardin</span><h3>Terrasse et escalier</h3></article>
+      <article class="cell reveal"><div class="pic"><img src="../echoppe/img/s-cisaille.webp" alt="" loading="lazy"></div><span class="tag">Entretien</span><h3>Haies et arbres</h3></article>
+    </div>
+  </div>
+</section>
+
+<section class="avis" id="avis" style="padding-top:0">
+  <div class="wrap grid">
+    <div class="side reveal">
+      <span class="tag">Avis Google</span>
+      <h2>« … le jardin est transformé, il semble avoir doublé de volume. »</h2>
+      <div class="big"><b>4,9</b><span><span class="stars">★★★★★</span><br>71 avis sur Google</span></div>
+      <a class="btn" href="https://www.google.com/maps/place/?q=place_id:ChIJc62d_rgnVQ0RPBUVDRGOFfk" target="_blank" rel="noopener">Voir les avis sur Google</a>
+    </div>
+    <div class="list">
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Incroyable, nous avons fait appel à Jardin d'échoppe pour un simple entretien post rénovation de notre maison, le jardin est transformé, il semble avoir doublé de volume. Outre que l'équipe est super sympa, ils nous ont aussi mis en déchetterie beaucoup de matériels de jardin abimé. … »</p><div class="who"><span class="av">L</span><div>Laura J.<small>octobre 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« … Valentin s’est occupé des devis et de la mise en place du projet, puis Pierre, Marin et Alexis ont réalisé une superbe structure en aluminium recouverte de jasmin pour dissimuler un vis-à-vis. Le rendu est élégant, pratique et soigné. Une équipe professionnelle, créative et à l’écoute : merci à eux ! »</p><div class="who"><span class="av">M</span><div>Mathieu L.<small>septembre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Très heureuse d'avoir fait aménager mon jardin par Jardin d'Echoppes. Le résultat dépasse mes attentes, et apporte une réelle valeur ajoutée à la maison. Que ce soit au moment de la conception ou de la mise en oeuvre, les équipes ont été très professionnelles, réactives, et on réalisé les travaux dans un délai très raisonnable. … »</p><div class="who"><span class="av">C</span><div>Caroline Z.<small>mars 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« De la conception à la réalisation, Jardin d'échoppe nous a livré un jardin avec plusieurs ambiances dans lequel toute la famille se sent très bien et pour lequel nous avons beaucoup de compliments. Le résultat est plus qu'à la hauteur de nos attentes. … »</p><div class="who"><span class="av">C</span><div>Claire D.<small>avril 2023</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous avons fait appel à Jardin d'Echoppe pour des travaux d'entretien des arbres et d'aménagement du jardin, avec notamment l'extension d'une terrasse bois. Nous sommes très contents du résultat et du professionalisme de l'équipe. Je vous les recommande vivement »</p><div class="who"><span class="av">M</span><div>Mathieu B.<small>mars 2026</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« … Nous avons fait refaire un jardin et 2 petites terrasses : l'équipe a toujours été sympathique et professionnelle, notre besoin bien compris et bien accompagné, le chantier propre et bien géré, le rendu très réussi. … »</p><div class="who"><span class="av">G</span><div>Guillemette S.<small>juin 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Une très bonne surprise. Non seulement Le concept était alléchant et incroyablement adapté à notre petit jardin de ville, mais en plus, le système de pack est très ingénieux rendant la prestation accessible à beaucoup. Le dossier d'étude est de très grande qualité. Je conseille vivement ! »</p><div class="who"><span class="av">B</span><div>Benoît F.<small>octobre 2019</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Très belle réalisation d'une palissade en bois avec vegetalisation par une équipe dynamique et sympathique qui n'hésite pas à revenir si qq retouches sont nécessaires. À recommander sans hésiter. »</p><div class="who"><span class="av">F</span><div>Franck T.<small>juin 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« Nous avons donné carte blanche sur notre jardin de 80m2. Le résultat est à la hauteur de nos espérances. De la réflexion à la conception, Jardin d'Echoppes a fait preuve de professionalisme. On se laisse guider tout en tenant compte de nos goûts et attentes en terme d'usage. … »</p><div class="who"><span class="av">L</span><div>Lucie N.<small>avril 2023</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« J'ai fait appel à Jardin D'Echoppe pour entretenir mon petit jardin composé d'une haie de pyrancathas et d'arbustes divers . Je suis très contente de la prestation qui est soignée. … »</p><div class="who"><span class="av">J</span><div>Janine V.<small>octobre 2025</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« comment exprimer notre joie ? notre jardin n'a jamais été aussi beau. les plans proposés ne représentent pas assez bien le résultat obtenu. en plus une équipe hyper compétente et sympa. nous sommes tellement content que nous prenons un contrat annuel pour maintenir ce jardin »</p><div class="who"><span class="av">C</span><div>Carlos S.<small>novembre 2019</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+      <article class="a-card"><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>« On va pas se mentir, la note de 5 étoiles ressemblant à une élection en Corée du nord peut surprendre, mais elle est amplement mérité !! … »</p><div class="who"><span class="av">F</span><div>Frédéric<small>mars 2022</small></div><svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="devis" id="devis">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="tag">Visite et devis</span>
+      <h2>Votre projet en 3 questions.</h2>
+      <p style="color:var(--dim);margin-top:14px">Répondez, envoyez : nous vous rappelons pour fixer une visite.</p>
+      <div class="coord">
+        <a href="tel:+33564375958"><span>Téléphone</span><b>05 64 37 59 58</b></a>
+        <a href="mailto:contact@jardindechoppe.fr"><span>E-mail</span><b>contact@jardindechoppe.fr</b></a>
+        <div><span>Adresse</span><b>19 av. Rudolf Diesel, Mérignac</b></div>
+        <div><span>Horaires</span><b>Lun., mar., jeu., ven.<br>9 h-12 h · 14 h-18 h</b></div>
+      </div>
+    </div>
+    <form id="form" class="reveal">
+      <fieldset><legend><span class="tag">1 / 3</span>Votre espace</legend><div class="opts">
+        <label><input type="radio" name="e" value="Jardin d'échoppe" checked><span>Jardin d'échoppe</span></label>
+        <label><input type="radio" name="e" value="Cour"><span>Cour</span></label>
+        <label><input type="radio" name="e" value="Balcon"><span>Balcon</span></label>
+        <label><input type="radio" name="e" value="Jardin de maison"><span>Jardin de maison</span></label>
+      </div></fieldset>
+      <fieldset><legend><span class="tag">2 / 3</span>Votre besoin</legend><div class="opts">
+        <label><input type="radio" name="b" value="Créer ou transformer" checked><span>Créer ou transformer</span></label>
+        <label><input type="radio" name="b" value="Entretenir"><span>Entretenir</span></label>
+        <label><input type="radio" name="b" value="Les deux"><span>Les deux</span></label>
+      </div></fieldset>
+      <fieldset><legend><span class="tag">3 / 3</span>La surface</legend><div class="opts">
+        <label><input type="radio" name="s" value="Moins de 20 m²"><span>Moins de 20 m²</span></label>
+        <label><input type="radio" name="s" value="20 à 80 m²" checked><span>20 à 80 m²</span></label>
+        <label><input type="radio" name="s" value="Plus de 80 m²"><span>Plus de 80 m²</span></label>
+      </div></fieldset>
+      <div class="two">
+        <label class="f"><span>Nom</span><input name="n" autocomplete="name"></label>
+        <label class="f"><span>Téléphone</span><input name="p" type="tel" autocomplete="tel"></label>
+      </div>
+      <button class="btn fill" type="submit">Envoyer ma demande</button>
+      <p class="hint">La demande part par e-mail à contact@jardindechoppe.fr</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div><img src="../echoppe/img/logo.png" alt="Jardin d'Échoppe" width="746" height="550"><div>Paysagiste urbain à Bordeaux depuis 2018.</div></div>
+      <div><span class="tag">Nous joindre</span><a href="tel:+33564375958">05 64 37 59 58</a><a href="mailto:contact@jardindechoppe.fr">contact@jardindechoppe.fr</a><span>19 av. Rudolf Diesel, 33700 Mérignac</span></div>
+      <div><span class="tag">Horaires</span><div>Lundi, mardi, jeudi, vendredi<br>9 h - 12 h · 14 h - 18 h</div></div>
+    </div>
+    <p class="small">Photos d'illustration (Unsplash), remplacées par vos réalisations · Maquette proposée par Alexandre, ce n'est pas le site officiel.</p>
+  </div>
+</footer>
+
+<div class="dock">
+  <a class="btn" href="tel:+33564375958">Appeler</a>
+  <a class="btn fill" href="#devis">Demander un devis</a>
+</div>
+
+<script>
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault(); const f = e.target;
+    const body = `Espace : ${f.e.value}\nBesoin : ${f.b.value}\nSurface : ${f.s.value}\n\nNom : ${f.n.value}\nTéléphone : ${f.p.value}`;
+    location.href = 'mailto:contact@jardindechoppe.fr?subject=' + encodeURIComponent('Demande de devis') + '&body=' + encodeURIComponent(body);
+  });
+
+  // Photo rendue en points qui respirent lentement, avec une loupe ronde qui montre la vraie photo
+  const box = document.getElementById('scan'), cv = document.getElementById('dots'), cx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const img = new Image(); img.src = '../echoppe/img/s-laniere.webp';
+  let W, H, dpr, step, cols, rows, lum = [], cover, pointer = null, vis = true;
+  const BG = '#243231';
+  const layout = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = box.clientWidth; H = box.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    step = W < 500 ? 6 : 8; cols = Math.ceil(W / step); rows = Math.ceil(H / step);
+    const s = Math.max(W / img.width, H / img.height); cover = { w: img.width * s, h: img.height * s }; cover.x = (W - cover.w) / 2; cover.y = (H - cover.h) / 2;
+    const o = document.createElement('canvas'); o.width = cols; o.height = rows; const oc = o.getContext('2d');
+    oc.drawImage(img, cover.x / step, cover.y / step, cover.w / step, cover.h / step);
+    const d = oc.getImageData(0, 0, cols, rows).data; lum = new Float32Array(cols * rows);
+    for (let i = 0; i < cols * rows; i++) lum[i] = (d[i*4] * .3 + d[i*4+1] * .59 + d[i*4+2] * .11) / 255;
+  };
+  const draw = t => {
+    cx.fillStyle = BG; cx.fillRect(0, 0, W, H);
+    cx.fillStyle = '#e9ece8';
+    const k = t / 1000;
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const l = lum[y * cols + x]; if (l < .06) continue;
+      const wave = reduce ? 1 : .82 + .18 * Math.sin(k * .7 + x * .09 + y * .05);
+      const r = Math.min(step * .5, (l ** 1.2) * step * .62 * wave);
+      if (r < .35) continue;
+      cx.beginPath(); cx.arc(x * step + step / 2, y * step + step / 2, r, 0, 6.283); cx.fill();
+    }
+    const R = Math.min(W, H) * .2;
+    const p = pointer || { x: W * (.5 + .28 * Math.sin(k * .23)), y: H * (.5 + .22 * Math.sin(k * .31 + 1)) };
+    cx.save(); cx.beginPath(); cx.arc(p.x, p.y, R, 0, 6.283); cx.clip();
+    cx.drawImage(img, cover.x, cover.y, cover.w, cover.h); cx.restore();
+    cx.strokeStyle = 'rgba(255,255,255,.85)'; cx.lineWidth = 1; cx.beginPath(); cx.arc(p.x, p.y, R, 0, 6.283); cx.stroke();
+    cx.beginPath(); cx.moveTo(p.x - R - 10, p.y); cx.lineTo(p.x - R + 6, p.y); cx.moveTo(p.x + R - 6, p.y); cx.lineTo(p.x + R + 10, p.y); cx.stroke();
+  };
+  const loop = t => { if (vis) draw(t); if (!reduce) requestAnimationFrame(loop); };
+  img.onload = () => { layout(); requestAnimationFrame(loop); if (reduce) draw(0); };
+  addEventListener('resize', () => img.complete && layout());
+  new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(box);
+  box.addEventListener('pointermove', e => { const r = box.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; if (reduce) draw(0); });
+  box.addEventListener('pointerleave', () => pointer = null);
+})();
+</script>
+</body>
+</html>
