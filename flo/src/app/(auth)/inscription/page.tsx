@@ -10,6 +10,7 @@ export default async function Inscription({ searchParams }: { searchParams: Msg 
     <form action={signUp} className="space-y-4">
       <h1 className="text-2xl font-bold">Créer un compte</h1>
       <Notice erreur={sp.erreur} info={sp.info} />
+      {!inv && <p className="text-sm text-muted">Flo est réservé à ses clients : gardez à portée de main le code d’accès reçu après votre commande.</p>}
       {inv && <input type="hidden" name="invitation" value={inv} />}
       <Field label="Prénom" name="first_name" autoComplete="given-name" maxLength={80} required />
       <Field label="E-mail" name="email" type="email" autoComplete="email" required />

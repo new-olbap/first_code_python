@@ -68,9 +68,9 @@ export async function createOrganization(fd: FormData) {
   if (name.length < 2 || name.length > 120) go("/bienvenue", "erreur", "Indiquez le nom de votre entreprise.");
   const sb = await createClient();
   const { error } = await sb.rpc("create_organization", {
-    p_name: name, p_trade: str(fd, "trade").slice(0, 80), p_address: str(fd, "address").slice(0, 300),
+    p_name: name, p_trade: str(fd, "trade").slice(0, 80), p_address: str(fd, "address").slice(0, 300), p_code: str(fd, "code").slice(0, 20),
   });
-  if (error) go("/bienvenue", "erreur", "Création impossible, veuillez réessayer.");
+  if (error) go("/bienvenue", "erreur", error.code === "FL010" ? "Code d’accès invalide ou déjà utilisé. Vérifiez le code reçu après votre commande." : "Création impossible, veuillez réessayer.");
   redirect("/");
 }
 

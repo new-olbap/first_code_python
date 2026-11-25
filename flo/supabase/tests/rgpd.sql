@@ -10,6 +10,7 @@ begin
   delete from auth.users where id in (alice, bob, solo);
   begin
     insert into auth.users (id, email) values (alice, 'a3@test.flo'), (bob, 'b3@test.flo'), (solo, 's3@test.flo');
+    update public.flo_reglages set code_obligatoire = false; -- ce test ne porte pas sur les codes d'accès (annulé à la fin)
     set local role authenticated;
     perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
     a := public.create_organization('Équipe d''Alice', null, null);

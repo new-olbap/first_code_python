@@ -20,6 +20,7 @@ begin
       (chloe, 'c@test.flo', '{"first_name":"Chloé"}'),
       (david, 'd@test.flo', '{"first_name":"David"}');
 
+    update public.flo_reglages set code_obligatoire = false; -- ce test ne porte pas sur les codes d'accès (annulé à la fin)
     set local role authenticated;
 
     -- Alice crée l'entreprise A, Bob l'entreprise B.
