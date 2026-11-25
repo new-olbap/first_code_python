@@ -2,7 +2,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT, TARIF, eur, mensualite } from "@/lib/tarif";
-import Cinema from "./Cinema";
+import { GeistSans } from "geist/font/sans";
+import FloLogo from "@/components/FloLogo";
+import Reel from "./Reel";
 import s from "./landing.module.css";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://flo-theta-gray.vercel.app";
@@ -35,9 +37,9 @@ export default function Decouvrir() {
     description: DESC, url: `${SITE}/`, inLanguage: "fr", offers: { "@type": "Offer", price: TARIF.lancement, priceCurrency: "EUR" },
   };
   return (
-    <div className={s.page}>
+    <div className={`${s.page} ${GeistSans.variable}`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Cinema demo={demo} />
+      <Reel demo={demo} />
 
       <main>
         <section className={s.sec} id="tarif">
@@ -90,15 +92,13 @@ export default function Decouvrir() {
       <footer className={s.footer}>
         <div className={s.wrap}>
           <div className={s.footCols}>
-            <div><span className={s.logo}>Flo<i /></span><p>Le logiciel de rendez-vous des artisans. Conçu en France, données hébergées en France.</p></div>
+            <div><span className={s.logo}><FloLogo size={22} text="#fff" /></span><p>Le logiciel de rendez-vous des artisans. Conçu en France, données hébergées en France.</p></div>
             <div><h4>Flo</h4><ul><li><a href="#fonctions">Fonctionnalités</a></li><li><Link href="/tarif">Tarif</Link></li><li><Link href="/connexion">Se connecter</Link></li></ul></div>
             <div><h4>Informations</h4><ul><li><Link href="/mentions-legales">Mentions légales</Link></li><li><Link href="/cgu">Conditions d’utilisation</Link></li><li><Link href="/confidentialite">Confidentialité</Link></li><li><a href={`mailto:${CONTACT}`}>Contact</a></li></ul></div>
           </div>
           <div className={s.legal}><span>© {new Date().getFullYear()} Flo</span><span>Photos et vidéo d’illustration : Unsplash, Pexels</span></div>
         </div>
       </footer>
-
-      <div className={s.mobileCta}><Link href="/tarif" className={`${s.btn} ${s.ghost}`}>Tarif</Link><a href={demo} className={`${s.btn} ${s.solid}`}>Démo</a></div>
     </div>
   );
 }
