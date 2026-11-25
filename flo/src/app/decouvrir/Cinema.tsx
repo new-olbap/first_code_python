@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import c from "./cinema.module.css";
 
-const FRAMES = 119;
+const FRAMES = 179; // 12 images par seconde, fondu entre deux images pour la fluidité
 const frameUrl = (i: number) => `/decouvrir/film/f${String(i + 1).padStart(3, "0")}.webp`;
 // Les 4 phrases du film : [début, fin] en part du défilement de la scène (la dernière reste affichée).
 const BEATS: [number, number][] = [[0, 0.24], [0.28, 0.5], [0.54, 0.76], [0.8, 1]];
@@ -27,6 +27,9 @@ export default function Cinema({ demo }: { demo: string }) {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add(c.calm); return; }
     gsap.registerPlugin(ScrollTrigger);
 
+    // La barre d'adresse de l'iPhone qui apparaît/disparaît ne doit pas tout recalculer.
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     // Défilement doux (Lenis), synchronisé avec ScrollTrigger.
     const lenis = new Lenis({ lerp: 0.09, anchors: true });
     lenis.on("scroll", ScrollTrigger.update);
@@ -34,53 +37,78 @@ export default function Cinema({ demo }: { demo: string }) {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    // 1. Le film : une image par position de défilement, dessinée dans un canvas (plus fluide qu'une vidéo).
-    const canvas = el.querySelector("canvas")!, ctx = canvas.getContext("2d")!;
-    const imgs: HTMLImageElement[] = [];
-    let current = 0;
-    const draw = (i: number) => {
-      let k = i; // image pas encore chargée : on prend la plus proche déjà prête
-      while (k > 0 && !imgs[k]?.complete) k--;
-      const img = imgs[k];
-      if (!img?.naturalWidth) return;
-      const s = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-      const w = img.naturalWidth * s, h = img.naturalHeight * s;
-      ctx.drawImage(img, (canvas.width - w) * 0.42, (canvas.height - h) / 2, w, h);
+    // 1. Le film : images décodées à l'avance (jamais pendant le défilement), dessinées une fois par
+    //    rafraîchissement d'écran, avec un fondu entre deux images voisines pour un mouvement continu.
+    const canvas = el.querySelector("canvas")!, ctx = canvas.getContext("2d", { alpha: false })!;
+    const frames: (ImageBitmap | HTMLImageElement | null)[] = new Array(FRAMES).fill(null);
+    let alive = true, dirty = true;
+    const load = async (i: number) => {
+      const im = new Image(); im.src = frameUrl(i);
+      try { await im.decode(); } catch { return; }
+      if (!alive) return;
+      frames[i] = typeof createImageBitmap === "function" ? await createImageBitmap(im).catch(() => im) : im;
+      dirty = true;
     };
-    const size = () => { const r = Math.min(devicePixelRatio, 2); canvas.width = canvas.clientWidth * r; canvas.height = canvas.clientHeight * r; draw(current); };
-    for (let i = 0; i < FRAMES; i++) { const im = new Image(); im.src = frameUrl(i); if (i === 0) im.onload = () => draw(0); imgs.push(im); }
+    (async () => { // première image d'abord, puis le reste, 6 à la fois
+      await load(0);
+      let next = 1;
+      await Promise.all(Array.from({ length: 6 }, async () => { while (alive && next < FRAMES) await load(next++); }));
+    })();
+    const near = (i: number) => { for (let d = 0; d < FRAMES; d++) { if (frames[i - d]) return frames[i - d]; if (frames[i + d]) return frames[i + d]; } return null; };
+    const paint = (img: ImageBitmap | HTMLImageElement, alpha: number) => {
+      const s = Math.max(canvas.width / img.width, canvas.height / img.height), w = img.width * s, h = img.height * s;
+      ctx.globalAlpha = alpha; ctx.drawImage(img, (canvas.width - w) * 0.42, (canvas.height - h) / 2, w, h);
+    };
+    let cw = 0, ch = 0;
+    const size = () => { // seulement si la largeur change vraiment (pas pour la barre d'adresse)
+      // dessin limité à 960 px (gros plan flou : l’agrandissement ne se voit pas) pour rester fluide
+      const r = Math.min(devicePixelRatio, 1.5, 960 / canvas.clientWidth, 960 / canvas.clientHeight), w = Math.round(canvas.clientWidth * r), h = Math.round(canvas.clientHeight * r);
+      if (w === cw && Math.abs(h - ch) < 160) return;
+      canvas.width = cw = w; canvas.height = ch = h; dirty = true;
+    };
     size(); addEventListener("resize", size);
 
     const beats = [...el.querySelectorAll<HTMLElement>(`.${c.beat}`)], cards = [...el.querySelectorAll<HTMLElement>(`.${c.card}`)];
     const bar = el.querySelector<HTMLElement>(`.${c.progress}`)!, hint = el.querySelector<HTMLElement>(`.${c.hint}`)!;
     const win = (p: number, a: number, b: number) => Math.min(1, Math.max(0, (p - a) / 0.05), Math.max(0, (b - p) / 0.05));
-    const film = ScrollTrigger.create({
-      trigger: el.querySelector(`.${c.film}`), start: "top top", end: "bottom bottom", scrub: true,
-      onUpdate: ({ progress: p }) => {
-        current = Math.round(p * (FRAMES - 1)); draw(current);
-        beats.forEach((b, i) => { const o = i === 0 ? Math.min(1, (BEATS[0][1] - p) / 0.05) : i === BEATS.length - 1 ? Math.min(1, Math.max(0, (p - BEATS[i][0]) / 0.05)) : win(p, ...BEATS[i]); b.style.opacity = String(o); b.style.transform = `translateY(${(1 - o) * 24}px)`; b.classList.toggle(c.live, o > 0.5); });
-        cards.forEach((card, i) => { const o = win(p, 0.56 + i * 0.05, 0.8); card.style.opacity = String(o); card.style.transform = `translateY(${(1 - o) * 20}px)`; });
+    let target = 0, shown = -1;
+    const film = ScrollTrigger.create({ trigger: el.querySelector(`.${c.film}`), start: "top top", end: "bottom bottom", onUpdate: ({ progress }) => { target = progress; } });
+    const render = () => {
+      // Lissage : le film rattrape le défilement en douceur (utile au doigt, où Lenis n'intervient pas).
+      const p = shown < 0 ? target : shown + (target - shown) * 0.3;
+      if (Math.abs(p - shown) > 0.0002 || dirty) {
+        shown = p; dirty = false;
+        const f = p * (FRAMES - 1), i = Math.floor(f), t = f - i, a = near(i), b2 = t > 0.02 ? frames[i + 1] : null;
+        if (a) { paint(a, 1); if (b2) paint(b2, t); }
+        beats.forEach((b, k) => {
+          const o = k === 0 ? Math.min(1, (BEATS[0][1] - p) / 0.05) : k === BEATS.length - 1 ? Math.min(1, Math.max(0, (p - BEATS[k][0]) / 0.05)) : win(p, ...BEATS[k]);
+          b.style.opacity = String(o); b.style.transform = `translate3d(0, ${(1 - o) * 24}px, 0)`; b.classList.toggle(c.live, o > 0.5);
+        });
+        cards.forEach((card, k) => { const o = win(p, 0.56 + k * 0.05, 0.8); card.style.opacity = String(o); card.style.transform = `translate3d(0, ${(1 - o) * 20}px, 0)`; });
         bar.style.transform = `scaleX(${p})`; hint.style.opacity = String(Math.max(0, 1 - p * 12));
-      },
-    });
+      }
+    };
+    gsap.ticker.add(render);
 
     // 2. L'écran de Flo arrive incliné et se redresse.
     const screen = el.querySelector<HTMLElement>(`.${c.screen}`)!, labels = [...el.querySelectorAll<HTMLElement>(`.${c.label}`)];
     const reveal = ScrollTrigger.create({
-      trigger: el.querySelector(`.${c.reveal}`), start: "top top", end: "bottom bottom", scrub: true,
+      trigger: el.querySelector(`.${c.reveal}`), start: "top top", end: "bottom bottom",
       onUpdate: ({ progress: p }) => {
         const q = Math.min(1, p / 0.6), e = 1 - Math.pow(1 - q, 3);
-        screen.style.transform = `rotateX(${(1 - e) * 38}deg) scale(${0.72 + e * 0.28}) translateY(${(1 - e) * 60}px)`;
+        screen.style.transform = `translate3d(0, ${(1 - e) * 60}px, 0) rotateX(${(1 - e) * 38}deg) scale(${0.72 + e * 0.28})`;
         labels.forEach((l, i) => { const o = Math.min(1, Math.max(0, (p - 0.62 - i * 0.07) / 0.08)); l.style.opacity = String(o); });
       },
     });
 
     // 3. Les fonctions défilent de côté pendant que l'on descend.
     const track = el.querySelector<HTMLElement>(`.${c.track}`)!, count = el.querySelector<HTMLElement>(`.${c.hCount}`)!;
+    let span = 0;
     const hs = ScrollTrigger.create({
-      trigger: el.querySelector(`.${c.hscroll}`), start: "top top", end: "bottom bottom", scrub: true,
+      trigger: el.querySelector(`.${c.hscroll}`), start: "top top", end: "bottom bottom",
+      onRefresh: () => { span = track.scrollWidth - innerWidth; },
       onUpdate: ({ progress: p }) => {
-        track.style.transform = `translateX(${-p * (track.scrollWidth - innerWidth)}px)`;
+        track.style.transform = `translate3d(${-p * span}px, 0, 0)`;
         count.textContent = `0${Math.min(PANELS.length, Math.floor(p * PANELS.length * 0.999) + 1)} / 0${PANELS.length}`;
       },
     });
@@ -91,7 +119,7 @@ export default function Cinema({ demo }: { demo: string }) {
 
     addEventListener("load", () => ScrollTrigger.refresh());
     return () => {
-      removeEventListener("resize", size); gsap.ticker.remove(tick); lenis.destroy();
+      alive = false; removeEventListener("resize", size); gsap.ticker.remove(tick); gsap.ticker.remove(render); lenis.destroy();
       [film, reveal, hs].forEach((s) => s.kill()); tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
     };
   }, []);
