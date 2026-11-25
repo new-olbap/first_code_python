@@ -47,3 +47,10 @@ psql -d <base_vide> -v ON_ERROR_STOP=1 -f supabase/tests/local_stub.sql \
 
 Chaque personne a un lien secret `/cal/<jeton>.ics` (lecture seule, sans les rendez-vous annulés, 60 jours passés et 1 an à venir).
 Google relit le lien toutes les quelques heures, Apple environ toutes les heures. Test du format : `node scripts/test-ics.mjs`.
+
+## Page de présentation (site public)
+
+- Un visiteur non connecté qui ouvre l’adresse principale (`/`) voit la page de présentation (`src/app/decouvrir`) ; un artisan connecté arrive sur son tableau de bord.
+- Référencement : `robots.txt` et `sitemap.xml` sont générés (`src/app/robots.ts`, `src/app/sitemap.ts`), avec des données structurées « logiciel » dans la page.
+- Quand Flo aura son nom de domaine, ajouter sur Vercel la variable `NEXT_PUBLIC_SITE_URL` (ex. `https://getflo.app`), puis redéployer.
+- Images : `public/decouvrir/` (vraies captures de Flo avec les données de démonstration, photos Unsplash).

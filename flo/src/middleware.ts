@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/", "/r/", "/invitation/", "/mentions-legales", "/cgu", "/confidentialite", "/tarif", "/cal/"]; // /r/… : réservation publique ; /cal/… : flux d’agenda (jeton secret)
+const PUBLIC = ["/connexion", "/inscription", "/mot-de-passe-oublie", "/auth/", "/r/", "/invitation/", "/mentions-legales", "/cgu", "/confidentialite", "/tarif", "/cal/", "/decouvrir", "/robots.txt", "/sitemap.xml"]; // /r/… : réservation publique ; /cal/… : flux d’agenda (jeton secret)
 
 // Rafraîchit la session Supabase et renvoie vers /connexion si on n'est pas connecté.
 export async function middleware(request: NextRequest) {
@@ -24,6 +24,8 @@ export async function middleware(request: NextRequest) {
   const isPublic = PUBLIC.some((p) => path === p || path.startsWith(p));
   const redirect = (to: string) => NextResponse.redirect(new URL(to, request.url));
 
+  // Visiteur non connecté sur l'adresse principale : la page de présentation (même URL, bonne pour le référencement).
+  if (!user && path === "/") return NextResponse.rewrite(new URL("/decouvrir", request.url));
   if (!user && !isPublic) return redirect("/connexion");
   if (user && (path === "/connexion" || path === "/inscription")) return redirect("/");
   return response;
