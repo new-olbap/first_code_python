@@ -121,12 +121,38 @@ footer { display: flex; justify-content: space-between; gap: 16px; padding: 140p
 footer a { color: var(--ink); }
 footer .small { flex-basis: 100%; text-align: center; font-size: 12px; color: var(--soft); order: 3; margin-top: 12px; }
 
+
+/* Étude de cas, d'après les articles du site de référence */
+.story { padding-top: 140px; }
+.story .meta { font: 500 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.story h2.t { font-size: clamp(30px, 3.6vw, 40px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.12; margin-top: 12px; max-width: 18ch; }
+.story .by { font-size: 13px; color: var(--grey); margin-top: 12px; }
+.story .by span { border-bottom: 1px solid var(--soft); }
+.story p { font-size: 16.5px; color: var(--text); margin-top: 16px; line-height: 1.6; max-width: 58ch; }
+.hl { background: #e2eae9; padding: 1px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.story h3 { font-size: 21px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+.story figure { margin-top: 28px; }
+.story figcaption { font-size: 13px; color: var(--grey); margin-top: 12px; line-height: 1.5; }
+.story figcaption b { font-weight: 400; color: var(--text); }
+.story .pic { aspect-ratio: 16 / 10; overflow: hidden; }
+.story .pic img { width: 100%; height: 100%; object-fit: cover; }
+.story ol { margin-top: 16px; padding-left: 22px; }
+.story ol li { font-size: 16.5px; color: var(--text); margin-top: 10px; line-height: 1.55; padding-left: 4px; }
+.story ol li::marker { color: var(--grey); }
+.story ol b { font-weight: 500; color: var(--ink); }
+.schema { width: 100%; height: auto; display: block; }
+.m-only { display: none; }
+@media (max-width: 640px) { .m-only { display: inline; } }
+
 .dock { display: none; }
 .reveal { opacity: 0; transform: translateY(12px); transition: opacity 1s, transform 1s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 
 @media (max-width: 640px) {
   body { padding-bottom: 76px; }
+  .story { padding-top: 96px; }
+  .schema-wrap { overflow-x: auto; margin-right: -16px; scrollbar-width: none; }
+  .schema-wrap svg { min-width: 560px; }
   header { padding: 18px 16px; }
   header nav { gap: 16px; font-size: 13px; }
   header nav a:not(:last-child) { display: none; }
@@ -158,7 +184,7 @@ footer .small { flex-basis: 100%; text-align: center; font-size: 12px; color: va
 
 <header>
   <a class="logo" href="#top" aria-label="Jardin d'Échoppe, accueil"><img class="d" src="../echoppe/img/logo-dessin.png" alt="" width="744" height="427"><img class="m" src="../echoppe/img/logo-mot.png" alt="Jardin d'Échoppe" width="729" height="118"></a>
-  <nav><a href="#realisations">Réalisations</a><a href="#avis">Avis</a><a href="#devis">Demander un devis</a></nav>
+  <nav><a href="#etude">Étude de cas</a><a href="#realisations">Réalisations</a><a href="#avis">Avis</a><a href="#devis">Demander un devis</a></nav>
 </header>
 
 <main id="top">
@@ -182,6 +208,52 @@ footer .small { flex-basis: 100%; text-align: center; font-size: 12px; color: va
       <p>Ce que nous réalisons, du croquis à la taille d'hiver</p>
       <ul><li>Terrasses bois</li><li>Murets</li><li>Clôtures</li><li>Brise-vue</li><li>Pergolas</li><li>Cabanons</li><li>Potagers</li><li>Éclairage</li><li>Arrosage intégré</li></ul>
     </div>
+
+
+    <article class="story" id="etude">
+      <span class="meta reveal">Étude de cas · exemple de projet</span>
+      <h2 class="t reveal">Un jardin d'échoppe de 80 m² qui paraît deux fois plus grand</h2>
+      <p class="by reveal">Conception, réalisation et entretien par <span>l'équipe Jardin d'Échoppe</span></p>
+      <p class="reveal">Derrière une échoppe bordelaise, le jardin est souvent une bande étroite entre deux murs mitoyens : peu de lumière, un vis-à-vis, un sol fatigué par les travaux de la maison. <span class="hl">Le but n'est pas d'ajouter des plantes, mais de découper l'espace en plusieurs ambiances pour que l'œil ne voie plus le fond du jardin d'un seul coup.</span></p>
+      <p class="reveal">Une cliente l'a résumé ainsi : « … le jardin est transformé, il semble avoir doublé de volume. »</p>
+      <figure class="reveal">
+        <div class="pic"><img src="../echoppe/img/s-cour.webp" alt="Petite cour plantée avec dallage et buis" loading="lazy"></div>
+        <figcaption>Figure 1. Plusieurs ambiances dans un petit espace : un dallage, des massifs bas, des grimpantes sur le mur. <b>Photo d'illustration</b>, remplacée par vos réalisations.</figcaption>
+      </figure>
+
+      <h3 class="reveal">Une seule équipe, au lieu de quatre artisans à coordonner</h3>
+      <p class="reveal">Pour un petit jardin, faire venir un dessinateur, un maçon, un poseur de terrasse puis un jardinier coûte du temps et crée des décalages. Chez Jardin d'Échoppe, la même équipe suit le projet du croquis à l'entretien.</p>
+      <figure class="reveal">
+        <div class="schema-wrap"><svg class="schema" viewBox="0 0 720 250" font-family="Host Grotesk" font-size="13" fill="#141312">
+          <text x="170" y="20" text-anchor="middle" font-size="12">Plusieurs artisans</text>
+          <text x="560" y="20" text-anchor="middle" font-size="12">Jardin d'Échoppe</text>
+          <g stroke="#141312" stroke-width="1" fill="none"><path d="M20 135h40M60 135V60M60 135v75M60 60h20M60 105h20M60 165h20M60 210h20"/></g>
+          <g fill="#141312"><circle cx="20" cy="135" r="3"/><circle cx="40" cy="135" r="2.5"/></g>
+          <text x="30" y="160" text-anchor="middle" font-size="12">Votre jardin</text>
+          <g fill="#efede8" stroke="#d8d4cc"><rect x="80" y="44" width="110" height="32" rx="3"/><rect x="80" y="89" width="110" height="32" rx="3"/><rect x="80" y="149" width="110" height="32" rx="3"/><rect x="80" y="194" width="110" height="32" rx="3"/></g>
+          <g text-anchor="middle"><text x="135" y="65">Dessinateur</text><text x="135" y="110">Maçon</text><text x="135" y="170">Poseur terrasse</text><text x="135" y="215">Jardinier</text></g>
+          <g stroke="#cfcac1" stroke-width="1"><path d="M190 60h40M190 105h40M190 165h40M190 210h40"/></g>
+          <g fill="#cfcac1"><circle cx="232" cy="60" r="3"/><circle cx="232" cy="105" r="3"/><circle cx="232" cy="165" r="3"/><circle cx="232" cy="210" r="3"/></g>
+          <g font-size="12"><text x="242" y="64">Plans</text><text x="242" y="109">Murets, bordures</text><text x="242" y="169">Terrasse bois</text><text x="242" y="214">Taille, tonte</text></g>
+          <g stroke="#141312" stroke-width="1" fill="none"><path d="M410 135h50"/></g>
+          <g fill="#141312"><circle cx="410" cy="135" r="3"/><circle cx="432" cy="135" r="2.5"/></g>
+          <text x="420" y="160" text-anchor="middle" font-size="12">Votre jardin</text>
+          <rect x="460" y="113" width="140" height="44" rx="3" fill="#4f6466"/>
+          <text x="530" y="140" text-anchor="middle" fill="#fff" font-size="14">Une seule équipe</text>
+          <g stroke="#a9bcbd" stroke-width="1" fill="none"><path d="M600 135h18M618 135V60M618 135v75M618 60h14M618 105h14M618 165h14M618 210h14"/></g>
+          <g fill="#4f6466"><circle cx="634" cy="60" r="3"/><circle cx="634" cy="105" r="3"/><circle cx="634" cy="165" r="3"/><circle cx="634" cy="210" r="3"/></g>
+          <g font-size="12"><text x="644" y="64">Plans</text><text x="644" y="109">Murets</text><text x="644" y="169">Terrasse</text><text x="644" y="214">Entretien</text></g>
+        </svg></div>
+        <figcaption><span class="m-only">Faites glisser le schéma. </span>Figure 2. À gauche, chaque étape a son artisan et ses délais. À droite, une seule équipe enchaîne les plans, les travaux et l'entretien, avec un seul interlocuteur.</figcaption>
+      </figure>
+      <p class="reveal">Concrètement, le projet se déroule en quatre temps :</p>
+      <ol class="reveal">
+        <li><b>Écouter :</b> vos envies, vos habitudes et l'usage que vous ferez du jardin, le matin comme le soir.</li>
+        <li><b>Dessiner :</b> plans, dessins et dossier d'étude, avec des plantes choisies pour la lumière réelle du lieu.</li>
+        <li><b>Réaliser :</b> terrasse bois, murets, clôture ou brise-vue, plantations et arrosage intégré.</li>
+        <li><b>Entretenir :</b> ponctuellement, ou avec un contrat et plusieurs passages par an.</li>
+      </ol>
+    </article>
 
     <section class="block" id="realisations">
       <h2 class="reveal">Réalisations</h2>
