@@ -53,3 +53,10 @@ export async function deleteMyAccount(fd: FormData) {
   await sb.auth.signOut({ scope: "local" }); // le compte n'existe plus : on efface seulement la session de ce navigateur
   go("/connexion", "info", "Votre compte a été supprimé.");
 }
+
+export async function resetCalendar() {
+  const sb = await createClient();
+  const { error } = await sb.rpc("my_calendar_token", { p_reset: true });
+  if (error) go("/parametres", "erreur", "Impossible de créer un nouveau lien, veuillez réessayer.");
+  go("/parametres", "info", "Nouveau lien créé : l’ancien ne fonctionne plus. Ajoutez le nouveau dans l’agenda de votre téléphone.");
+}
