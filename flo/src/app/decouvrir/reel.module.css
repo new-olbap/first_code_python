@@ -204,3 +204,41 @@
   .endText { bottom: var(--safe); }
   .scale { top: 90px; }
 }
+
+/* Moins de vide : textes et images agrandis */
+.sWhite > svg { height: clamp(140px, 18vw, 260px); }
+.tilted { width: min(380px, 56vw); }
+.phones .phone { width: min(300px, 34vw); }
+.cornerNote { font-size: 18px; }
+.scale { top: 130px; }
+.scale div { padding: 16px 0; }
+.card { width: min(560px, 88vw); }
+.cardBody { padding: 28px 24px 30px; }
+.cardBody b { font-size: clamp(44px, 5vw, 64px); }
+.cardBody p { font-size: 21px; }
+.cardBody small { font-size: 16px; }
+
+@media (max-width: 760px) {
+  .big { font-size: 46px; }
+  .mid { font-size: 34px; }
+  .small { font-size: 17px; }
+  .introLogo svg { height: 26vw; }
+  .word { font-size: 34vw; }
+  .laptopPos { width: 140vw; right: -46vw; top: 34%; }
+  .orangeBlock { width: 62%; height: 50%; }
+  .sWhite > svg { height: 44vw; }
+  .tilted { width: 50vw; translate: 50% -106%; }
+  .scale div { padding: 15px 0; }
+  .scale div:nth-child(n+3) { font-size: 27px !important; }
+  .board { width: 94vw; aspect-ratio: 3 / 4.6; translate: 0 -10%; }
+  .board .mid { font-size: 38px; }
+  .screen { width: 100vw; } .sc1 { right: -14vw; top: 11%; } .sc2 { right: -4vw; top: 23%; } .sc3 { right: 8vw; top: 35%; width: 74vw; }
+  .phones .phone { width: 40vw; }
+  .phones { translate: 50% -108%; }
+  .phones .phone:last-child { translate: 0 30px; }
+  .hall { align-items: center; padding: 70px 0 calc(var(--safe) - 40px); gap: 10px; }
+  .poster { width: 47vw; }
+  .poster p { font-size: 19px; }
+  .card { translate: 0 -10%; }
+  .cardBody b { font-size: 48px; }
+}
