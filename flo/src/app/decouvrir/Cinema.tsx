@@ -12,23 +12,6 @@ const frameUrl = (i: number) => `/decouvrir/film/f${String(i + 1).padStart(3, "0
 // Les 4 phrases du film : [début, fin] en part du défilement de la scène (la dernière reste affichée).
 const BEATS: [number, number][] = [[0, 0.24], [0.28, 0.5], [0.54, 0.76], [0.8, 1]];
 
-// Petites images de Flo qui accompagnent chaque phrase du film. b : phrase, d : décalage d'apparition,
-// x/y/w : position sur ordinateur, mx/my/mw : sur téléphone (m: false = masqué sur téléphone).
-type Item = { b: number; d: number; x: string; y: string; w: string; mx: string; my: string; mw: string; m?: false; img?: string; alt?: string; tag?: string; title?: string; text?: string; hot?: boolean };
-const ITEMS: Item[] = [
-  { b: 0, d: 0.03, x: "70%", y: "13%", w: "clamp(170px, 16vw, 250px)", mx: "54%", my: "9%", mw: "40vw", img: "/decouvrir/mini-mobile.webp", alt: "Flo sur téléphone" },
-  { b: 0, d: 0.08, x: "48%", y: "34%", w: "250px", mx: "5%", my: "15%", mw: "46vw", tag: "Pendant ce temps", title: "Flo tient votre agenda", text: "Rendez-vous du jour, demandes, relances" },
-  { b: 1, d: 0.01, x: "56%", y: "13%", w: "270px", mx: "5%", my: "9%", mw: "56vw", tag: "Appel manqué", title: "06 •• •• •• 12", text: "08 h 12 · pendant le chantier", hot: true },
-  { b: 1, d: 0.04, x: "56%", y: "26%", w: "270px", mx: "5%", my: "17%", mw: "56vw", tag: "Appel manqué", title: "06 •• •• •• 47", text: "09 h 40", hot: true },
-  { b: 1, d: 0.07, x: "56%", y: "39%", w: "270px", mx: "5%", my: "25%", mw: "56vw", m: false, tag: "Message vocal", title: "« Bonjour, c’est pour un devis… »", text: "10 h 05", hot: true },
-  { b: 1, d: 0.12, x: "79%", y: "12%", w: "clamp(150px, 14vw, 220px)", mx: "64%", my: "9%", mw: "31vw", img: "/decouvrir/mini-reservation.webp", alt: "Page de réservation en ligne de Flo" },
-  { b: 1, d: 0.15, x: "75%", y: "58%", w: "250px", mx: "5%", my: "33%", mw: "60vw", m: false, tag: "Avec Flo", title: "Le client réserve en ligne, tout seul" },
-  { b: 2, d: 0.01, x: "50%", y: "11%", w: "clamp(380px, 42vw, 620px)", mx: "5%", my: "10%", mw: "90vw", img: "/decouvrir/mini-demande.webp", alt: "Une demande dans Flo, avec le créneau choisi" },
-  { b: 2, d: 0.07, x: "53%", y: "45%", w: "clamp(360px, 40vw, 600px)", mx: "5%", my: "27%", mw: "90vw", img: "/decouvrir/mini-reponse.webp", alt: "Réponse prête à envoyer par e-mail ou SMS" },
-  { b: 3, d: 0.01, x: "55%", y: "10%", w: "clamp(340px, 36vw, 540px)", mx: "5%", my: "9%", mw: "90vw", img: "/decouvrir/mini-agenda.webp", alt: "Le rendez-vous dans l’agenda de Flo" },
-  { b: 3, d: 0.06, x: "58%", y: "50%", w: "270px", mx: "5%", my: "35%", mw: "62vw", tag: "Ajouté à votre agenda", title: "Mardi 8 h 00 · Fuite sous l’évier", text: "Avec l’adresse et le téléphone du client" },
-];
-
 const PANELS = [
   { n: "01", t: "L’agenda", p: "Jour, semaine ou mois, pour vous et votre équipe.", l: ["Un créneau déjà pris est refusé", "Horaires et congés respectés", "Historique de chaque client"], img: "/decouvrir/ecran-agenda.webp", alt: "Agenda de la semaine dans Flo" },
   { n: "02", t: "La réservation en ligne", p: "Une page à votre nom : le client choisit sa prestation et un créneau libre, sans créer de compte.", l: ["Seuls vos créneaux libres sont proposés", "Vous acceptez en un geste"], img: "/decouvrir/ecran-reservation.webp", alt: "Page de réservation sur téléphone", phone: true },
@@ -85,7 +68,7 @@ export default function Cinema({ demo }: { demo: string }) {
     };
     size(); addEventListener("resize", size);
 
-    const beats = [...el.querySelectorAll<HTMLElement>(`.${c.beat}`)], items = [...el.querySelectorAll<HTMLElement>(`.${c.item}`)];
+    const beats = [...el.querySelectorAll<HTMLElement>(`.${c.beat}`)], cards = [...el.querySelectorAll<HTMLElement>(`.${c.card}`)];
     const bar = el.querySelector<HTMLElement>(`.${c.progress}`)!, hint = el.querySelector<HTMLElement>(`.${c.hint}`)!;
     const win = (p: number, a: number, b: number) => Math.min(1, Math.max(0, (p - a) / 0.05), Math.max(0, (b - p) / 0.05));
     let target = 0, shown = -1;
@@ -101,11 +84,7 @@ export default function Cinema({ demo }: { demo: string }) {
           const o = k === 0 ? Math.min(1, (BEATS[0][1] - p) / 0.05) : k === BEATS.length - 1 ? Math.min(1, Math.max(0, (p - BEATS[k][0]) / 0.05)) : win(p, ...BEATS[k]);
           b.style.opacity = String(o); b.style.transform = `translate3d(0, ${(1 - o) * 24}px, 0)`; b.classList.toggle(c.live, o > 0.5);
         });
-        items.forEach((it, k) => {
-          const { b, d } = ITEMS[k], a = BEATS[b][0] + d;
-          const o = b === BEATS.length - 1 ? Math.min(1, Math.max(0, (p - a) / 0.04)) : win(p, a, BEATS[b][1]);
-          it.style.opacity = String(o); it.style.transform = `translate3d(0, ${(1 - o) * 26}px, 0) scale(${0.96 + o * 0.04})`;
-        });
+        cards.forEach((card, k) => { const o = win(p, 0.56 + k * 0.05, 0.8); card.style.opacity = String(o); card.style.transform = `translate3d(0, ${(1 - o) * 20}px, 0)`; });
         bar.style.transform = `scaleX(${p})`; hint.style.opacity = String(Math.max(0, 1 - p * 12));
       }
     };
@@ -172,12 +151,10 @@ export default function Cinema({ demo }: { demo: string }) {
             <p className={c.sub}>Agenda, réservation en ligne, demandes et relances d’entretien : Flo organise vos rendez-vous. Paiement unique, données en France.</p>
             <div className={c.ctas}><a href={demo} className={`${c.btn} ${c.white}`}>Demander une démo</a><a href="#tarif" className={`${c.btn} ${c.ghost}`}>Voir le tarif</a></div>
           </div>
-          {ITEMS.map((it, k) => (
-            <div key={k} className={c.item} data-m={it.m === false ? "0" : undefined} aria-hidden={!it.img}
-              style={{ "--x": it.x, "--y": it.y, "--w": it.w, "--mx": it.mx, "--my": it.my, "--mw": it.mw } as React.CSSProperties}>
-              {it.img ? <img src={it.img} alt={it.alt} /> : <div className={c.card}><span className={`${c.tag} ${it.hot ? c.tagNew : ""}`}>{it.tag}</span><b>{it.title}</b>{it.text && <small>{it.text}</small>}</div>}
-            </div>
-          ))}
+          <div className={c.cards} aria-hidden>
+            <div className={c.card}><span className={`${c.tag} ${c.tagNew}`}>Nouvelle demande</span><b>Fuite sous l’évier</b><small>Réservé en ligne · mardi 8 h 00</small></div>
+            <div className={c.card}><span className={c.tag}>Réponse prête</span><b>« Bonjour, je passe mardi à 8 h. »</b><small>À envoyer par SMS ou e-mail</small></div>
+          </div>
           <div className={c.progress} />
           <div className={c.hint}>Faites défiler</div>
         </div>
@@ -186,7 +163,7 @@ export default function Cinema({ demo }: { demo: string }) {
       <section className={c.reveal} aria-label="Voici Flo">
         <div className={c.revealStage}>
           <div className={c.revealTitle}><p className={c.big} style={{ maxWidth: "none" }}>Voici <span className={c.orange}>Flo.</span></p><p>Tout ce qui vous fait perdre du temps au téléphone, réuni dans un seul écran.</p></div>
-          <div className={c.screen}><img src="/decouvrir/ecran-tableau.webp" alt="Tableau de bord de Flo" decoding="async" /></div>
+          <div className={c.screen}><img src="/decouvrir/ecran-tableau.webp" alt="Tableau de bord de Flo" /></div>
         </div>
       </section>
 

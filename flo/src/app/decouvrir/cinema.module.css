@@ -20,7 +20,7 @@
 .top .btn { min-height: 38px; padding: 0 14px; font-size: 14px; }
 
 /* 1. Le film */
-.film { position: relative; height: 300vh; margin-top: -60px; }
+.film { position: relative; height: 420vh; margin-top: -60px; }
 .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: #2a0d10; }
 .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.75) 100%); }
@@ -33,9 +33,8 @@
 .orange { color: var(--orange); }
 .sub { font-size: clamp(16px, 1.4vw, 19px); color: rgba(255, 255, 255, 0.78); max-width: 46ch; margin-top: 18px; }
 .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-.item { position: absolute; left: var(--x); top: var(--y); width: var(--w); opacity: 0; will-change: opacity, transform; pointer-events: none; }
-.item img { display: block; width: 100%; border: 1px solid rgba(255, 255, 255, 0.22); } /* pas d'ombre : coûteuse au-dessus du film */
-.card { background: rgba(255, 255, 255, 0.96); color: #0a0a0a; padding: 12px 14px; font-size: 14px; }
+.cards { position: absolute; right: clamp(18px, 6vw, 90px); top: 22%; display: grid; gap: 10px; width: min(300px, 72vw); }
+.card { background: rgba(255, 255, 255, 0.96); color: #0a0a0a; padding: 14px 16px; font-size: 14px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
 .card b { display: block; font-size: 15px; font-weight: 600; }
 .card small { color: #555; font-size: 13px; }
 .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; margin-bottom: 8px; background: #0a0a0a; color: #fff; }
@@ -80,10 +79,7 @@
 
 @media (max-width: 960px) {
   .nav { display: none; }
-  .item { left: var(--mx); top: var(--my); width: var(--mw); }
-  .item[data-m="0"] { display: none; }
-  .card { padding: 9px 11px; font-size: 12px; }
-  .card b { font-size: 13px; }
+  .cards { top: 16%; right: 14px; }
   .huge { font-size: clamp(46px, 13vw, 80px); }
   .panel { grid-template-columns: 1fr; align-content: center; gap: 22px; padding-top: 90px; }
   .panel .shot { order: -1; }
@@ -97,7 +93,6 @@
 .calm .film, .calm .reveal, .calm .hscroll { height: auto; }
 .calm .stage, .calm .revealStage, .calm .hStage { position: relative; height: auto; min-height: 80vh; }
 .calm .beat { position: relative; opacity: 1; bottom: auto; padding-top: 40px; padding-bottom: 40px; }
-.calm .item { position: relative; left: auto; top: auto; width: min(420px, 90%); margin: 12px auto; opacity: 1; transform: none; }
-.calm .track { flex-direction: column; }
+.calm .card, .calm .calm .track { flex-direction: column; }
 .calm .panel { height: auto; }
 .calm .hint, .calm .progress, .calm .hCount { display: none; }
