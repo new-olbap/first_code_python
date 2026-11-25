@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT, TARIF, eur, mensualite } from "@/lib/tarif";
-import Tabs, { type Feature } from "./Tabs";
+import Cinema from "./Cinema";
 import s from "./landing.module.css";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://flo-theta-gray.vercel.app";
@@ -19,17 +19,6 @@ export const metadata: Metadata = {
 
 const demo = `mailto:${CONTACT}?subject=${encodeURIComponent("Démonstration de Flo")}&body=${encodeURIComponent("Bonjour,\n\nJe souhaiterais voir une démonstration de Flo.\n\nMon métier :\nMon téléphone :\n")}`;
 const Arrow = () => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden><path d="M3 8h10M9 4l4 4-4 4" /></svg>;
-
-const FEATURES: Feature[] = [
-  { tab: "Agenda", title: "Toute votre semaine d’un coup d’œil", text: "Jour, semaine ou mois : vos rendez-vous et ceux de votre équipe, au même endroit.", img: "/decouvrir/ecran-agenda.webp", alt: "Agenda de la semaine dans Flo",
-    points: ["Un créneau déjà pris est refusé, impossible de vous mettre deux clients en même temps", "Vos horaires et vos congés sont respectés", "Chaque rendez-vous garde l’historique du client"] },
-  { tab: "Réservation en ligne", title: "Vos clients réservent eux-mêmes", text: "Une page à votre nom, à partager par SMS ou sur votre site : le client choisit sa prestation et un créneau libre.", img: "/decouvrir/ecran-reservation.webp", alt: "Page de réservation en ligne sur téléphone", phone: true,
-    points: ["Pas de compte à créer pour le client", "Seuls vos créneaux libres sont proposés", "Vous acceptez ou refusez chaque demande en un geste"] },
-  { tab: "Demandes", title: "Plus aucune demande oubliée", text: "Les réservations en ligne et les e-mails de vos clients arrivent au même endroit, avec une pastille tant qu’ils ne sont pas traités.", img: "/decouvrir/ecran-demandes.webp", alt: "Demandes à traiter dans Flo",
-    points: ["Collez un e-mail : Flo retrouve la fiche du client, ou la crée", "Réponse prête à envoyer par e-mail ou SMS", "Le rendez-vous se crée en un clic"] },
-  { tab: "Tableau de bord", title: "Ce qui compte aujourd’hui", text: "Le matin, vous voyez vos rendez-vous du jour, ce qu’il reste à confirmer et l’activité du mois.", img: "/decouvrir/ecran-tableau.webp", alt: "Tableau de bord de Flo",
-    points: ["Prochains rendez-vous et calendrier du mois", "Rendez-vous à confirmer mis en avant", "Statistiques : rendez-vous, prospects, annulations"] },
-];
 
 const FAQ = [
   ["Faut-il payer un abonnement ?", `Non. Flo se paie une seule fois : ${eur(TARIF.lancement)} pour les ${TARIF.places} premiers artisans, puis ${eur(TARIF.normal)}, en une fois ou en ${TARIF.fois} virements sans frais. Les mises à jour sont comprises.`],
@@ -48,75 +37,9 @@ export default function Decouvrir() {
   return (
     <div className={s.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className={s.announce}>Offre de lancement : <b>{eur(TARIF.lancement)} à vie</b> pour les {TARIF.places} premiers artisans, au lieu de {eur(TARIF.normal)}.</div>
-      <header className={s.header}>
-        <div className={`${s.wrap} ${s.top}`}>
-          <Link href="/" className={s.logo} aria-label="Flo, accueil">Flo<i /></Link>
-          <nav className={s.nav} aria-label="Navigation"><a href="#fonctions">Fonctionnalités</a><a href="#telephone">Sur téléphone</a><a href="#tarif">Tarif</a><a href="#questions">Questions</a></nav>
-          <Link href="/connexion" className={s.login}>Se connecter</Link>
-          <a href={demo} className={`${s.btn} ${s.solid}`}>Demander une démo</a>
-        </div>
-      </header>
+      <Cinema demo={demo} />
 
       <main>
-        <section className={s.hero}>
-          <div className={`${s.wrap} ${s.heroGrid}`}>
-            <div>
-              <span className={s.kicker}>Logiciel de rendez-vous pour artisans</span>
-              <h1 className={s.h1}>Vos rendez-vous s’organisent. <span className={s.orange}>Vous restez sur le chantier.</span></h1>
-              <p className={s.lead}>Agenda, réservation en ligne, demandes reçues par e-mail et relances d’entretien : Flo réunit tout ce qui vous fait perdre du temps au téléphone.</p>
-              <div className={s.ctas}>
-                <a href={demo} className={`${s.btn} ${s.solid}`}>Demander une démo <Arrow /></a>
-                <a href="#tarif" className={`${s.btn} ${s.ghost}`}>Voir le tarif</a>
-              </div>
-              <div className={s.trust}><span>Paiement unique, pas d’abonnement</span><span>Hébergé en France</span><span>Équipe illimitée</span></div>
-            </div>
-            <div className={s.visual}>
-              <img src="/decouvrir/artisan.webp" alt="Artisan sur un chantier" fetchPriority="high" />
-              <div className={`${s.glass} ${s.g1}`}><span className={`${s.tag} ${s.tagNew}`}>Nouvelle demande</span><b>Entretien chaudière</b><small>Réservé en ligne · mardi 8 h 00</small></div>
-              <div className={`${s.glass} ${s.g2}`}><span className={`${s.tag} ${s.tagOk}`}>Confirmé</span><b>Dépannage fuite</b><small>Ajouté à votre agenda de téléphone</small></div>
-              <div className={`${s.glass} ${s.g3}`}><span className={`${s.tag} ${s.tagLine}`}>À relancer</span><b>3 entretiens annuels</b><small>Message prêt à envoyer</small></div>
-            </div>
-          </div>
-        </section>
-
-        <div className={s.wrap}>
-          <p className={s.tradesNote}>Pensé pour les métiers qui travaillent sur rendez-vous</p>
-          <div className={s.trades}><div>Plombiers</div><div>Chauffagistes</div><div>Électriciens</div><div>Paysagistes</div><div>Piscinistes</div><div>Dépanneurs</div></div>
-        </div>
-
-        <section className={s.sec} id="fonctions">
-          <div className={s.wrap}>
-            <div className={s.head}><h2 className={s.h2}>Tout votre planning, dans un seul outil.</h2><p className={s.lead}>Voici Flo, tel que vous l’utiliserez. Choisissez une fonction pour la voir.</p></div>
-            <Tabs items={FEATURES} />
-            <div className={s.cards}>
-              <div className={s.card}><span className={s.ic}><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3h3" /></svg></span><h3>Relances d’entretien</h3><p>Flo repère les entretiens à refaire, les demandes restées sans réponse et les prospects à rappeler, avec le message déjà rédigé.</p></div>
-              <div className={s.card}><span className={s.ic}><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10" cy="7" r="3" /><path d="M4 17c1-3 3.5-4.5 6-4.5s5 1.5 6 4.5" /></svg></span><h3>Fiches clients</h3><p>Coordonnées, adresse, notes et historique des rendez-vous. Import depuis Excel ou Google Contacts, export quand vous voulez.</p></div>
-              <div className={s.card}><span className={s.ic}><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="7" cy="7" r="2.5" /><circle cx="14" cy="8" r="2" /><path d="M2 16c.8-2.5 2.6-3.8 5-3.8s4.2 1.3 5 3.8M12.5 12.4c2 0 3.6 1.1 4.5 3.6" /></svg></span><h3>Équipe illimitée</h3><p>Invitez vos salariés : chacun a son agenda, et vous décidez qui peut modifier les prestations et l’entreprise.</p></div>
-            </div>
-          </div>
-        </section>
-
-        <section className={`${s.sec} ${s.band}`} id="telephone">
-          <div className={`${s.wrap} ${s.bandGrid}`}>
-            <div className={s.phones}>
-              <img src="/decouvrir/ecran-mobile.webp" alt="Flo sur téléphone : tableau de bord" loading="lazy" />
-              <img src="/decouvrir/ecran-reservation.webp" alt="Page de réservation sur téléphone" loading="lazy" />
-            </div>
-            <div>
-              <h2 className={s.h2}>Votre agenda Flo, aussi dans votre téléphone.</h2>
-              <p className={s.lead} style={{ marginTop: 14 }}>Ajoutez votre lien Flo une seule fois : vos rendez-vous apparaissent dans l’agenda que vous utilisez déjà, et se mettent à jour tout seuls.</p>
-              <div className={s.syncs}><span>Google Agenda</span><span>iPhone et Mac</span><span>Outlook</span></div>
-              <ol className={s.steps}>
-                <li><b>01</b>Le client réserve sur votre page, ou vous écrit par e-mail.</li>
-                <li><b>02</b>Vous acceptez la demande en un geste, depuis le chantier.</li>
-                <li><b>03</b>Le rendez-vous s’ajoute à votre agenda, avec l’adresse et le téléphone du client.</li>
-              </ol>
-              <a href={demo} className={`${s.btn} ${s.outlineW}`} style={{ marginTop: 26 }}>Voir une démonstration</a>
-            </div>
-          </div>
-        </section>
-
         <section className={s.sec} id="tarif">
           <div className={s.wrap}>
             <div className={s.head}><h2 className={s.h2}>Un seul paiement, à vie.</h2><p className={s.lead}>Pas d’abonnement : vous payez une fois, Flo est à vous, mises à jour comprises.</p></div>
@@ -171,7 +94,7 @@ export default function Decouvrir() {
             <div><h4>Flo</h4><ul><li><a href="#fonctions">Fonctionnalités</a></li><li><Link href="/tarif">Tarif</Link></li><li><Link href="/connexion">Se connecter</Link></li></ul></div>
             <div><h4>Informations</h4><ul><li><Link href="/mentions-legales">Mentions légales</Link></li><li><Link href="/cgu">Conditions d’utilisation</Link></li><li><Link href="/confidentialite">Confidentialité</Link></li><li><a href={`mailto:${CONTACT}`}>Contact</a></li></ul></div>
           </div>
-          <div className={s.legal}><span>© {new Date().getFullYear()} Flo</span><span>Photos d’illustration : Unsplash</span></div>
+          <div className={s.legal}><span>© {new Date().getFullYear()} Flo</span><span>Photos et vidéo d’illustration : Unsplash, Pexels</span></div>
         </div>
       </footer>
 

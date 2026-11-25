@@ -1,0 +1,101 @@
+/* Partie « cinéma » de la page de présentation : film piloté par le défilement, révélation de l'écran en 3D,
+   fonctions qui défilent de côté, téléphones en parallaxe. Noir, blanc, accent orange, angles droits. */
+.dark { --orange: #ff5a1f; background: #0a0a0a; color: #f5f5f5; }
+
+/* En-tête en verre sombre, au-dessus de tout */
+.bar { background: #000; color: #fff; font-size: 13px; text-align: center; padding: 9px 16px; position: relative; z-index: 41; }
+.bar b { color: var(--orange); font-weight: 600; }
+.header { position: sticky; top: 0; z-index: 40; background: rgba(10, 10, 10, 0.86); /* pas de flou : trop coûteux au-dessus d'un film qui change à chaque image */ border-bottom: 1px solid rgba(255, 255, 255, 0.08); color: #fff; }
+.top { max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); display: flex; align-items: center; gap: 28px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 6px; font-size: 24px; font-weight: 900; letter-spacing: -0.03em; margin-right: auto; }
+.logo i { width: 8px; height: 8px; background: var(--orange); margin-top: 9px; }
+.nav { display: flex; gap: 26px; font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+.nav a:hover { color: #fff; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 20px; font-weight: 600; font-size: 15px; border: 1px solid #fff; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+.btn svg { width: 16px; }
+.white { background: #fff; color: #0a0a0a !important; }
+.white:hover { background: var(--orange); border-color: var(--orange); color: #fff !important; }
+.ghost { color: #fff !important; border-color: rgba(255, 255, 255, 0.5); }
+.ghost:hover { background: #fff; color: #0a0a0a !important; }
+.top .btn { min-height: 38px; padding: 0 14px; font-size: 14px; }
+
+/* 1. Le film */
+.film { position: relative; height: 420vh; margin-top: -60px; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: #2a0d10; }
+.shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.75) 100%); }
+.beat { position: absolute; left: 0; right: 0; bottom: clamp(70px, 14vh, 140px); max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); opacity: 0; will-change: opacity, transform; pointer-events: none; }
+.beat.live { pointer-events: auto; }
+.kicker { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.8); }
+.kicker::before { content: ""; width: 8px; height: 8px; background: var(--orange); }
+.huge { font-size: clamp(52px, 9vw, 140px); line-height: 0.95; letter-spacing: -0.045em; font-weight: 500; margin-top: 16px; max-width: 13ch; }
+.big { font-size: clamp(38px, 6vw, 92px); line-height: 1; letter-spacing: -0.04em; font-weight: 500; max-width: 15ch; }
+.orange { color: var(--orange); }
+.sub { font-size: clamp(16px, 1.4vw, 19px); color: rgba(255, 255, 255, 0.78); max-width: 46ch; margin-top: 18px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.cards { position: absolute; right: clamp(18px, 6vw, 90px); top: 22%; display: grid; gap: 10px; width: min(300px, 72vw); }
+.card { background: rgba(255, 255, 255, 0.96); color: #0a0a0a; padding: 14px 16px; font-size: 14px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+.card b { display: block; font-size: 15px; font-weight: 600; }
+.card small { color: #555; font-size: 13px; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; margin-bottom: 8px; background: #0a0a0a; color: #fff; }
+.tagNew { background: var(--orange); }
+.progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--orange); transform-origin: 0 50%; transform: scaleX(0); }
+.hint { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+
+/* 2. Révélation de l'écran */
+.reveal { position: relative; height: 240vh; }
+.revealStage { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; overflow: hidden; padding: 70px clamp(18px, 4vw, 40px) 30px; }
+.revealTitle { text-align: center; }
+.revealTitle .big { font-size: clamp(34px, 4.4vw, 64px); }
+.revealTitle p { color: rgba(255, 255, 255, 0.7); margin-top: 12px; font-size: 17px; }
+.screen { width: min(1100px, 100%, calc((100svh - 230px) * 1.44)); transform-origin: 50% 100%; will-change: transform; box-shadow: 0 30px 60px -30px rgba(255, 90, 31, 0.3); border: 1px solid rgba(255, 255, 255, 0.12); }
+.screen img { display: block; width: 100%; }
+
+/* 3. Fonctions en défilement horizontal */
+/* 3. Visite guidée : écran fixe à droite, étapes qui défilent à gauche, fondu entre les écrans */
+.tour { max-width: 1200px; margin: 0 auto; padding: 10vh clamp(18px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1.7fr; gap: clamp(28px, 4vw, 56px); }
+.tourStage { grid-column: 2; grid-row: 1; position: sticky; top: 90px; height: calc(100svh - 140px); }
+.tourShot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; opacity: 0; transform: scale(0.98); transition: opacity 0.7s ease, transform 0.7s ease; }
+.tourShot.on { opacity: 1; transform: none; }
+.steps { grid-column: 1; grid-row: 1; }
+.steps .stepShot { display: none; } /* plus précis que « .page img » de landing.module.css */
+.step { min-height: 78svh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s ease; }
+.step.on { opacity: 1; }
+.step .num { font-size: 14px; color: var(--orange); font-weight: 600; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.step h3 { font-size: clamp(32px, 4vw, 58px); line-height: 1; letter-spacing: -0.04em; font-weight: 500; margin: 14px 0 16px; }
+.step p { color: rgba(255, 255, 255, 0.72); font-size: 17px; max-width: 40ch; }
+.step ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; color: rgba(255, 255, 255, 0.9); }
+.step li { display: flex; gap: 10px; }
+.step li::before { content: ""; flex: none; width: 7px; height: 7px; background: var(--orange); margin-top: 9px; }
+
+/* 4. Téléphones */
+.phones { padding: clamp(80px, 12vw, 160px) 0; overflow: hidden; }
+.phonesGrid { max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.phonePair { display: flex; justify-content: center; gap: 18px; }
+.phonePair img { width: min(250px, 46%); border: 6px solid #262626; border-radius: 28px; will-change: transform; }
+.syncs { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0; }
+.syncs span { border: 1px solid rgba(255, 255, 255, 0.25); padding: 8px 12px; font-size: 14px; }
+
+/* Passage du noir au clair avant le tarif */
+.fadeToLight { height: 30vh; background: linear-gradient(180deg, #0a0a0a, #f4f2ee); }
+
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .cards { top: 16%; right: 14px; }
+  .huge { font-size: clamp(46px, 13vw, 80px); }
+  /* Téléphone : pas d'écran fixe, chaque étape montre son image au-dessus de son texte */
+  .tour { grid-template-columns: 1fr; padding-top: 2vh; }
+  .tourStage { display: none; }
+  .step { min-height: 0; padding: 7vh 0; opacity: 0.35; }
+  .steps .stepShot { display: block; width: 100%; max-height: 52svh; object-fit: contain; margin-bottom: 22px; border: 1px solid rgba(255, 255, 255, 0.12); }
+  .step ul { display: none; }
+  .phonesGrid { grid-template-columns: 1fr; }
+}
+
+/* Sans animation (réglage du système) : tout est posé, rien n'est épinglé */
+.calm .film, .calm .reveal { height: auto; }
+.calm .stage, .calm .revealStage { position: relative; height: auto; min-height: 80vh; }
+.calm .beat { position: relative; opacity: 1; bottom: auto; padding-top: 40px; padding-bottom: 40px; }
+.calm .card { opacity: 1; transform: none; }
+.calm .step { opacity: 1; }
+.calm .hint, .calm .progress { display: none; }
