@@ -1,6 +1,6 @@
 /* Présentation façon « film de marque » : des scènes plein écran qui s'enchaînent au défilement,
    avec un volet de couleur à chaque changement (joué d'un coup, pas image par image : reste fluide). */
-.reel { --night: #0d111c; --orange: #ff5a1f; --paper: #f6f5f1; --ease: cubic-bezier(0.77, 0, 0.18, 1);
+.reel { --safe: clamp(70px, 10vh, 100px); --night: #0d111c; --orange: #ff5a1f; --paper: #f6f5f1; --ease: cubic-bezier(0.77, 0, 0.18, 1);
   position: relative; background: var(--night); color: #fff; font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; }
 .reel h1, .reel h2, .reel p { margin: 0; }
 
@@ -41,7 +41,7 @@
 .mid { font-size: clamp(28px, 3.6vw, 56px); line-height: 1; letter-spacing: -0.045em; font-weight: 600; }
 .small { font-size: clamp(15px, 1.25vw, 18px); line-height: 1.5; opacity: 0.92; max-width: 40ch; margin-top: 16px !important; }
 .orange { color: var(--orange); }
-.cap { position: absolute; left: clamp(16px, 4vw, 48px); bottom: clamp(70px, 10vh, 100px); max-width: min(560px, 86vw); }
+.cap { position: absolute; left: clamp(16px, 4vw, 48px); bottom: var(--safe); max-width: min(560px, 86vw); }
 .laptop .lid { background: #1a1c22; border-radius: 14px 14px 4px 4px; padding: 2.4% 2.4% 3%; }
 .laptop .lid img { display: block; width: 100%; }
 .laptop .base { position: relative; height: 13px; width: 114%; margin-left: -7%; background: linear-gradient(#d6d8dd, #8f9299); border-radius: 0 0 14px 14px; }
@@ -57,13 +57,13 @@
 
 /* 2. Symbole géant */
 .giant { position: absolute; right: -10vw; top: -8%; height: 116%; width: auto; }
-.giantText { position: absolute; left: clamp(16px, 4vw, 48px); bottom: clamp(70px, 12vh, 120px); max-width: 11ch; }
+.giantText { position: absolute; left: clamp(16px, 4vw, 48px); bottom: var(--safe); max-width: 11ch; }
 
 /* 3. Ordinateur */
 .sLaptop { background: #e9e7e2; color: var(--night); }
 .orangeBlock { position: absolute; left: 0; bottom: 0; width: 34%; height: 58%; background: var(--orange); }
 .laptopPos { position: absolute; width: min(60vw, 860px); right: 5vw; top: 46%; translate: 0 -54%; }
-.sLaptop .cap { z-index: 2; }
+.sLaptop .cap, .sPhone .cap { z-index: 2; }
 
 /* 4. Symbole seul */
 .sWhite { background: #fff; color: var(--night); display: flex; align-items: center; justify-content: center; }
@@ -159,7 +159,6 @@
   .orangeBlock { width: 50%; height: 40%; }
   .laptopPos { width: 92vw; right: 4vw; top: 40%; }
   .tilted { right: 50%; translate: 50% -62%; width: 58vw; }
-  .sPhone .cap, .sOrange .cap { bottom: 64px; }
   .palette { grid-template-columns: 1fr 1fr; }
   .swatch { padding: 74px 14px 18px; }
   .typeBlock { width: 40%; height: 34%; }
@@ -186,3 +185,22 @@
 .calm .scene { position: relative; height: 100vh; height: 100svh; clip-path: none; visibility: visible; transition: none; }
 .calm .a, .calm .zoom, .calm .grow rect { opacity: 1; transform: none; transition: none; }
 .calm .hud { display: none; }
+
+@media (max-width: 760px) {
+  /* La barre d'outils de Safari flotte au-dessus du bas de la page : textes remontés, compteur masqué */
+  .reel { --safe: calc(150px + env(safe-area-inset-bottom)); }
+  .hud, .bar { display: none; }
+  .intro h1, .cornerNote { bottom: var(--safe); }
+  .label { display: none; }
+  .giant { top: 2%; height: 52%; }
+  .laptopPos { top: 34%; }
+  .tilted { translate: 50% -96%; width: 44vw; }
+  .phones { translate: 50% -82%; }
+  .phones .phone { width: 34vw; }
+  .screen { width: 80vw; } .sc1 { top: 12%; } .sc2 { top: 22%; } .sc3 { top: 32%; width: 56vw; }
+  .board { translate: 0 -12%; }
+  .hall { align-items: flex-start; padding-top: 110px; }
+  .card { translate: 0 -12%; }
+  .endText { bottom: var(--safe); }
+  .scale { top: 90px; }
+}

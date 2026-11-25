@@ -5,7 +5,7 @@ import Link from "next/link";
 import FloLogo, { FloMark } from "@/components/FloLogo";
 import r from "./reel.module.css";
 
-const N = 16;      // nombre de plans
+const N = 13;      // nombre de plans
 const STEP = 1;    // une hauteur d'écran par plan
 const WIPES = [r.l, r.b, r.r, r.t];
 
@@ -84,27 +84,9 @@ export default function Reel({ demo }: { demo: string }) {
           <div className={r.cap}><p className={`${r.big} ${r.a} ${r.a2}`}>Vos clients réservent <span className={r.orange}>eux-mêmes.</span></p><p className={`${r.small} ${r.a} ${r.a3}`}>Une page à votre nom : le client choisit sa prestation et un créneau libre, sans créer de compte.</p></div>
         </section>
 
-        {/* 6. La palette */}
-        <section className={sc(5)} style={{ zIndex: 6 }}>
-          <div className={r.palette}>
-            <div className={r.swatch} style={{ background: "#ff5a1f" }}>Orange chantier<small>#FF5A1F</small></div>
-            <div className={r.swatch} style={{ background: "#ff8a50" }}>Petit matin<small>#FF8A50</small></div>
-            <div className={r.swatch} style={{ background: "#0d111c" }}>Nuit<small>#0D111C</small></div>
-            <div className={r.swatch} style={{ background: "#f6f5f1", color: "#0d111c" }}>Plâtre<small>#F6F5F1</small></div>
-          </div>
-        </section>
-
-        {/* 7. La typographie */}
-        <section className={sc(6, r.sWhite)} style={{ zIndex: 7 }}>
-          <span className={r.label}>03 — Typographie</span>
-          <div className={`${r.typeBlock} ${r.zoom}`} />
-          <p className={`${r.typeWord} ${r.a}`}>Geist</p>
-          <p className={r.alphabet}>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz 0123456789</p>
-        </section>
-
         {/* 8. Tout ce qui est inclus, en échelle de titres */}
-        <section className={sc(7, r.sWhite)} style={{ zIndex: 8 }}>
-          <span className={r.label}>04 — Tout est inclus</span>
+        <section className={sc(5, r.sWhite)} style={{ zIndex: 6 }}>
+          <span className={r.label}>02 — Tout est inclus</span>
           <div className={`${r.scale} ${r.a}`}>
             <div style={{ fontSize: "clamp(44px, 7vw, 104px)" }}>Agenda<small>jour · semaine · mois</small></div>
             <div style={{ fontSize: "clamp(32px, 4.6vw, 68px)" }}>Réservation en ligne<small>votre page</small></div>
@@ -116,19 +98,16 @@ export default function Reel({ demo }: { demo: string }) {
         </section>
 
         {/* 9. Photo et message */}
-        <section className={sc(8)} style={{ zIndex: 9 }}>
-          <div className={r.split}>
-            <div style={{ overflow: "hidden" }}><img className={r.zoom} src="/decouvrir/artisan.webp" alt="Artisan sur un chantier" decoding="async" /></div>
-            <div className={r.splitText}>
-              <p className={`${r.big} ${r.a}`}>Moins de téléphone. <span className={r.orange}>Plus de chantier.</span></p>
-              <p className={`${r.small} ${r.a} ${r.a2}`}>Flo range les demandes, prépare les réponses et remplit l’agenda pendant que vous travaillez.</p>
-              <FloMark className={r.splitMark} size={300} />
-            </div>
+        <section className={sc(6)} style={{ zIndex: 7 }}>
+          <FloMark className={`${r.giant} ${r.zoom}`} size={900} />
+          <div className={r.cap}>
+            <p className={`${r.big} ${r.a}`}>Moins de téléphone. <span className={r.orange}>Plus de chantier.</span></p>
+            <p className={`${r.small} ${r.a} ${r.a2}`}>Flo range les demandes, prépare les réponses et remplit l’agenda pendant que vous travaillez.</p>
           </div>
         </section>
 
         {/* 10. Panneau d'affichage */}
-        <section className={sc(9, r.wall)} style={{ zIndex: 10 }}>
+        <section className={sc(7, r.wall)} style={{ zIndex: 8 }}>
           <div className={`${r.board} ${r.a}`}>
             <img src="/decouvrir/plombier.webp" alt="" decoding="async" />
             <p className={`${r.boardText} ${r.mid}`} style={{ color: "#fff" }}>Le client réserve. Vous restez sur le chantier.</p>
@@ -136,21 +115,9 @@ export default function Reel({ demo }: { demo: string }) {
           </div>
         </section>
 
-        {/* 11. Imagerie */}
-        <section className={sc(10)} style={{ zIndex: 11 }}>
-          <span className={r.label}>05 — Sur le terrain</span>
-          <div className={`${r.grid} ${r.a}`}>
-            <img src="/decouvrir/artisan.webp" alt="" decoding="async" />
-            <img src="/decouvrir/plombier.webp" alt="" decoding="async" />
-            <img src="/decouvrir/electricien.webp" alt="" decoding="async" />
-            <img src="/decouvrir/salle-de-bain.webp" alt="" decoding="async" />
-            <img src="/decouvrir/chaufferie.webp" alt="" decoding="async" />
-          </div>
-        </section>
-
         {/* 12. Les écrans de Flo */}
-        <section className={sc(11, r.sScreens)} style={{ zIndex: 12 }}>
-          <span className={r.label}>06 — Le produit</span>
+        <section className={sc(8, r.sScreens)} style={{ zIndex: 9 }}>
+          <span className={r.label}>03 — Le produit</span>
           <img className={`${r.screen} ${r.sc1} ${r.a}`} src="/decouvrir/ecran-agenda.webp" alt="Agenda de Flo" decoding="async" />
           <img className={`${r.screen} ${r.sc2} ${r.a} ${r.a2}`} src="/decouvrir/ecran-demandes.webp" alt="Demandes dans Flo" decoding="async" />
           <img className={`${r.screen} ${r.sc3} ${r.a} ${r.a3}`} src="/decouvrir/ecran-tableau.webp" alt="Tableau de bord de Flo" decoding="async" />
@@ -158,7 +125,7 @@ export default function Reel({ demo }: { demo: string }) {
         </section>
 
         {/* 13. Synchronisé avec le téléphone */}
-        <section className={sc(12, r.sOrange)} style={{ zIndex: 13 }}>
+        <section className={sc(9, r.sOrange)} style={{ zIndex: 10 }}>
           <div className={`${r.phones} ${r.a}`}>
             <Phone src="/decouvrir/ecran-mobile.webp" alt="Flo sur téléphone" />
             <Phone src="/decouvrir/ecran-reservation.webp" alt="Réservation sur téléphone" />
@@ -170,7 +137,7 @@ export default function Reel({ demo }: { demo: string }) {
         </section>
 
         {/* 14. Affiches */}
-        <section className={sc(13, r.hall)} style={{ zIndex: 14 }}>
+        <section className={sc(10, r.hall)} style={{ zIndex: 11 }}>
           {[["/decouvrir/plombier.webp", "Vous réparez. Flo s’occupe des rendez-vous."], ["/decouvrir/salle-de-bain.webp", "Le client réserve en ligne, tout seul."], ["/decouvrir/chaufferie.webp", "L’entretien annuel ? Flo s’en souvient."]].map(([img, t], k) => (
             <figure key={t} className={`${r.poster} ${r.a} ${k === 1 ? r.a2 : k === 2 ? r.a3 : ""}`} style={{ margin: 0 }}>
               <img src={img} alt="" decoding="async" /><span><FloLogo size={14} text="#fff" color="#ffffff" /></span><p>{t}</p>
@@ -179,8 +146,8 @@ export default function Reel({ demo }: { demo: string }) {
         </section>
 
         {/* 15. Le rendez-vous ajouté */}
-        <section className={sc(14, r.sCard)} style={{ zIndex: 15 }}>
-          <span className={r.label}>07 — Exemple de rendez-vous</span>
+        <section className={sc(11, r.sCard)} style={{ zIndex: 12 }}>
+          <span className={r.label}>04 — Exemple de rendez-vous</span>
           <div className={`${r.card} ${r.a}`}>
             <div className={r.cardHead}>Ajouté à votre agenda <FloMark size={16} color="#ffffff" /></div>
             <div className={r.cardBody}><b>Mardi · 8 h 00</b><p>Fuite sous l’évier</p><small>Claire D. · Bordeaux · téléphone et adresse inclus</small></div>
@@ -188,7 +155,7 @@ export default function Reel({ demo }: { demo: string }) {
         </section>
 
         {/* 16. Fin */}
-        <section className={sc(15, r.end)} style={{ zIndex: 16 }}>
+        <section className={sc(12, r.end)} style={{ zIndex: 13 }}>
           <FloMark className={`${r.endMark} ${r.zoom}`} size={900} color="#0d111c" />
           <div className={r.endText}>
             <p className={`${r.big} ${r.a}`}>Essayez Flo.</p>
