@@ -3,7 +3,8 @@ import { headers } from "next/headers";
 import Card from "@/components/Card";
 import { Field, Notice, inputCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import { createClient, getSession } from "@/lib/supabase/server";
-import { deleteMyAccount, updateOrganization, updateProfile, updateSlug } from "./actions";
+import CopyButton from "@/components/CopyButton";
+import { deleteMyAccount, resetCalendar, updateOrganization, updateProfile, updateSlug } from "./actions";
 
 export default async function Parametres({ searchParams }: { searchParams: Promise<{ erreur?: string; info?: string }> }) {
   const session = (await getSession())!;
@@ -13,6 +14,9 @@ export default async function Parametres({ searchParams }: { searchParams: Promi
   const { data } = await sb.from("organizations").select("trade, address").eq("id", org.id).single();
   const h = await headers();
   const site = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}/r/`;
+  const { data: token } = await sb.rpc("my_calendar_token");
+  const feed = token ? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}/cal/${token}.ics` : null;
+  const webcal = feed?.replace(/^https?:/, "webcal:");
 
   return (
     <main className="space-y-5">
@@ -48,6 +52,27 @@ export default async function Parametres({ searchParams }: { searchParams: Promi
         </Card>
       )}
 
+      <Card className="space-y-4">
+        <h2 className="text-lg font-semibold">Mes rendez-vous dans l’agenda de mon téléphone</h2>
+        {feed && webcal ? (<>
+          <p className="text-sm text-muted">
+            Ajoutez ce lien une seule fois : vos rendez-vous FLO apparaissent ensuite dans Google Agenda, l’iPhone ou Outlook, et se mettent à jour tout seuls.
+            On les consulte sur le téléphone, mais on les modifie toujours dans FLO.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a className={primaryBtn} href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noopener">Ajouter à Google Agenda</a>
+            <a className={secondaryBtn} href={webcal}>Ajouter à l’iPhone / au Mac</a>
+            <CopyButton text={feed} label="Copier le lien (Outlook…)" />
+          </div>
+          <p className="text-xs text-muted">
+            Google relit le lien toutes les quelques heures, l’iPhone environ toutes les heures : un nouveau rendez-vous peut mettre un peu de temps à apparaître.
+            Ce lien est personnel, ne le partagez pas : il donne accès à vos rendez-vous et aux coordonnées de vos clients.
+          </p>
+          <form action={resetCalendar}><button className={`${secondaryBtn} text-xs`}>Lien partagé par erreur ? En créer un nouveau</button></form>
+        </>) : (
+          <p className="text-sm text-muted">La synchronisation n’est pas encore disponible sur ce compte.</p>
+        )}
+      </Card>
       <Card className="space-y-4">
         <h2 className="text-lg font-semibold">Mon profil</h2>
         <form action={updateProfile} className="flex flex-wrap items-end gap-3">

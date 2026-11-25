@@ -38,3 +38,12 @@ Test d’isolation sur un PostgreSQL local (sans Supabase) :
 psql -d <base_vide> -v ON_ERROR_STOP=1 -f supabase/tests/local_stub.sql \
   -f supabase/migrations/0001_comptes.sql -f supabase/tests/isolation.sql
 ```
+
+## Synchronisation avec l’agenda du téléphone (migration 0009)
+
+1. Supabase > **SQL Editor** : coller et exécuter `supabase/migrations/0009_calendrier.sql`.
+2. Vérifier avec `supabase/tests/calendrier.sql` (tout est annulé ensuite) : doit afficher `OK : synchronisation d'agenda vérifiée`.
+3. Dans FLO : **Paramètres > Mes rendez-vous dans l’agenda de mon téléphone** → « Ajouter à Google Agenda » ou « Ajouter à l’iPhone ».
+
+Chaque personne a un lien secret `/cal/<jeton>.ics` (lecture seule, sans les rendez-vous annulés, 60 jours passés et 1 an à venir).
+Google relit le lien toutes les quelques heures, Apple environ toutes les heures. Test du format : `node scripts/test-ics.mjs`.
