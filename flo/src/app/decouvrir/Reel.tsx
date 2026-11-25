@@ -6,7 +6,7 @@ import FloLogo, { FloMark } from "@/components/FloLogo";
 import r from "./reel.module.css";
 
 const N = 16;      // nombre de plans
-const STEP = 0.6;  // hauteur d'écran à faire défiler par plan
+const STEP = 1;    // une hauteur d'écran par plan
 const WIPES = [r.l, r.b, r.r, r.t];
 
 const Laptop = ({ src, alt }: { src: string; alt: string }) => (
@@ -24,15 +24,19 @@ export default function Reel({ demo }: { demo: string }) {
   useEffect(() => {
     const el = root.current!;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add(r.calm); return; }
+    const html = document.documentElement;
     let raf = 0;
     const update = () => {
       raf = 0;
       const step = stage.current!.offsetHeight * STEP; // hauteur stable (svh), insensible à la barre d'adresse de l'iPhone
-      setI(Math.min(N - 1, Math.max(0, Math.floor(-el.getBoundingClientRect().top / step))));
+      const box = el.getBoundingClientRect();
+      setI(Math.min(N - 1, Math.max(0, Math.floor(-box.top / step))));
+      // Arrêt obligatoire sur chaque plan tant qu'on est dans le film, défilement libre ailleurs.
+      html.style.scrollSnapType = box.top <= 2 && box.bottom > innerHeight * 0.5 ? "y mandatory" : "none";
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(update); };
     addEventListener("scroll", on, { passive: true }); addEventListener("resize", on); update();
-    return () => { removeEventListener("scroll", on); removeEventListener("resize", on); cancelAnimationFrame(raf); };
+    return () => { removeEventListener("scroll", on); removeEventListener("resize", on); cancelAnimationFrame(raf); html.style.scrollSnapType = ""; };
   }, []);
 
   const sc = (k: number, extra = "") => `${r.scene} ${WIPES[k % 4]} ${extra} ${k === i ? r.on : k < i ? r.past : ""} ${k < i - 1 ? r.gone : ""}`;
@@ -44,6 +48,8 @@ export default function Reel({ demo }: { demo: string }) {
         <div className={r.headRight}><Link href="/connexion" className={`${r.btn} ${r.btnNight}`}>Se connecter</Link><a href={demo} className={`${r.btn} ${r.btnOrange}`}>Démo</a></div>
       </header>
 
+      {Array.from({ length: N }, (_, k) => <div key={k} className={r.snap} style={{ top: `${(k + 0.25) * STEP * 100}svh` }} aria-hidden />)}
+      <div className={r.snap} style={{ top: "100%" }} aria-hidden />{/* sortie du film : la suite de la page */}
       <div className={r.stage} ref={stage}>
         {/* 1. Le logo */}
         <section className={sc(0, r.intro)} style={{ zIndex: 1 }}>
