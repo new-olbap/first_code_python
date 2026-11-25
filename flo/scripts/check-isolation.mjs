@@ -7,6 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL, key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const client = () => createClient(url, key, { auth: { persistSession: false } });
 const ts = Date.now();
+// Deux codes d’accès, créés avec « select public.nouveau_code('test'); » : FLO_CODES=FLO-XXXX-XXXX,FLO-YYYY-YYYY
+const codes = (process.env.FLO_CODES ?? "").split(",");
 let failed = 0;
 const check = (ok, label) => { console.log(`${ok ? "✅" : "❌"} ${label}`); if (!ok) failed++; };
 
@@ -17,7 +19,7 @@ async function newOwner(name, company) {
     options: { data: { first_name: name } },
   });
   if (error || !data.session) throw new Error(`inscription ${name} : ${error?.message ?? "pas de session (Confirm email activé ?)"}`);
-  const { data: orgId, error: e2 } = await sb.rpc("create_organization", { p_name: company, p_trade: "Test", p_address: "" });
+  const { data: orgId, error: e2 } = await sb.rpc("create_organization", { p_name: company, p_trade: "Test", p_address: "", p_code: codes.shift() });
   if (e2) throw new Error(`création entreprise ${name} : ${e2.message}`);
   return { sb, id: data.user.id, orgId };
 }

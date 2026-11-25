@@ -13,6 +13,7 @@ begin
     insert into auth.users (id, email, raw_user_meta_data) values
       (alice, 'a2@test.flo', '{"first_name":"Alice"}'), (bob, 'b2@test.flo', '{"first_name":"Bob"}'),
       (carol, 'c2@test.flo', '{"first_name":"Carol"}'), (dan, 'd2@test.flo', '{"first_name":"Dan"}');
+    update public.flo_reglages set code_obligatoire = false; -- ce test ne porte pas sur les codes d'accès (annulé à la fin)
     set local role authenticated;
     perform set_config('request.jwt.claims', json_build_object('sub', carol)::text, true);
     perform public.create_organization('Entreprise de Carol', null, null);

@@ -55,3 +55,12 @@ Google relit le lien toutes les quelques heures, Apple environ toutes les heures
 - Quand Flo aura son nom de domaine, ajouter sur Vercel la variable `NEXT_PUBLIC_SITE_URL` (ex. `https://getflo.app`), puis redéployer.
 - Images : `public/decouvrir/` (vraies captures de Flo avec les données de démonstration, photos Unsplash).
 - Partie « cinéma » (`Cinema.tsx`) : un film piloté par le défilement (119 images WebP dans `public/decouvrir/film/`, tirées d’une vidéo libre Pexels), puis l’écran de Flo qui se redresse en 3D, les fonctions en défilement horizontal et les téléphones en parallaxe. GSAP (ScrollTrigger) et Lenis. Si le système demande moins d’animations, tout s’affiche sans effet.
+
+## Inscription fermée : codes d'accès (migration 0010)
+
+1. Supabase > **SQL Editor** : exécuter `supabase/migrations/0010_codes_acces.sql`, puis le test `supabase/tests/codes_acces.sql` (« OK : codes d'accès vérifiés »).
+2. Pour chaque client qui a payé : `select public.nouveau_code('Nom du client');` dans le SQL Editor. Le code (ex. `FLO-7K2M-Q9XD`) sert une seule fois, à la création de l'entreprise (page « Bienvenue »).
+3. Suivi : `select * from public.codes_acces order by created_at desc;`
+4. Les salariés invités depuis la page Équipe n'ont pas besoin de code.
+
+Les tests SQL des autres étapes coupent l'obligation du code le temps du test (tout est annulé à la fin) : ils demandent donc la migration 0010.

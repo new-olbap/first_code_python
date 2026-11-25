@@ -1,7 +1,7 @@
 // Compte de démonstration « Plomberie Martin » : crée le compte (ou le remet à zéro) et le remplit de données
 // réalistes, datées à partir d'aujourd'hui. Relancez-le avant chaque démo.
 // Usage : node --env-file=.env.local scripts/demo.mjs
-// Nécessite DEMO_EMAIL, DEMO_EMAIL_EQUIPE et DEMO_PASSWORD dans .env.local, et « Confirm email » désactivé dans Supabase.
+// Nécessite DEMO_EMAIL, DEMO_EMAIL_EQUIPE et DEMO_PASSWORD dans .env.local (plus FLO_CODE, un code d’accès, si le compte n’a pas encore d’entreprise), et « Confirm email » désactivé dans Supabase.
 // Les téléphones (06 39 98 …) sont réservés aux fictions par l'ARCEP, les e-mails sont en @example.com : aucun vrai contact.
 import { createClient } from "@supabase/supabase-js";
 
@@ -29,7 +29,7 @@ const pick = (a) => a[Math.floor(rnd() * a.length)];
 // ===== 1. Comptes : Thomas (propriétaire) et Lucas (collaborateur) =====
 const T = await login(DEMO_EMAIL, "Thomas");
 let m = ok(await T.sb.from("memberships").select("organization_id").eq("user_id", T.id).maybeSingle(), "entreprise");
-const org = m?.organization_id ?? ok(await T.sb.rpc("create_organization", { p_name: "Plomberie Martin", p_trade: "Plombier-chauffagiste", p_address: "12 rue de la République, 69002 Lyon" }), "création entreprise");
+const org = m?.organization_id ?? ok(await T.sb.rpc("create_organization", { p_name: "Plomberie Martin", p_trade: "Plombier-chauffagiste", p_address: "12 rue de la République, 69002 Lyon", p_code: process.env.FLO_CODE }), "création entreprise");
 await T.sb.from("organizations").update({ slug: "plomberie-martin-demo", booking_enabled: true }).eq("id", org); // adresse lisible si libre
 
 const L = await login(DEMO_EMAIL_EQUIPE, "Lucas");

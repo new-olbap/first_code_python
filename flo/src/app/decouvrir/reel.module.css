@@ -1,0 +1,244 @@
+/* Présentation façon « film de marque » : des scènes plein écran qui s'enchaînent au défilement,
+   avec un volet de couleur à chaque changement (joué d'un coup, pas image par image : reste fluide). */
+.reel { --safe: clamp(70px, 10vh, 100px); --night: #0d111c; --orange: #ff5a1f; --paper: #f6f5f1; --ease: cubic-bezier(0.77, 0, 0.18, 1);
+  position: relative; background: var(--night); color: #fff; font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; }
+.reel h1, .reel h2, .reel p { margin: 0; }
+
+/* En-tête fixe, discret */
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 12px clamp(14px, 3vw, 28px); pointer-events: none; }
+.header > * { pointer-events: auto; }
+.logoBox { background: var(--night); padding: 10px 12px; display: inline-flex; }
+.headRight { display: flex; gap: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 16px; font-weight: 600; font-size: 14px; border: 1px solid transparent; white-space: nowrap; transition: background 0.2s, color 0.2s; }
+.btnOrange { background: var(--orange); color: #fff !important; }
+.btnOrange:hover { background: #ff7440; }
+.btnNight { background: var(--night); color: #fff !important; }
+.btnNight:hover { background: #000; }
+.btnLine { border-color: var(--night); color: var(--night) !important; }
+.btnLine:hover { background: var(--night); color: #fff !important; }
+
+/* La scène fixe et ses plans */
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--night); }
+.scene { position: absolute; inset: 0; overflow: hidden; background: var(--night); clip-path: var(--hide); visibility: hidden;
+  transition: clip-path 0.85s var(--ease), visibility 0s linear 0.85s; }
+.scene.on, .scene.past { clip-path: inset(0); visibility: visible; transition: clip-path 0.85s var(--ease), visibility 0s; }
+.scene.gone { visibility: hidden; transition: visibility 0s linear 0.85s; }
+.l { --hide: inset(0 100% 0 0); } .r { --hide: inset(0 0 0 100%); } .b { --hide: inset(100% 0 0 0); } .t { --hide: inset(0 0 100% 0); }
+
+/* Ce qui bouge à l'intérieur d'un plan quand il arrive */
+.a { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 0.45s ease 0.12s, transform 0.6s cubic-bezier(0.2, 0.8, 0.1, 1) 0.12s; }
+.a2 { transition-delay: 0.2s; } .a3 { transition-delay: 0.28s; }
+.zoom { transform: scale(1.12); transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.1, 1) 0.1s; }
+.on .a, .past .a { opacity: 1; transform: none; }
+.on .zoom, .past .zoom { transform: none; }
+.grow rect { transform-box: fill-box; transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.9s var(--ease) 0.4s; }
+.grow rect:first-child { transform: scaleY(0); transform-origin: 50% 100%; transition-delay: 0.2s; }
+.on .grow rect, .past .grow rect { transform: none; }
+
+/* Éléments communs */
+.label { position: absolute; left: clamp(16px, 4vw, 48px); top: 86px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
+.big { font-size: clamp(38px, 6.2vw, 100px); line-height: 0.96; letter-spacing: -0.05em; font-weight: 600; }
+.mid { font-size: clamp(28px, 3.6vw, 56px); line-height: 1; letter-spacing: -0.045em; font-weight: 600; }
+.small { font-size: clamp(15px, 1.25vw, 18px); line-height: 1.5; opacity: 0.92; max-width: 40ch; margin-top: 16px !important; }
+.orange { color: var(--orange); }
+.cap { position: absolute; left: clamp(16px, 4vw, 48px); bottom: var(--safe); max-width: min(560px, 86vw); }
+.laptop .lid { background: #1a1c22; border-radius: 14px 14px 4px 4px; padding: 2.4% 2.4% 3%; }
+.laptop .lid img { display: block; width: 100%; }
+.laptop .base { position: relative; height: 13px; width: 114%; margin-left: -7%; background: linear-gradient(#d6d8dd, #8f9299); border-radius: 0 0 14px 14px; }
+.phone { border: 7px solid #15171c; border-radius: 34px; overflow: hidden; background: #000; }
+.phone img { display: block; width: 100%; }
+
+/* 1. Logo */
+.intro { display: flex; align-items: center; justify-content: center; }
+.introLogo { display: flex; align-items: flex-start; gap: clamp(14px, 2.6vw, 36px); }
+.introLogo svg { height: clamp(90px, 15vw, 210px); width: auto; }
+.word { font-size: clamp(110px, 19vw, 270px); font-weight: 700; letter-spacing: -0.07em; line-height: 0.76; }
+.intro h1 { position: absolute; left: clamp(16px, 4vw, 48px); bottom: 34px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; bottom: 64px; }
+
+/* 2. Symbole géant */
+.giant { position: absolute; right: -10vw; top: -8%; height: 116%; width: auto; }
+.giantText { position: absolute; left: clamp(16px, 4vw, 48px); bottom: var(--safe); max-width: 11ch; }
+
+/* 3. Ordinateur */
+.sLaptop { background: #e9e7e2; color: var(--night); }
+.orangeBlock { position: absolute; left: 0; bottom: 0; width: 34%; height: 58%; background: var(--orange); }
+.laptopPos { position: absolute; width: min(60vw, 860px); right: 5vw; top: 46%; translate: 0 -54%; }
+.sLaptop .cap, .sPhone .cap { z-index: 2; }
+
+/* 4. Symbole seul */
+.sWhite { background: #fff; color: var(--night); display: flex; align-items: center; justify-content: center; }
+.sWhite > svg { height: clamp(70px, 9vw, 130px); width: auto; }
+.cornerNote { position: absolute; right: clamp(16px, 4vw, 48px); bottom: 64px; font-size: 15px; color: #333; max-width: 30ch; text-align: right; }
+
+/* 5. Téléphone incliné */
+.sPhone { background: radial-gradient(60% 70% at 72% 55%, rgba(255, 90, 31, 0.45), transparent 70%), var(--night); }
+.tilted { position: absolute; width: min(300px, 56vw); right: 14vw; top: 50%; translate: 0 -50%; rotate: -16deg; }
+
+/* 6. Palette */
+.palette { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
+.swatch { position: relative; padding: 90px 20px 30px; display: flex; flex-direction: column; justify-content: space-between; font-size: 15px; font-weight: 600; }
+.swatch small { font-size: 13px; font-weight: 600; opacity: 0.9; line-height: 1.6; }
+
+/* 7. Typographie */
+.typeWord { position: absolute; left: clamp(12px, 3vw, 40px); top: 50%; translate: 0 -50%; font-size: clamp(120px, 25vw, 360px); font-weight: 600; letter-spacing: -0.07em; line-height: 1; }
+.typeBlock { position: absolute; right: 0; top: 0; width: 26%; height: 60%; background: var(--orange); }
+.alphabet { position: absolute; left: clamp(16px, 4vw, 48px); right: clamp(16px, 4vw, 48px); bottom: 64px; font-size: clamp(13px, 1.4vw, 18px); color: #888; letter-spacing: 0.04em; }
+
+/* 8. Liste des fonctions en échelle typographique */
+.scale { position: absolute; left: clamp(16px, 4vw, 48px); right: clamp(16px, 4vw, 48px); top: 120px; }
+.scale div { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e2e0da; padding: 10px 0; letter-spacing: -0.04em; font-weight: 500; }
+.scale small { font-size: 13px; color: #555; letter-spacing: 0; font-weight: 500; }
+
+/* 9. Photo + texte */
+.split { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+.split img { width: 100%; height: 100%; object-fit: cover; }
+.splitText { position: relative; overflow: hidden; padding: 0 clamp(20px, 4vw, 60px); display: flex; flex-direction: column; justify-content: center; background: var(--night); }
+.splitMark { position: absolute; right: -40px; bottom: -60px; height: 46%; width: auto; }
+
+/* 10. Panneau d'affichage */
+.wall { background: linear-gradient(180deg, #1e1f24, #0b0b0e); display: flex; align-items: center; justify-content: center; }
+.board { position: relative; width: min(1100px, 90vw); aspect-ratio: 16 / 7; border: 10px solid #2c2e34; overflow: hidden; background: linear-gradient(100deg, #ff5a1f 40%, #ff8a50); }
+.board img { position: absolute; left: 0; top: 0; width: 48%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(90deg, #000 60%, transparent); mask-image: linear-gradient(90deg, #000 60%, transparent); }
+.boardText { position: absolute; left: 46%; right: 5%; top: 50%; translate: 0 -50%; }
+.boardLogo { position: absolute; right: 5%; bottom: 7%; }
+
+/* 11. Imagerie */
+.grid { position: absolute; inset: 76px clamp(12px, 3vw, 40px) clamp(60px, 9vh, 80px); display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
+.grid img { width: 100%; height: 100%; object-fit: cover; }
+.grid img:first-child { grid-row: span 2; }
+
+/* 12. Les écrans */
+.sScreens { background: var(--paper); color: var(--night); }
+.screen { position: absolute; width: min(52vw, 720px); border: 1px solid #d7d4cc; }
+.sc1 { right: 4vw; top: 16%; } .sc2 { right: 18vw; top: 34%; } .sc3 { right: 32vw; top: 52%; width: min(34vw, 460px); }
+
+/* 13. Téléphones sur orange */
+.sOrange { background: var(--orange); color: var(--night); }
+.phones { position: absolute; right: 8vw; top: 50%; translate: 0 -50%; display: flex; gap: 18px; align-items: center; }
+.phones .phone { width: min(240px, 34vw); }
+.phones .phone:last-child { translate: 0 60px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.chips span { border: 1px solid var(--night); padding: 7px 11px; font-size: 13px; font-weight: 600; }
+
+/* 14. Affiches dans un hall */
+.hall { background: linear-gradient(180deg, #2a2b30 0%, #121317 62%, #08080a 100%); display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 40px); }
+.poster { position: relative; height: 68%; aspect-ratio: 3 / 5; overflow: hidden; background: var(--orange); }
+.poster img { position: absolute; inset: 0 0 40%; width: 100%; height: 60%; object-fit: cover; }
+.poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 25%, var(--orange) 60%); }
+.poster p { position: absolute; z-index: 1; left: 8%; right: 8%; bottom: 7%; font-size: clamp(16px, 1.8vw, 28px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 600; }
+.poster span { position: absolute; z-index: 1; left: 8%; top: 5%; }
+
+/* 15. Le rendez-vous dans l'agenda */
+.sCard { background: #fff; color: var(--night); display: flex; align-items: center; justify-content: center; }
+.card { position: relative; width: min(420px, 80vw); background: #fff; border: 1px solid #e4e1da; box-shadow: 26px 26px 0 var(--night); rotate: -4deg; }
+.cardHead { background: var(--orange); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+.cardBody { padding: 22px 18px 24px; }
+.cardBody b { display: block; font-size: clamp(34px, 4vw, 48px); letter-spacing: -0.05em; line-height: 1; }
+.cardBody p { margin-top: 10px !important; font-size: 17px; font-weight: 600; }
+.cardBody small { display: block; margin-top: 6px; color: #6b6b6b; font-size: 14px; }
+
+/* 16. Fin */
+.end { background: var(--orange); color: var(--night); }
+.endMark { position: absolute; left: -6vw; top: -10%; height: 120%; width: auto; }
+.endText { position: absolute; right: clamp(16px, 6vw, 90px); top: 50%; translate: 0 -50%; max-width: 560px; }
+.endBtns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+
+/* Points d'arrêt : un geste = un plan (le défilement s'arrête sur chaque plan au lieu de les sauter) */
+.snap { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; scroll-snap-stop: always; pointer-events: none; }
+
+/* Compteur, barre de progression, passer */
+.hud { position: absolute; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(14px, 3vw, 28px) 16px; pointer-events: none; }
+.hud > * { pointer-events: auto; background: rgba(13, 17, 28, 0.78); color: #fff; font-size: 12px; font-weight: 600; padding: 7px 10px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--orange); transform-origin: 0 50%; transition: transform 0.6s var(--ease); }
+
+@media (min-width: 761px) { .sScreens .cap { top: 130px; bottom: auto; max-width: 27vw; } }
+
+@media (max-width: 760px) {
+  .label { top: 74px; }
+  .giant { right: -30vw; top: 4%; height: 62%; }
+  .orangeBlock { width: 50%; height: 40%; }
+  .laptopPos { width: 92vw; right: 4vw; top: 40%; }
+  .tilted { right: 50%; translate: 50% -62%; width: 58vw; }
+  .palette { grid-template-columns: 1fr 1fr; }
+  .swatch { padding: 74px 14px 18px; }
+  .typeBlock { width: 40%; height: 34%; }
+  .scale { top: 100px; }
+  .split { grid-template-columns: 1fr; grid-template-rows: 45% 55%; }
+  .board { aspect-ratio: 4 / 5; width: 86vw; }
+  .board img { width: 100%; height: 55%; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
+  .boardText { left: 7%; right: 7%; top: auto; bottom: 18%; translate: none; }
+  .grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1.4fr 1fr 1fr; }
+  .grid img:first-child { grid-row: auto; grid-column: span 2; }
+  .screen { width: 84vw; } .sc1 { right: 4vw; top: 14%; } .sc2 { right: 8vw; top: 28%; } .sc3 { right: 12vw; top: 42%; width: 60vw; }
+  .phones { right: 50%; translate: 50% -64%; }
+  .phones .phone { width: 38vw; }
+  .poster { height: auto; width: 43vw; }
+  .poster:nth-child(3) { display: none; }
+  .poster p { font-size: 15px; }
+  .endMark { left: -30vw; height: 70%; top: -6%; }
+  .endText { left: 16px; right: 16px; top: auto; bottom: 80px; translate: none; }
+}
+
+/* Sans animation (réglage du système) : les plans s'empilent, sans volets */
+.calm { height: auto !important; }
+.calm .stage { position: relative; height: auto; overflow: visible; }
+.calm .scene { position: relative; height: 100vh; height: 100svh; clip-path: none; visibility: visible; transition: none; }
+.calm .a, .calm .zoom, .calm .grow rect { opacity: 1; transform: none; transition: none; }
+.calm .hud { display: none; }
+
+@media (max-width: 760px) {
+  /* La barre d'outils de Safari flotte au-dessus du bas de la page : textes remontés, compteur masqué */
+  .reel { --safe: calc(150px + env(safe-area-inset-bottom)); }
+  .hud, .bar { display: none; }
+  .intro h1, .cornerNote { bottom: var(--safe); }
+  .label { display: none; }
+  .giant { top: 2%; height: 52%; }
+  .laptopPos { top: 34%; }
+  .tilted { translate: 50% -96%; width: 44vw; }
+  .phones { translate: 50% -82%; }
+  .phones .phone { width: 34vw; }
+  .screen { width: 80vw; } .sc1 { top: 12%; } .sc2 { top: 22%; } .sc3 { top: 32%; width: 56vw; }
+  .board { translate: 0 -12%; }
+  .hall { align-items: flex-start; padding-top: 110px; }
+  .card { translate: 0 -12%; }
+  .endText { bottom: var(--safe); }
+  .scale { top: 90px; }
+}
+
+/* Moins de vide : textes et images agrandis */
+.sWhite > svg { height: clamp(140px, 18vw, 260px); }
+.tilted { width: min(380px, 56vw); }
+.phones .phone { width: min(300px, 34vw); }
+.cornerNote { font-size: 18px; }
+.scale { top: 130px; }
+.scale div { padding: 16px 0; }
+.card { width: min(560px, 88vw); }
+.cardBody { padding: 28px 24px 30px; }
+.cardBody b { font-size: clamp(44px, 5vw, 64px); }
+.cardBody p { font-size: 21px; }
+.cardBody small { font-size: 16px; }
+
+@media (max-width: 760px) {
+  .big { font-size: 46px; }
+  .mid { font-size: 34px; }
+  .small { font-size: 17px; }
+  .introLogo svg { height: 26vw; }
+  .word { font-size: 34vw; }
+  .laptopPos { width: 140vw; right: -46vw; top: 34%; }
+  .orangeBlock { width: 62%; height: 50%; }
+  .sWhite > svg { height: 44vw; }
+  .tilted { width: 50vw; translate: 50% -106%; }
+  .scale div { padding: 15px 0; }
+  .scale div:nth-child(n+3) { font-size: 27px !important; }
+  .board { width: 94vw; aspect-ratio: 3 / 4.6; translate: 0 -10%; }
+  .board .mid { font-size: 38px; }
+  .screen { width: 100vw; } .sc1 { right: -14vw; top: 11%; } .sc2 { right: -4vw; top: 23%; } .sc3 { right: 8vw; top: 35%; width: 74vw; }
+  .phones .phone { width: 40vw; }
+  .phones { translate: 50% -108%; }
+  .phones .phone:last-child { translate: 0 30px; }
+  .hall { align-items: center; padding: 70px 0 calc(var(--safe) - 40px); gap: 10px; }
+  .poster { width: 47vw; }
+  .poster p { font-size: 19px; }
+  .card { translate: 0 -10%; }
+  .cardBody b { font-size: 48px; }
+}
