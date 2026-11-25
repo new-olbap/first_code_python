@@ -112,8 +112,9 @@ export default function Cinema({ demo }: { demo: string }) {
           <canvas aria-hidden />
           <div className={c.shade} />
           <div className={c.beat} style={{ opacity: 1 }}>
-            <span className={c.kicker}>Logiciel de rendez-vous pour artisans</span>
-            <h1 className={c.huge}>Vous réparez.</h1>
+            {/* Le titre principal (h1) porte les mots-clés pour Google ; la grande phrase reste l'accroche visuelle. */}
+            <h1 className={c.kicker}>Logiciel de rendez-vous pour artisans</h1>
+            <p className={c.huge}>Vous réparez.</p>
           </div>
           <div className={c.beat}><p className={c.big}>Le téléphone sonne. <span className={c.orange}>Encore.</span></p></div>
           <div className={c.beat}><p className={c.big}>Flo range la demande et prépare la réponse.</p></div>

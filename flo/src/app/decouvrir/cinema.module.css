@@ -26,7 +26,7 @@
 .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.75) 100%); }
 .beat { position: absolute; left: 0; right: 0; bottom: clamp(70px, 14vh, 140px); max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); opacity: 0; will-change: opacity, transform; pointer-events: none; }
 .beat.live { pointer-events: auto; }
-.kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.8); }
+.kicker { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.8); }
 .kicker::before { content: ""; width: 8px; height: 8px; background: var(--orange); }
 .huge { font-size: clamp(52px, 9vw, 140px); line-height: 0.95; letter-spacing: -0.045em; font-weight: 500; margin-top: 16px; max-width: 13ch; }
 .big { font-size: clamp(38px, 6vw, 92px); line-height: 1; letter-spacing: -0.04em; font-weight: 500; max-width: 15ch; }
