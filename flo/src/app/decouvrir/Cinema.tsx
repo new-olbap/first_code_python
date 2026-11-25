@@ -101,17 +101,14 @@ export default function Cinema({ demo }: { demo: string }) {
       },
     });
 
-    // 3. Les fonctions défilent de côté pendant que l'on descend.
-    const track = el.querySelector<HTMLElement>(`.${c.track}`)!, count = el.querySelector<HTMLElement>(`.${c.hCount}`)!;
-    let span = 0;
-    const hs = ScrollTrigger.create({
-      trigger: el.querySelector(`.${c.hscroll}`), start: "top top", end: "bottom bottom",
-      onRefresh: () => { span = track.scrollWidth - innerWidth; },
-      onUpdate: ({ progress: p }) => {
-        track.style.transform = `translate3d(${-p * span}px, 0, 0)`;
-        count.textContent = `0${Math.min(PANELS.length, Math.floor(p * PANELS.length * 0.999) + 1)} / 0${PANELS.length}`;
-      },
-    });
+    // 3. Visite guidée : l'écran reste en place, le texte défile ; l'écran change en fondu à chaque étape.
+    const steps = [...el.querySelectorAll<HTMLElement>(`.${c.step}`)], shots = [...el.querySelectorAll<HTMLElement>(`.${c.tourShot}`)];
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const k = steps.indexOf(e.target as HTMLElement);
+      steps.forEach((st, i) => st.classList.toggle(c.on, i === k)); shots.forEach((sh, i) => sh.classList.toggle(c.on, i === k));
+    }), { rootMargin: "-45% 0px -45% 0px" });
+    steps.forEach((st) => io.observe(st));
 
     // 4. Les téléphones montent à des vitesses différentes.
     const ph = [...el.querySelectorAll<HTMLElement>(`.${c.phonePair} img`)];
@@ -120,7 +117,7 @@ export default function Cinema({ demo }: { demo: string }) {
     addEventListener("load", () => ScrollTrigger.refresh());
     return () => {
       alive = false; removeEventListener("resize", size); gsap.ticker.remove(tick); gsap.ticker.remove(render); lenis.destroy();
-      [film, reveal, hs].forEach((s) => s.kill()); tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
+      [film, reveal].forEach((s) => s.kill()); io.disconnect(); tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
     };
   }, []);
 
@@ -167,17 +164,18 @@ export default function Cinema({ demo }: { demo: string }) {
         </div>
       </section>
 
-      <section className={c.hscroll} id="fonctions" aria-label="Fonctionnalités">
-        <div className={c.hStage}>
-          <div className={c.track}>
-            {PANELS.map((x) => (
-              <article key={x.n} className={c.panel}>
-                <div><span className={c.num}>{x.n}</span><h3>{x.t}</h3><p>{x.p}</p><ul>{x.l.map((li) => <li key={li}>{li}</li>)}</ul></div>
-                <div className={c.shot}><img src={x.img} alt={x.alt} loading="lazy" style={x.phone ? { maxWidth: 300 } : undefined} /></div>
-              </article>
-            ))}
-          </div>
-          <div className={c.hCount}>01 / 04</div>
+      <section className={c.tour} id="fonctions" aria-label="Fonctionnalités">
+        <div className={c.tourStage}>
+          {PANELS.map((x, i) => (
+            <img key={x.n} className={`${c.tourShot} ${i === 0 ? c.on : ""}`} src={x.img} alt={x.alt} decoding="async" />
+          ))}
+        </div>
+        <div className={c.steps}>
+          {PANELS.map((x, i) => (
+            <article key={x.n} className={`${c.step} ${i === 0 ? c.on : ""}`}>
+              <img className={c.stepShot} src={x.img} alt="" loading="lazy" decoding="async" /><span className={c.num}>{x.n} / 0{PANELS.length}</span><h3>{x.t}</h3><p>{x.p}</p><ul>{x.l.map((li) => <li key={li}>{li}</li>)}</ul>
+            </article>
+          ))}
         </div>
       </section>
 
