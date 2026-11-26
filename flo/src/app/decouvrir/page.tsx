@@ -5,6 +5,7 @@ import { CONTACT, TARIF, eur, mensualite } from "@/lib/tarif";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import FloLogo, { FloMark } from "@/components/FloLogo";
+import Rotator from "./Rotator";
 import s from "./site.module.css";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://flo-theta-gray.vercel.app";
@@ -23,16 +24,6 @@ const demo = `mailto:${CONTACT}?subject=${encodeURIComponent("Démonstration de 
 
 const METIERS = ["Plombiers", "Chauffagistes", "Électriciens", "Pisciniers", "Paysagistes", "Serruriers", "Climaticiens"];
 
-// Journal d'une matinée type : ce que Flo fait pendant que l'artisan travaille.
-const JOURNAL: [string, string, boolean][] = [
-  ["08:02", "Nouvelle réservation : Claire D. · fuite sous l’évier · mardi 8 h 00", false],
-  ["08:02", "Ajoutée à votre agenda et à votre téléphone", true],
-  ["09:15", "E-mail reçu : « Bonjour, ma chaudière fait un bruit bizarre… »", false],
-  ["09:15", "Rangé dans Demandes, prêt à être accepté", true],
-  ["10:30", "Entretien à refaire : M. Dupont, chaudière, il y a 11 mois", false],
-  ["10:30", "Message de relance déjà rédigé", true],
-];
-
 const FAQ = [
   ["Faut-il payer un abonnement ?", `Non. Flo se paie une seule fois : ${eur(TARIF.lancement)} pour les ${TARIF.places} premiers artisans, puis ${eur(TARIF.normal)}, en une fois ou en ${TARIF.fois} virements sans frais. Les mises à jour sont comprises.`],
   ["Mes clients doivent-ils créer un compte ?", "Non. Ils ouvrent votre page de réservation, choisissent une prestation et un créneau, et laissent leurs coordonnées. C’est tout."],
@@ -43,6 +34,21 @@ const FAQ = [
 ];
 
 const Check = () => <svg className={s.check} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M3 8.5l3 3 7-7" /></svg>;
+
+// Une grande section : titre, maquette qui s'efface vers le bas, phrase (noir puis gris) et liste de fonctions.
+function Feature({ title, strong, rest, items, children, rev, id }: { title: string; strong: string; rest: string; items: string[]; children: React.ReactNode; rev?: boolean; id?: string }) {
+  return (
+    <section className={`${s.wrap} ${s.feature} ${rev ? s.rev : ""}`} id={id}>
+      <h2 className={s.h2}>{title}</h2>
+      <div className={s.mock}>{children}</div>
+      <aside className={s.side}>
+        <p className={s.statement}><b>{strong}</b> {rest}</p>
+        <p className={s.sideLabel}>Fonctions</p>
+        <ul className={s.sideList}>{items.map((t) => <li key={t}>{t}</li>)}</ul>
+      </aside>
+    </section>
+  );
+}
 
 export default function Decouvrir() {
   const jsonLd = {
@@ -58,109 +64,97 @@ export default function Decouvrir() {
           <Link href="/" aria-label="Flo, accueil" className={s.brand}><FloLogo size={20} /></Link>
           <nav className={s.links}><a href="#fonctions">Fonctionnalités</a><a href="#tarif">Tarif</a><a href="#questions">Questions</a></nav>
           <div className={s.navRight}>
-            <Link href="/connexion" className={`${s.btn} ${s.ghost}`}>Se connecter</Link>
-            <a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a>
+            <a href={demo} className={`${s.btn} ${s.ghost} ${s.sm}`}>Demander une démo</a>
+            <Link href="/connexion" className={`${s.btn} ${s.ghost} ${s.sm}`}>Se connecter</Link>
+            <Link href="/tarif" className={`${s.btn} ${s.solid} ${s.sm}`}>Commander</Link>
           </div>
+          <details className={s.menu}>
+            <summary aria-label="Menu"><span /><span /></summary>
+            <div className={s.menuPanel}>
+              <a href="#fonctions">Fonctionnalités</a><a href="#tarif">Tarif</a><a href="#questions">Questions</a>
+              <Link href="/connexion">Se connecter</Link>
+              <a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a>
+            </div>
+          </details>
         </div>
       </header>
 
       <main>
-        {/* Accueil : titre à gauche, symbole au centre, ce qui est inclus à droite */}
+        {/* Accueil : titre à gauche, symbole lumineux au centre, trois phrases à droite */}
         <section className={`${s.wrap} ${s.hero}`}>
           <div className={s.heroText}>
-            <p className={s.eyebrow}>Logiciel de rendez-vous pour artisans</p>
-            <h1 className={s.display}>Vos clients réservent. Vous restez sur le chantier.</h1>
-            <p className={s.lead}>Agenda, réservation en ligne, demandes et relances d’entretien, au même endroit. Un seul paiement, données hébergées en France.</p>
+            <h1 className={s.display}>Rendez-vous en ligne<br /> pour artisans</h1>
+            <Rotator className={s.rotator} words={METIERS.map((m) => `Pour les ${m.toLowerCase()}`)} />
             <div className={s.ctas}>
-              <a href={demo} className={`${s.btn} ${s.solid}`}>Demander une démo</a>
-              <a href="#tarif" className={`${s.btn} ${s.ghost}`}>Voir le tarif</a>
+              <a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a>
+              <a href="#tarif" className={`${s.btn} ${s.ghost} ${s.pill}`}>Voir le tarif</a>
             </div>
           </div>
-          <FloMark className={s.heroMark} size={240} color="#000" />
-          <ul className={s.heroStack}>
-            {["Agenda", "Réservation en ligne", "Demandes", "Relances d’entretien", "Équipe illimitée"].map((t, k) => <li key={t}><span>0{k + 1}</span>{t}</li>)}
+          <div className={s.glow}><FloMark className={s.heroMark} size={240} color="#000" /></div>
+          <ul className={s.heroLines}>
+            <li>Vos clients réservent eux-mêmes</li>
+            <li>Les demandes arrivent rangées</li>
+            <li>Les entretiens sont relancés</li>
           </ul>
         </section>
 
-        {/* Le produit en action, comme un journal */}
-        <section className={s.wrap}>
-          <div className={s.journal}>
-            <div className={s.journalHead}><span>Journal de Flo · Plomberie Martin</span><span>Mardi</span></div>
-            <ol>
-              {JOURNAL.map(([h, t, ok], k) => (
-                <li key={k} className={ok ? s.ok : undefined}>
-                  <span className={s.time}>{h}</span>
-                  {ok ? <Check /> : <FloMark size={12} color="#000" className={s.bullet} />}
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ol>
+        <section className={s.strip} aria-label="Métiers">
+          <div className={s.marquee}>
+            {[0, 1].map((n) => <ul key={n} aria-hidden={n === 1}>{METIERS.map((m) => <li key={m}>{m}</li>)}</ul>)}
           </div>
         </section>
 
-        <section className={`${s.wrap} ${s.strip}`}>
-          <p className={s.eyebrow}>Pensé pour les artisans</p>
-          <ul>{METIERS.map((m) => <li key={m}>{m}</li>)}</ul>
-        </section>
+        <Feature id="fonctions" title="Vos clients réservent, sans vous appeler" strong="Une page de réservation à votre nom," rest="ouverte jour et nuit, sur votre fiche Google, votre site ou vos SMS."
+          items={["Choix de la prestation", "Seulement vos créneaux libres", "Sans compte pour le client", "Accepter ou refuser en un geste"]}>
+          <div className={`${s.window} ${s.windowBack}`}><img src="/decouvrir/ecran-agenda.webp" alt="Agenda de Flo" loading="lazy" width={1600} height={1111} /></div>
+          <div className={s.phone}><img src="/decouvrir/ecran-reservation.webp" alt="Page de réservation de Flo sur téléphone" loading="lazy" width={700} height={1192} /></div>
+        </Feature>
 
-        {/* Réservation en ligne */}
-        <section className={`${s.wrap} ${s.sec} ${s.split}`}>
-          <div>
-            <p className={s.eyebrow}>Réservation en ligne</p>
-            <h2 className={s.h2}>Une page de réservation à votre nom.</h2>
-            <p className={s.body}>Le client choisit sa prestation et un créneau libre, sans créer de compte. Vous mettez le lien sur votre fiche Google, votre site, Instagram ou vos SMS.</p>
-            <ul className={s.ticks}>
-              <li><Check />Seulement vos créneaux libres, selon vos horaires</li>
-              <li><Check />Vous acceptez ou refusez en un geste</li>
-              <li><Check />Coordonnées et adresse du client incluses</li>
-            </ul>
-          </div>
-          <div className={`${s.card} ${s.phoneCard}`}>
-            <img src="/decouvrir/ecran-reservation.webp" alt="Page de réservation de Flo sur téléphone" loading="lazy" width={700} height={1192} />
-          </div>
-        </section>
+        <Feature rev title="Toutes les demandes au même endroit" strong="Réservations et e-mails arrivent dans Demandes," rest="rangés et prêts à être acceptés, même quand vous êtes sur un chantier."
+          items={["Réservations en ligne", "E-mails des clients", "Réponses rapides", "Pastille pour les nouveautés"]}>
+          <div className={s.window}><img src="/decouvrir/ecran-demandes.webp" alt="Demandes dans Flo" loading="lazy" width={1600} height={1111} /></div>
+        </Feature>
 
-        {/* Fonctionnalités */}
-        <section className={`${s.wrap} ${s.sec}`} id="fonctions">
-          <p className={s.eyebrow}>Tout est inclus</p>
-          <h2 className={s.h2}>Tout ce qu’il faut, rien de plus.</h2>
-          <div className={s.grid2}>
-            <article className={s.card}>
-              <h3 className={s.h3}>Agenda</h3>
-              <p className={s.body}>Jour, semaine, mois. Chaque membre de l’équipe a le sien.</p>
-              <img className={s.shot} src="/decouvrir/ecran-agenda.webp" alt="Agenda de Flo" loading="lazy" width={1600} height={1111} />
-            </article>
-            <article className={s.card}>
-              <h3 className={s.h3}>Demandes</h3>
-              <p className={s.body}>Réservations et e-mails arrivent au même endroit, prêts à être traités.</p>
-              <img className={s.shot} src="/decouvrir/ecran-demandes.webp" alt="Demandes dans Flo" loading="lazy" width={1600} height={1111} />
-            </article>
+        <Feature title="Votre semaine, dans votre téléphone" strong="Chaque rendez-vous s’affiche aussi" rest="dans l’agenda que vous utilisez déjà, avec l’adresse et le téléphone du client."
+          items={["Jour, semaine et mois", "Un agenda par personne", "Google Agenda, iPhone, Outlook", "Fiches clients et historique"]}>
+          <div className={s.calendar}>
+            <div className={s.calHead}><b>Mardi 24</b><span>Novembre</span></div>
+            {[["08:00", "Fuite sous l’évier", "Claire D. · 12 rue Sainte-Catherine"], ["10:30", "Entretien chaudière", "M. Dupont · Talence"], ["14:00", "Devis salle de bain", "Mme Laurent · Mérignac"]].map(([h, t, d]) => (
+              <div key={h} className={s.event}><span>{h}</span><div><b>{t}</b><small>{d}</small></div><FloMark size={14} color="#000" /></div>
+            ))}
           </div>
-          <div className={s.grid4}>
+        </Feature>
+
+        {/* Trois cartes, comme une vitrine */}
+        <section className={`${s.wrap} ${s.sec}`}>
+          <h2 className={s.h2}>Inclus dans Flo</h2>
+          <div className={s.cards}>
             <article className={s.card}>
-              <h3 className={s.h4}>Relances d’entretien</h3>
-              <p className={s.small}>Flo se souvient des entretiens à refaire et rédige le message.</p>
+              <p className={s.cardLabel}>Relances</p>
+              <div className={s.mini}>
+                <p><span>Entretien à refaire</span><b>M. Dupont · chaudière</b><small>Dernier passage il y a 11 mois</small></p>
+                <p className={s.miniMsg}>« Bonjour M. Dupont, l’entretien annuel de votre chaudière arrive : voici mes prochains créneaux… »</p>
+              </div>
+              <h3 className={s.h4}>Relances d’entretien</h3><p className={s.small}>Flo se souvient des entretiens à refaire et rédige le message.</p>
             </article>
             <article className={s.card}>
-              <h3 className={s.h4}>Agenda du téléphone</h3>
-              <p className={s.small}>Vos rendez-vous dans le calendrier que vous utilisez déjà.</p>
-              <div className={s.chips}><span>Google Agenda</span><span>iPhone</span><span>Outlook</span></div>
-            </article>
-            <article className={s.card}>
-              <h3 className={s.h4}>Fiches clients</h3>
-              <p className={s.small}>Historique, adresse, téléphone. Import depuis Excel ou vos contacts.</p>
+              <p className={s.cardLabel}>Équipe</p>
+              <div className={s.mini}>
+                {[["T", "Thomas", "Propriétaire"], ["L", "Léa", "Technicienne"], ["K", "Karim", "Apprenti"]].map(([a, n, r]) => <p key={n} className={s.member}><i>{a}</i><b>{n}</b><small>{r}</small></p>)}
+              </div>
+              <h3 className={s.h4}>Équipe illimitée</h3><p className={s.small}>Chacun son agenda. Vous choisissez qui peut modifier l’entreprise.</p>
             </article>
             <article className={`${s.card} ${s.dark}`}>
-              <h3 className={s.h4}>Hébergé en France</h3>
-              <p className={s.small}>Vos données restent à vous : export et suppression à tout moment.</p>
+              <p className={s.cardLabel}>Données</p>
+              <div className={s.mini}><p className={s.big}>FR</p></div>
+              <h3 className={s.h4}>Hébergé en France</h3><p className={s.small}>Export de vos clients et suppression de vos données à tout moment.</p>
             </article>
           </div>
         </section>
 
         {/* Mise en route */}
         <section className={`${s.wrap} ${s.sec}`}>
-          <p className={s.eyebrow}>Mise en route</p>
-          <h2 className={s.h2}>On l’installe avec vous.</h2>
+          <h2 className={s.h2}>On l’installe avec vous</h2>
           <ol className={s.steps}>
             <li><span>01</span><h3 className={s.h4}>On prépare votre Flo</h3><p className={s.small}>Prestations, horaires, équipe, et vos clients importés.</p></li>
             <li><span>02</span><h3 className={s.h4}>Vous partagez votre lien</h3><p className={s.small}>Sur votre fiche Google, votre site, Instagram et vos SMS. On peut le faire pour vous.</p></li>
@@ -170,53 +164,48 @@ export default function Decouvrir() {
 
         {/* Tarif */}
         <section className={`${s.wrap} ${s.sec}`} id="tarif">
-          <p className={s.eyebrow}>Tarif</p>
-          <h2 className={s.h2}>Un seul paiement, à vie.</h2>
+          <h2 className={s.h2}>Un seul paiement, à vie</h2>
           <div className={s.priceGrid}>
             <div className={`${s.card} ${s.price}`}>
-              <p className={s.eyebrow}>Offre de lancement · {TARIF.places} premiers artisans</p>
+              <p className={s.cardLabel}>Offre de lancement · {TARIF.places} premiers artisans</p>
               <div className={s.amount}>{eur(TARIF.lancement)} <s>{eur(TARIF.normal)}</s></div>
-              <p className={s.body}>ou {TARIF.fois} × {eur(mensualite(TARIF.lancement))}, sans frais. TVA non applicable, art. 293 B du CGI.</p>
+              <p className={s.small}>ou {TARIF.fois} × {eur(mensualite(TARIF.lancement))}, sans frais. TVA non applicable, art. 293 B du CGI.</p>
               <ul className={s.ticks}>
                 <li><Check />Agenda, réservation en ligne, demandes</li><li><Check />Relances d’entretien et statistiques</li>
                 <li><Check />Équipe : membres illimités</li><li><Check />Synchronisation avec le téléphone</li>
                 <li><Check />Installation et assistance par e-mail</li><li><Check />Mises à jour comprises</li>
               </ul>
               <div className={s.ctas}>
-                <Link href="/tarif" className={`${s.btn} ${s.solid}`}>Commander</Link>
-                <a href={demo} className={`${s.btn} ${s.ghost}`}>Demander une démo</a>
+                <Link href="/tarif" className={`${s.btn} ${s.solid} ${s.pill}`}>Commander</Link>
+                <a href={demo} className={`${s.btn} ${s.ghost} ${s.pill}`}>Demander une démo</a>
               </div>
             </div>
-            <div className={`${s.card} ${s.dark} ${s.priceSide}`}>
-              <FloMark size={56} color="#fff" />
-              <p className={s.h3}>Rentabilisé dès les premiers rendez-vous gagnés.</p>
-              <p className={s.small}>Un entretien relancé à temps ou une demande qui n’est plus oubliée suffit souvent à couvrir le prix.</p>
-            </div>
+            <aside className={s.side}>
+              <p className={s.statement}><b>Rentabilisé dès les premiers rendez-vous gagnés.</b> Un entretien relancé à temps ou une demande qui n’est plus oubliée suffit souvent à couvrir le prix.</p>
+            </aside>
           </div>
         </section>
 
         <section className={`${s.wrap} ${s.sec}`} id="questions">
-          <p className={s.eyebrow}>Questions</p>
           <h2 className={s.h2}>Questions fréquentes</h2>
           <div className={s.faq}>
             {FAQ.map(([q, a], i) => <details key={q} open={i === 0}><summary>{q}</summary><p>{a}</p></details>)}
           </div>
         </section>
 
-        <section className={`${s.wrap} ${s.sec} ${s.final}`}>
-          <FloMark size={64} color="#000" />
-          <h2 className={s.display}>Moins de téléphone. Plus de chantier.</h2>
-          <div className={s.ctas}><a href={demo} className={`${s.btn} ${s.solid}`}>Demander une démo</a><Link href="/tarif" className={`${s.btn} ${s.ghost}`}>Voir le tarif</Link></div>
+        <section className={`${s.wrap} ${s.final}`}>
+          <h2 className={s.h2}>Moins de téléphone. Plus de chantier.</h2>
+          <div className={s.ctas}><a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a><Link href="/tarif" className={`${s.btn} ${s.ghost} ${s.pill}`}>Voir le tarif</Link></div>
         </section>
       </main>
 
       <footer className={s.footer}>
         <div className={`${s.wrap} ${s.footCols}`}>
-          <div><FloLogo size={18} /><p>Le logiciel de rendez-vous des artisans. Conçu en France, données hébergées en France.</p></div>
           <div><h4>Flo</h4><ul><li><a href="#fonctions">Fonctionnalités</a></li><li><Link href="/tarif">Tarif</Link></li><li><Link href="/connexion">Se connecter</Link></li></ul></div>
+          <div><h4>Métiers</h4><ul>{METIERS.slice(0, 4).map((m) => <li key={m}>{m}</li>)}</ul></div>
           <div><h4>Informations</h4><ul><li><Link href="/mentions-legales">Mentions légales</Link></li><li><Link href="/cgu">Conditions d’utilisation</Link></li><li><Link href="/confidentialite">Confidentialité</Link></li><li><a href={`mailto:${CONTACT}`}>Contact</a></li></ul></div>
         </div>
-        <div className={`${s.wrap} ${s.legal}`}>© {new Date().getFullYear()} Flo</div>
+        <div className={`${s.wrap} ${s.legal}`}><FloLogo size={16} text="#000" /><span>Conçu en France, données hébergées en France · © {new Date().getFullYear()}</span></div>
       </footer>
     </div>
   );
