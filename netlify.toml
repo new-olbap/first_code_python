@@ -1,9 +1,2 @@
 [build]
   publish = "."
-
-# Le fichier de règles n'est pas une page publique
-[[redirects]]
-  from = "/CLAUDE.md"
-  to = "/"
-  status = 404
-  force = true
