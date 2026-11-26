@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import FloLogo, { FloMark } from "@/components/FloLogo";
 import Rotator from "./Rotator";
+import { Cube, Mark3D, RevealInit, ThemeToggle, themeScript } from "./Effects";
 import s from "./site.module.css";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://flo-theta-gray.vercel.app";
@@ -39,9 +40,9 @@ const Check = () => <svg className={s.check} viewBox="0 0 16 16" fill="none" str
 function Feature({ title, strong, rest, items, children, rev, id }: { title: string; strong: string; rest: string; items: string[]; children: React.ReactNode; rev?: boolean; id?: string }) {
   return (
     <section className={`${s.wrap} ${s.feature} ${rev ? s.rev : ""}`} id={id}>
-      <h2 className={s.h2}>{title}</h2>
-      <div className={s.mock}>{children}</div>
-      <aside className={s.side}>
+      <h2 className={s.h2} data-reveal>{title}</h2>
+      <div className={s.mock} data-reveal>{children}</div>
+      <aside className={s.side} data-reveal>
         <p className={s.statement}><b>{strong}</b> {rest}</p>
         <p className={s.sideLabel}>Fonctions</p>
         <ul className={s.sideList}>{items.map((t) => <li key={t}>{t}</li>)}</ul>
@@ -57,7 +58,9 @@ export default function Decouvrir() {
   };
   return (
     <div className={`${s.page} ${GeistSans.variable} ${GeistMono.variable}`}>
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <RevealInit />
 
       <header className={s.nav}>
         <div className={`${s.wrap} ${s.navIn}`}>
@@ -67,7 +70,9 @@ export default function Decouvrir() {
             <a href={demo} className={`${s.btn} ${s.ghost} ${s.sm}`}>Demander une démo</a>
             <Link href="/connexion" className={`${s.btn} ${s.ghost} ${s.sm}`}>Se connecter</Link>
             <Link href="/tarif" className={`${s.btn} ${s.solid} ${s.sm}`}>Commander</Link>
+            <ThemeToggle />
           </div>
+          <div className={s.mobileTheme}><ThemeToggle /></div>
           <details className={s.menu}>
             <summary aria-label="Menu"><span /><span /></summary>
             <div className={s.menuPanel}>
@@ -90,7 +95,7 @@ export default function Decouvrir() {
               <a href="#tarif" className={`${s.btn} ${s.ghost} ${s.pill}`}>Voir le tarif</a>
             </div>
           </div>
-          <div className={s.glow}><FloMark className={s.heroMark} size={240} color="#000" /></div>
+          <div className={s.glow}><Mark3D /></div>
           <ul className={s.heroLines}>
             <li>Vos clients réservent eux-mêmes</li>
             <li>Les demandes arrivent rangées</li>
@@ -119,17 +124,17 @@ export default function Decouvrir() {
           items={["Jour, semaine et mois", "Un agenda par personne", "Google Agenda, iPhone, Outlook", "Fiches clients et historique"]}>
           <div className={s.calendar}>
             <div className={s.calHead}><b>Mardi 24</b><span>Novembre</span></div>
-            {[["08:00", "Fuite sous l’évier", "Claire D. · 12 rue Sainte-Catherine"], ["10:30", "Entretien chaudière", "M. Dupont · Talence"], ["14:00", "Devis salle de bain", "Mme Laurent · Mérignac"]].map(([h, t, d]) => (
-              <div key={h} className={s.event}><span>{h}</span><div><b>{t}</b><small>{d}</small></div><FloMark size={14} color="#000" /></div>
+            {[["08:00", "Fuite sous l’évier", "Claire D. · 12 rue Sainte-Catherine"], ["10:30", "Entretien chaudière", "M. Dupont · Talence"], ["14:00", "Devis salle de bain", "Mme Laurent · Mérignac"]].map(([h, t, d], k) => (
+              <div key={h} className={s.event} data-reveal style={{ "--d": k + 2 } as React.CSSProperties}><span>{h}</span><div><b>{t}</b><small>{d}</small></div><FloMark size={14} /></div>
             ))}
           </div>
         </Feature>
 
         {/* Trois cartes, comme une vitrine */}
         <section className={`${s.wrap} ${s.sec}`}>
-          <h2 className={s.h2}>Inclus dans Flo</h2>
+          <h2 className={s.h2} data-reveal>Inclus dans Flo</h2>
           <div className={s.cards}>
-            <article className={s.card}>
+            <article className={s.card} data-reveal>
               <p className={s.cardLabel}>Relances</p>
               <div className={s.mini}>
                 <p><span>Entretien à refaire</span><b>M. Dupont · chaudière</b><small>Dernier passage il y a 11 mois</small></p>
@@ -137,16 +142,16 @@ export default function Decouvrir() {
               </div>
               <h3 className={s.h4}>Relances d’entretien</h3><p className={s.small}>Flo se souvient des entretiens à refaire et rédige le message.</p>
             </article>
-            <article className={s.card}>
+            <article className={s.card} data-reveal style={{ "--d": 1 } as React.CSSProperties}>
               <p className={s.cardLabel}>Équipe</p>
               <div className={s.mini}>
                 {[["T", "Thomas", "Propriétaire"], ["L", "Léa", "Technicienne"], ["K", "Karim", "Apprenti"]].map(([a, n, r]) => <p key={n} className={s.member}><i>{a}</i><b>{n}</b><small>{r}</small></p>)}
               </div>
               <h3 className={s.h4}>Équipe illimitée</h3><p className={s.small}>Chacun son agenda. Vous choisissez qui peut modifier l’entreprise.</p>
             </article>
-            <article className={`${s.card} ${s.dark}`}>
+            <article className={`${s.card} ${s.dark}`} data-reveal style={{ "--d": 2 } as React.CSSProperties}>
               <p className={s.cardLabel}>Données</p>
-              <div className={s.mini}><p className={s.big}>FR</p></div>
+              <div className={s.mini}><Cube faces={["FR", "RGPD", "FR", "UE", "", ""]} /></div>
               <h3 className={s.h4}>Hébergé en France</h3><p className={s.small}>Export de vos clients et suppression de vos données à tout moment.</p>
             </article>
           </div>
@@ -154,19 +159,19 @@ export default function Decouvrir() {
 
         {/* Mise en route */}
         <section className={`${s.wrap} ${s.sec}`}>
-          <h2 className={s.h2}>On l’installe avec vous</h2>
+          <h2 className={s.h2} data-reveal>On l’installe avec vous</h2>
           <ol className={s.steps}>
-            <li><span>01</span><h3 className={s.h4}>On prépare votre Flo</h3><p className={s.small}>Prestations, horaires, équipe, et vos clients importés.</p></li>
-            <li><span>02</span><h3 className={s.h4}>Vous partagez votre lien</h3><p className={s.small}>Sur votre fiche Google, votre site, Instagram et vos SMS. On peut le faire pour vous.</p></li>
-            <li><span>03</span><h3 className={s.h4}>Les rendez-vous arrivent</h3><p className={s.small}>Dans Flo et dans l’agenda de votre téléphone.</p></li>
+            <li data-reveal><span>01</span><h3 className={s.h4}>On prépare votre Flo</h3><p className={s.small}>Prestations, horaires, équipe, et vos clients importés.</p></li>
+            <li data-reveal style={{ "--d": 1 } as React.CSSProperties}><span>02</span><h3 className={s.h4}>Vous partagez votre lien</h3><p className={s.small}>Sur votre fiche Google, votre site, Instagram et vos SMS. On peut le faire pour vous.</p></li>
+            <li data-reveal style={{ "--d": 2 } as React.CSSProperties}><span>03</span><h3 className={s.h4}>Les rendez-vous arrivent</h3><p className={s.small}>Dans Flo et dans l’agenda de votre téléphone.</p></li>
           </ol>
         </section>
 
         {/* Tarif */}
         <section className={`${s.wrap} ${s.sec}`} id="tarif">
-          <h2 className={s.h2}>Un seul paiement, à vie</h2>
+          <h2 className={s.h2} data-reveal>Un seul paiement, à vie</h2>
           <div className={s.priceGrid}>
-            <div className={`${s.card} ${s.price}`}>
+            <div className={`${s.card} ${s.price}`} data-reveal>
               <p className={s.cardLabel}>Offre de lancement · {TARIF.places} premiers artisans</p>
               <div className={s.amount}>{eur(TARIF.lancement)} <s>{eur(TARIF.normal)}</s></div>
               <p className={s.small}>ou {TARIF.fois} × {eur(mensualite(TARIF.lancement))}, sans frais. TVA non applicable, art. 293 B du CGI.</p>
@@ -180,21 +185,21 @@ export default function Decouvrir() {
                 <a href={demo} className={`${s.btn} ${s.ghost} ${s.pill}`}>Demander une démo</a>
               </div>
             </div>
-            <aside className={s.side}>
+            <aside className={s.side} data-reveal>
               <p className={s.statement}><b>Rentabilisé dès les premiers rendez-vous gagnés.</b> Un entretien relancé à temps ou une demande qui n’est plus oubliée suffit souvent à couvrir le prix.</p>
             </aside>
           </div>
         </section>
 
         <section className={`${s.wrap} ${s.sec}`} id="questions">
-          <h2 className={s.h2}>Questions fréquentes</h2>
-          <div className={s.faq}>
+          <h2 className={s.h2} data-reveal>Questions fréquentes</h2>
+          <div className={s.faq} data-reveal>
             {FAQ.map(([q, a], i) => <details key={q} open={i === 0}><summary>{q}</summary><p>{a}</p></details>)}
           </div>
         </section>
 
         <section className={`${s.wrap} ${s.final}`}>
-          <h2 className={s.h2}>Moins de téléphone. Plus de chantier.</h2>
+          <h2 className={s.h2} data-reveal>Moins de téléphone. Plus de chantier.</h2>
           <div className={s.ctas}><a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a><Link href="/tarif" className={`${s.btn} ${s.ghost} ${s.pill}`}>Voir le tarif</Link></div>
         </section>
       </main>
@@ -205,7 +210,7 @@ export default function Decouvrir() {
           <div><h4>Métiers</h4><ul>{METIERS.slice(0, 4).map((m) => <li key={m}>{m}</li>)}</ul></div>
           <div><h4>Informations</h4><ul><li><Link href="/mentions-legales">Mentions légales</Link></li><li><Link href="/cgu">Conditions d’utilisation</Link></li><li><Link href="/confidentialite">Confidentialité</Link></li><li><a href={`mailto:${CONTACT}`}>Contact</a></li></ul></div>
         </div>
-        <div className={`${s.wrap} ${s.legal}`}><FloLogo size={16} text="#000" /><span>Conçu en France, données hébergées en France · © {new Date().getFullYear()}</span></div>
+        <div className={`${s.wrap} ${s.legal}`}><span className={s.brand}><FloLogo size={16} /></span><span>Conçu en France, données hébergées en France · © {new Date().getFullYear()}</span></div>
       </footer>
     </div>
   );
