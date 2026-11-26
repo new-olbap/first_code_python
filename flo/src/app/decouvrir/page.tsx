@@ -111,8 +111,8 @@ export default function Decouvrir() {
           <div className={s.phone}><img src="/decouvrir/ecran-reservation.webp" alt="Page de réservation de Flo sur téléphone" loading="lazy" width={700} height={1192} /></div>
         </Feature>
 
-        <Feature rev title="Toutes les demandes au même endroit" strong="Réservations et e-mails arrivent dans Demandes," rest="rangés et prêts à être acceptés, même quand vous êtes sur un chantier."
-          items={["Réservations en ligne", "E-mails des clients", "Réponses rapides", "Pastille pour les nouveautés"]}>
+        <Feature rev title="Toutes les demandes au même endroit" strong="Les réservations arrivent dans Demandes," rest="et un e-mail de client s’y ajoute en le collant : coordonnées remplies, prêt à être accepté."
+          items={["Réservations en ligne", "E-mails collés en un geste", "Réponses rapides", "Pastille pour les nouveautés"]}>
           <div className={s.window}><img src="/decouvrir/ecran-demandes.webp" alt="Demandes dans Flo" loading="lazy" width={1600} height={1111} /></div>
         </Feature>
 
