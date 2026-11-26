@@ -90,10 +90,6 @@ export default function Decouvrir() {
           <div className={s.heroText}>
             <h1 className={s.display}>Rendez-vous en ligne<br /> pour artisans</h1>
             <Rotator className={s.rotator} words={METIERS.map((m) => `Pour les ${m.toLowerCase()}`)} />
-            <div className={s.ctas}>
-              <a href={demo} className={`${s.btn} ${s.solid} ${s.pill}`}>Demander une démo</a>
-              <a href="#tarif" className={`${s.btn} ${s.ghost} ${s.pill}`}>Voir le tarif</a>
-            </div>
           </div>
           <div className={s.glow}><Mark3D /></div>
           <ul className={s.heroLines}>
