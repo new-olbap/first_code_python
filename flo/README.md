@@ -53,8 +53,8 @@ Google relit le lien toutes les quelques heures, Apple environ toutes les heures
 - Un visiteur non connecté qui ouvre l’adresse principale (`/`) voit la page de présentation (`src/app/decouvrir`) ; un artisan connecté arrive sur son tableau de bord.
 - Référencement : `robots.txt` et `sitemap.xml` sont générés (`src/app/robots.ts`, `src/app/sitemap.ts`), avec des données structurées « logiciel » dans la page.
 - Quand Flo aura son nom de domaine, ajouter sur Vercel la variable `NEXT_PUBLIC_SITE_URL` (ex. `https://getflo.app`), puis redéployer.
-- Images : `public/decouvrir/` (vraies captures de Flo avec les données de démonstration, photos Unsplash).
-- Partie « cinéma » (`Cinema.tsx`) : un film piloté par le défilement (119 images WebP dans `public/decouvrir/film/`, tirées d’une vidéo libre Pexels), puis l’écran de Flo qui se redresse en 3D, les fonctions en défilement horizontal et les téléphones en parallaxe. GSAP (ScrollTrigger) et Lenis. Si le système demande moins d’animations, tout s’affiche sans effet.
+- Style : noir et blanc sur fond papier, filets fins, étiquettes en Geist Mono, une seule couleur (le vert des coches). Logo noir (`src/components/FloLogo.tsx`, couleur du texte par défaut).
+- Images : `public/decouvrir/` (vraies captures de Flo avec les données de démonstration).
 
 ## Inscription fermée : codes d'accès (migration 0010)
 
